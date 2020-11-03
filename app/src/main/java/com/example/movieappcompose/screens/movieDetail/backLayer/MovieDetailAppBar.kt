@@ -1,4 +1,4 @@
-package com.example.movieappcompose.screens.movieDetail
+package com.example.movieappcompose.screens.movieDetail.backLayer
 
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.background

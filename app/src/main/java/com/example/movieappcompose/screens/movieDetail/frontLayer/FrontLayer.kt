@@ -1,10 +1,11 @@
-package com.example.movieappcompose.screens.movieDetail
+package com.example.movieappcompose.screens.movieDetail.frontLayer
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Tab
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,21 +15,31 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.viewModel
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnSelected
+import com.example.movieappcompose.screens.movieDetail.MovieDetailState
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
+import com.example.movieappcompose.widgets.Center
 import com.example.movieappcompose.widgets.MovieTabRow
 import com.example.movieappcompose.widgets.ViewPager
 
 @Composable
-fun FrontLayer(frontLayerViewModel: FrontLayerViewModel = viewModel()) {
+fun FrontLayer(
+    movieDetailState: MovieDetailState,
+    frontLayerViewModel: FrontLayerViewModel = viewModel(),
+) {
     FrontLayer(
         pageSelected = frontLayerViewModel.state.page,
-        onPageSelected = frontLayerViewModel::selectPage
+        onPageSelected = frontLayerViewModel::selectPage,
+        movieDetailState
     )
 }
 
 @Composable
-fun FrontLayer(pageSelected: Int, onPageSelected: OnSelected) {
+fun FrontLayer(
+    pageSelected: Int,
+    onPageSelected: OnSelected,
+    movieDetailState: MovieDetailState
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -56,17 +67,54 @@ fun FrontLayer(pageSelected: Int, onPageSelected: OnSelected) {
             }
         }
         Spacer(modifier = Modifier.height(Dimen.margin.big))
-        ViewPager(
-            noItems = 2,
-            selectedPage = pageSelected,
-            onPageChanged = onPageSelected,
-        ) { index, _ ->
-            if (index == 0)
-            // TODO: 03/11/2020 include list from model
-                CommentsTab(List(30) { "This is my comment nr $it" })
-            else
-            // TODO: 03/11/2020 include list from model
-                DiscussionTab(List(30) { "This is my discussion message nr $it" })
+        when (movieDetailState) {
+            is MovieDetailState.LoadedMovieDetails -> DataLoadedViewPager(
+                pageSelected = pageSelected,
+                onPageSelected = onPageSelected,
+                // TODO: 03/11/2020 include list from model
+                comments = List(30) { "This is my comment nr $it" },
+                // TODO: 03/11/2020 include list from model
+                discussionMessages = List(30) { "This is my discussion message nr $it" }
+            )
+            else -> LoadingDatingViewPage(
+                pageSelected = pageSelected,
+                onPageSelected = onPageSelected
+            )
+        }
+    }
+}
+
+@Composable
+fun DataLoadedViewPager(
+    pageSelected: Int,
+    onPageSelected: OnSelected,
+    comments: List<String>,
+    discussionMessages: List<String>,
+) {
+    ViewPager(
+        noItems = 2,
+        selectedPage = pageSelected,
+        onPageChanged = onPageSelected,
+    ) { index, _ ->
+        if (index == 0)
+            CommentsTab(comments)
+        else
+            DiscussionTab(discussionMessages)
+    }
+}
+
+@Composable
+fun LoadingDatingViewPage(
+    pageSelected: Int,
+    onPageSelected: OnSelected,
+) {
+    ViewPager(
+        noItems = 2,
+        selectedPage = pageSelected,
+        onPageChanged = onPageSelected,
+    ) { _, _ ->
+        Center {
+            CircularProgressIndicator()
         }
     }
 }

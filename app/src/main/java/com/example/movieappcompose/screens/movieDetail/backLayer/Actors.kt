@@ -1,10 +1,11 @@
-package com.example.movieappcompose.screens.movieDetail
+package com.example.movieappcompose.screens.movieDetail.backLayer
 
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
@@ -47,7 +48,7 @@ fun ActorsSection(onShowMorePressed: OnClick) {
         }
     }
     Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-        for (x in 0 until 4){
+        for (x in 0 until 4) {
             ActorDetail(
                 modifier = Modifier
                         .padding(Dimen.padding.medium)
@@ -60,7 +61,39 @@ fun ActorsSection(onShowMorePressed: OnClick) {
 }
 
 @Composable
-fun ActorDetail(modifier: Modifier, name:String, role:String) {
+fun ActorsSectionLoading(onShowMorePressed: OnClick) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(id = R.string.detail_actors),
+            style = MaterialTheme.typography.h2
+        )
+        TextButton(
+            onClick = onShowMorePressed,
+            backgroundColor = Color.Transparent,
+            contentColor = MovieColors.greyText,
+        ) {
+            Text(
+                text = stringResource(id = R.string.detail_see_more),
+                style = MaterialTheme.typography.body1
+            )
+            Icon(Icons.Sharp.ArrowForward)
+        }
+    }
+    Box(
+        modifier = Modifier
+                .padding(vertical = Dimen.padding.big)
+                .fillMaxWidth(), alignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun ActorDetail(modifier: Modifier, name: String, role: String) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,

@@ -1,4 +1,4 @@
-package com.example.movieappcompose.screens.movieDetail
+package com.example.movieappcompose.screens.movieDetail.backLayer
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.PaddingValues
@@ -44,6 +44,40 @@ fun TicketButtons(
             contentPadding = PaddingValues(Dimen.padding.button),
             elevation = Dimen.elevation.button,
             onClick = onBuyPressed,
+        ) {
+            Text(text = stringResource(id = R.string.detail_buy_now))
+        }
+    }
+}
+
+@Composable
+fun TicketsButtonLoading() {
+    Row {
+        // TODO: 02/11/2020 make this buttons as widgets
+        Button(
+            modifier = Modifier
+                    .weight(1f)
+                    .padding(Dimen.padding.medium),
+            backgroundColor = MovieColors.greyButton,
+            contentPadding = PaddingValues(Dimen.padding.button),
+            elevation = Dimen.elevation.button,
+            onClick = { },
+            enabled = false
+        ) {
+            Text(
+                text = stringResource(id = R.string.detail_collect),
+                style = MaterialTheme.typography.button.copy(color = MovieColors.greyButtonText)
+            )
+        }
+        Button(
+            modifier = Modifier
+                    .weight(2f)
+                    .padding(Dimen.padding.medium),
+            backgroundColor = MovieColors.yellow,
+            contentPadding = PaddingValues(Dimen.padding.button),
+            elevation = Dimen.elevation.button,
+            onClick = { },
+            enabled = false
         ) {
             Text(text = stringResource(id = R.string.detail_buy_now))
         }

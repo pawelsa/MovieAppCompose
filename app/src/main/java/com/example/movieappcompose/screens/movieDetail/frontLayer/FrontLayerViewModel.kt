@@ -1,4 +1,4 @@
-package com.example.movieappcompose.screens.movieDetail
+package com.example.movieappcompose.screens.movieDetail.frontLayer
 
 import com.example.movieappcompose.base.BaseViewModel
 
