@@ -23,8 +23,8 @@ fun MovieDetailPage(movieId: Long) {
             headerHeight = Dimen.frontLayerPeekHeight,
             scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed),
             frontLayerShape = RoundedCornerShape(
-                topLeft = Dimen.bottomSheetCornerRadius,
-                topRight = Dimen.bottomSheetCornerRadius
+                topLeft = Dimen.corner.bottomSheet,
+                topRight = Dimen.corner.bottomSheet
             ),
             backLayerBackgroundColor = MovieColors.backgroundEnd,
             backLayerContent = { MovieDetailBackLayer(movie = "Fight Club") },

@@ -31,7 +31,7 @@ fun DetailsPart(movieId:Long) {
     Text(
         text = stringResource(id = R.string.detail_introducion),
         style = MaterialTheme.typography.h2,
-        modifier = Modifier.padding(vertical = Dimen.paddingMedium)
+        modifier = Modifier.padding(vertical = Dimen.padding.medium)
     )
     Text(
         text = stringResource(id = R.string.lorem_ipsum),
@@ -39,11 +39,11 @@ fun DetailsPart(movieId:Long) {
         maxLines = 4,
         overflow = TextOverflow.Ellipsis,
     )
-    Spacer(modifier = Modifier.height(Dimen.marginBig))
+    Spacer(modifier = Modifier.height(Dimen.margin.big))
     TicketButtons(
         onCollectPressed = onCollectPressed,
         onBuyPressed = onBuyPressed
     )
-    Spacer(modifier = Modifier.height(Dimen.marginBig))
+    Spacer(modifier = Modifier.height(Dimen.margin.big))
     ActorsSection(onShowMorePressed = onShowMoreActorsPressed)
 }

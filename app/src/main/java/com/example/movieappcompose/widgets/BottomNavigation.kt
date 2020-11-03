@@ -30,14 +30,14 @@ fun BottomNavigationBar(show: Boolean, current: Int, onSelect: (Int) -> Unit) {
     val modifier = Modifier.height(animate(target = if (show) Dimen.bottomBarHeight else 0.dp))
     Box(
         modifier = modifier
-            .clip(
-                RoundedCornerShape(
-                    topLeft = Dimen.bigCornerRadius,
-                    topRight = Dimen.bigCornerRadius
+                .clip(
+                    RoundedCornerShape(
+                        topLeft = Dimen.corner.big,
+                        topRight = Dimen.corner.big
+                    )
                 )
-            )
-            .background(Color.White)
-            .padding(Dimen.paddingMedium)
+                .background(Color.White)
+                .padding(Dimen.padding.medium)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

@@ -62,13 +62,13 @@ private fun WithConstraintsScope.MovieDetailCard(movie: String) {
             Surface(
                 elevation = Dimen.elevation.poster,
                 modifier = Modifier
-                    .width(Dimen.posterWidth)
-                    .aspectRatio(0.73f)
-                    .clip(RoundedCornerShape(Dimen.posterCornerRadius))
-                    .constrainAs(poster) {
-                        start.linkTo(body.start, margin = Dimen.marginBig)
-                        bottom.linkTo(content.top, margin = Dimen.marginBig)
-                    }) {
+                        .width(Dimen.posterWidth)
+                        .aspectRatio(0.73f)
+                        .clip(RoundedCornerShape(Dimen.corner.poster))
+                        .constrainAs(poster) {
+                            start.linkTo(body.start, margin = Dimen.margin.big)
+                            bottom.linkTo(content.top, margin = Dimen.margin.big)
+                        }) {
                     Image(
                         asset = imageResource(id = R.drawable.fight_club),
                         contentScale = ContentScale.Crop,
@@ -80,51 +80,52 @@ private fun WithConstraintsScope.MovieDetailCard(movie: String) {
             val dpAsPixels = (maxHeight.value * scale + 0.5f)
             Box(
                 Modifier
-                    .fillMaxWidth()
-                    .clip(
-                        RoundedCornerShape(
-                            topLeft = Dimen.bigCardCornerRadius,
-                            topRight = Dimen.bigCardCornerRadius,
+                        .fillMaxWidth()
+                        .clip(
+                            RoundedCornerShape(
+                                topLeft = Dimen.corner.bigCard,
+                                topRight = Dimen.corner.bigCard,
+                            )
                         )
-                    )
-                    .zIndex(4.dp.value)
-                    .background(
-                        VerticalGradient(
-                            0.0f to MovieColors.backgroundStart,
-                            1.0f to MovieColors.backgroundEnd,
-                            startY = 0f,
-                            endY = dpAsPixels,
+                        .zIndex(4.dp.value)
+                        .background(
+                            VerticalGradient(
+                                0.0f to MovieColors.backgroundStart,
+                                1.0f to MovieColors.backgroundEnd,
+                                startY = 0f,
+                                endY = dpAsPixels,
+                            )
                         )
-                    )
-                    .constrainAs(body) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        top.linkTo(info.top)
-                        bottom.linkTo(parent.bottom)
-                        width = Dimension.fillToConstraints
-                        height = Dimension.fillToConstraints
-                    }
+                        .constrainAs(body) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            top.linkTo(info.top)
+                            bottom.linkTo(parent.bottom)
+                            width = Dimension.fillToConstraints
+                            height = Dimension.fillToConstraints
+                        }
             )
 
             Column(
                 Modifier
-                    .padding(vertical = Dimen.paddingBig)
-                    .zIndex(5.dp.value)
-                    .constrainAs(info) {
-                        start.linkTo(poster.end, margin = Dimen.marginBig)
-                        end.linkTo(body.end, margin = Dimen.marginBig)
-                        bottom.linkTo(content.top)
-                        width = Dimension.fillToConstraints
-                    }
+                        .padding(vertical = Dimen.padding.big)
+                        .zIndex(5.dp.value)
+                        .constrainAs(info) {
+                            start.linkTo(poster.end, margin = Dimen.margin.big)
+                            end.linkTo(body.end, margin = Dimen.margin.big)
+                            bottom.linkTo(content.top)
+                            width = Dimension.fillToConstraints
+                        }
             ) {
                 GeneralMovieInfo(movie = movie)
             }
 
-            Column(modifier = Modifier.zIndex(5.dp.value)
+            Column(modifier = Modifier
+                    .zIndex(5.dp.value)
                     .constrainAs(content) {
-                        start.linkTo(parent.start, margin = Dimen.marginBig)
-                        end.linkTo(parent.end, margin = Dimen.marginBig)
-                        bottom.linkTo(parent.bottom, margin = Dimen.marginMedium)
+                        start.linkTo(parent.start, margin = Dimen.margin.big)
+                        end.linkTo(parent.end, margin = Dimen.margin.big)
+                        bottom.linkTo(parent.bottom, margin = Dimen.margin.medium)
                         width = Dimension.fillToConstraints
                     }
             ) {

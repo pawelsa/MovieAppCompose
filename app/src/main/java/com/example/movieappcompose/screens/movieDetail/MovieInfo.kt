@@ -28,22 +28,24 @@ fun GeneralMovieInfo(movie: String, grade: Int = 9) {
     Text(text = movie, style = MaterialTheme.typography.h2)
     Genres(listOf("Action", "Thiller"))
     ProvideTextStyle(value = MaterialTheme.typography.subtitle1) {
-        Text(text = stringResource(id = R.string.director))
-        Spacer(modifier = Modifier.height(Dimen.marginSmall))
+        Text(text = stringResource(id = R.string.director, formatArgs = arrayOf("")))
+        Spacer(modifier = Modifier.height(Dimen.margin.small))
         Text(text = stringResource(id = R.string.starring, formatArgs = arrayOf("")))
     }
-    Spacer(modifier = Modifier.height(Dimen.marginMedium))
+    Spacer(modifier = Modifier.height(Dimen.margin.medium))
     Grade(grade = grade)
 }
 
 @Composable
 fun Genres(genreList: List<String>) {
     Row(
-        Modifier.padding(
-            top = Dimen.paddingMedium,
-            bottom = Dimen.paddingMedium,
-            end = Dimen.paddingBig
-        ).fillMaxWidth()
+        Modifier
+                .padding(
+                    top = Dimen.padding.medium,
+                    bottom = Dimen.padding.medium,
+                    end = Dimen.padding.big
+                )
+                .fillMaxWidth()
     ) {
         for (genre in genreList){
             GenreTag(name = genre, color = MovieColors.yellow)
@@ -54,7 +56,7 @@ fun Genres(genreList: List<String>) {
 @Composable
 fun GenreTag(name: String, color: Color) {
     val tagTextStyle = MaterialTheme.typography.body2.copy(
-        fontSize = Dimen.genreTextSize,
+        fontSize = Dimen.text.genre,
     )
     Text(
         text = name,
@@ -66,11 +68,14 @@ fun GenreTag(name: String, color: Color) {
 }
 
 private fun Modifier.genreTag(color: Color) =
-    this.padding(end = Dimen.paddingMedium).border(
-        width = Dimen.tagBorder,
-        color = color,
-        shape = RoundedCornerShape(Dimen.corner.tag)
-    ).padding(horizontal = Dimen.paddingSmall, vertical = Dimen.paddingTiny)
+    this
+            .padding(end = Dimen.padding.medium)
+            .border(
+                width = Dimen.tagBorder,
+                color = color,
+                shape = RoundedCornerShape(Dimen.corner.tag)
+            )
+            .padding(horizontal = Dimen.padding.small, vertical = Dimen.padding.tiny)
 
 
 @Composable
@@ -89,10 +94,16 @@ fun Grade(grade: Int) {
                 modifier = starModifier.clip(CutHalfShape(CutHalfShapeType.RIGHT))
             )
         }
-        Spacer(modifier = Modifier.width(Dimen.marginMedium))
+        Spacer(modifier = Modifier.width(Dimen.margin.medium))
         Text(
-            text = grade.toDouble().roundTo(1).toString(),
-            style = MaterialTheme.typography.h2.copy(color = MovieColors.yellow, fontSize = Dimen.descriptionTextSize)
+            text = grade
+                    .toDouble()
+                    .roundTo(1)
+                    .toString(),
+            style = MaterialTheme.typography.h2.copy(
+                color = MovieColors.yellow,
+                fontSize = Dimen.text.description
+            )
         )
     }
 }

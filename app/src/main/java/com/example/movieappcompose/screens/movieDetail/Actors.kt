@@ -50,7 +50,7 @@ fun ActorsSection(onShowMorePressed: OnClick) {
         for (x in 0 until 4){
             ActorDetail(
                 modifier = Modifier
-                        .padding(Dimen.paddingMedium)
+                        .padding(Dimen.padding.medium)
                         .weight(1f),
                 name = "Jakiś gość",
                 role = "Grał kogoś",
@@ -69,7 +69,7 @@ fun ActorDetail(modifier: Modifier, name:String, role:String) {
         Image(
             asset = imageResource(id = R.drawable.fight_club),
             modifier = Modifier
-                    .padding(Dimen.paddingMedium)
+                    .padding(Dimen.padding.medium)
                     .aspectRatio(Dimen.squareRatio)
                     .clip(
                         CircleShape

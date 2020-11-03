@@ -23,10 +23,12 @@ fun TicketButtons(
     Row {
         // TODO: 02/11/2020 make this buttons as widgets
         Button(
-            modifier = Modifier.weight(1f).padding(Dimen.paddingMedium),
+            modifier = Modifier
+                    .weight(1f)
+                    .padding(Dimen.padding.medium),
             backgroundColor = MovieColors.greyButton,
-            contentPadding = PaddingValues(Dimen.buttonPadding),
-            elevation = Dimen.buttonElevation,
+            contentPadding = PaddingValues(Dimen.padding.button),
+            elevation = Dimen.elevation.button,
             onClick = onCollectPressed,
         ) {
             Text(
@@ -35,10 +37,12 @@ fun TicketButtons(
             )
         }
         Button(
-            modifier = Modifier.weight(2f).padding(Dimen.paddingMedium),
+            modifier = Modifier
+                    .weight(2f)
+                    .padding(Dimen.padding.medium),
             backgroundColor = MovieColors.yellow,
-            contentPadding = PaddingValues(Dimen.buttonPadding),
-            elevation = Dimen.buttonElevation,
+            contentPadding = PaddingValues(Dimen.padding.button),
+            elevation = Dimen.elevation.button,
             onClick = onBuyPressed,
         ) {
             Text(text = stringResource(id = R.string.detail_buy_now))

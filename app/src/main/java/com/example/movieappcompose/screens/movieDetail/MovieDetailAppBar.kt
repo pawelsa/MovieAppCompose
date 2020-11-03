@@ -10,14 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowBack
 import androidx.compose.material.icons.sharp.MoreVert
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ProvidableAmbient
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.drawLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.base.OnClick
-import com.example.movieappcompose.screens.movieScreen.Actions
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.utlis.ActionsAmbient
 import com.example.movieappcompose.widgets.MovieAppBar
@@ -28,7 +26,7 @@ fun MovieDetailAppBar(
     onMorePressed: OnClick
 ) {
     val appBarIconModifier = Modifier
-            .padding(Dimen.paddingMedium)
+            .padding(Dimen.padding.medium)
             .size(32.dp)
             .clip(CircleShape)
             .background(Color.White.copy(alpha = 0.3f))

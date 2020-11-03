@@ -79,30 +79,30 @@ val appTypography = Typography(
     h2 = defaultTypography.h2.copy(
         fontFamily = appFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = Dimen.titleTextSize,
+        fontSize = Dimen.text.title,
         color = Color.Black
     ),
     h3 = defaultTypography.h3.copy(
         fontFamily = appFontFamily,
         color = MovieColors.greyText,
-        fontSize = Dimen.descriptionTextSize,
+        fontSize = Dimen.text.description,
     ),
     h4 = defaultTypography.h4.copy(
         fontFamily = appFontFamily,
         color = Color.Black,
-        fontSize = Dimen.nameTextSize,
+        fontSize = Dimen.text.name,
         fontWeight = FontWeight.SemiBold
     ),
     h5 = defaultTypography.h5.copy(
         fontFamily = appFontFamily,
         color = MovieColors.greyText,
-        fontSize = Dimen.roleTextSize,
+        fontSize = Dimen.text.role,
         fontWeight = FontWeight.Normal
     ),
     h6 = defaultTypography.h6.copy(fontFamily = appFontFamily),
     subtitle1 = defaultTypography.subtitle1.copy(
         fontFamily = appFontFamily,
-        fontSize = Dimen.detailTextSize,
+        fontSize = Dimen.text.detail,
         color = MovieColors.greyText,
     ),
     subtitle2 = defaultTypography.subtitle2.copy(fontFamily = appFontFamily),
@@ -111,7 +111,7 @@ val appTypography = Typography(
     button = defaultTypography.button.copy(
         fontFamily = appFontFamily,
         color = Color.White,
-        fontSize = Dimen.buttonTextSize
+        fontSize = Dimen.text.button
     ),
     caption = defaultTypography.caption.copy(fontFamily = appFontFamily),
     overline = defaultTypography.overline.copy(fontFamily = appFontFamily)

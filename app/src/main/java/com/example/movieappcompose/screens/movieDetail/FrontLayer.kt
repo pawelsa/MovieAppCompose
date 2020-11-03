@@ -32,7 +32,7 @@ fun FrontLayer(pageSelected: Int, onPageSelected: OnSelected) {
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
-                    .padding(vertical = Dimen.paddingBig)
+                    .padding(vertical = Dimen.padding.big)
                     .height(Dimen.pillHeight)
                     .width(Dimen.pillWidth)
                     .clip(RoundedCornerShape(Dimen.corner.pill))
@@ -43,19 +43,19 @@ fun FrontLayer(pageSelected: Int, onPageSelected: OnSelected) {
             Tab(
                 selected = pageSelected == 0,
                 onClick = { onPageSelected(0) },
-                modifier = Modifier.padding(Dimen.paddingSmall)
+                modifier = Modifier.padding(Dimen.padding.small)
             ) {
                 Text(text = stringResource(id = R.string.detail_comments))
             }
             Tab(
                 selected = pageSelected == 1,
                 onClick = { onPageSelected(1) },
-                modifier = Modifier.padding(Dimen.paddingSmall)
+                modifier = Modifier.padding(Dimen.padding.small)
             ) {
                 Text(text = stringResource(id = R.string.detail_discuss))
             }
         }
-        Spacer(modifier = Modifier.height(Dimen.marginBig))
+        Spacer(modifier = Modifier.height(Dimen.margin.big))
         ViewPager(
             noItems = 2,
             selectedPage = pageSelected,
@@ -80,7 +80,7 @@ private fun CommentsTab(
         items = comments,
     )
     { item ->
-        Text(text = item, modifier = Modifier.padding(Dimen.paddingBig))
+        Text(text = item, modifier = Modifier.padding(Dimen.padding.big))
     }
 }
 
@@ -91,6 +91,6 @@ fun DiscussionTab(discussionMessages: List<String>) {
         items = discussionMessages,
     )
     { item ->
-        Text(text = item, modifier = Modifier.padding(Dimen.paddingBig))
+        Text(text = item, modifier = Modifier.padding(Dimen.padding.big))
     }
 }

@@ -62,14 +62,14 @@ fun MovieCard(title: String, onClick: OnClick = {}) {
             )
 
             Column(Modifier
-                .padding(vertical = 15.dp)
-                .zIndex(5.dp.value)
-                .constrainAs(info) {
-                    start.linkTo(poster.end, margin = maxWidth.times(0.045f))
-                    end.linkTo(card.end, margin = Dimen.marginMedium)
-                    bottom.linkTo(poster.bottom)
-                    width = Dimension.fillToConstraints
-                }) {
+                    .padding(vertical = 15.dp)
+                    .zIndex(5.dp.value)
+                    .constrainAs(info) {
+                        start.linkTo(poster.end, margin = maxWidth.times(0.045f))
+                        end.linkTo(card.end, margin = Dimen.margin.medium)
+                        bottom.linkTo(poster.bottom)
+                        width = Dimension.fillToConstraints
+                    }) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
