@@ -10,6 +10,7 @@ import androidx.compose.ui.WithConstraints
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.VerticalGradient
 import com.example.movieappcompose.ui.Dimen
+import com.example.movieappcompose.ui.MovieColors
 
 @Composable
 fun Page(showBottomBar: Boolean, content: @Composable () -> Unit) {
@@ -20,8 +21,8 @@ fun Page(showBottomBar: Boolean, content: @Composable () -> Unit) {
                 .fillMaxWidth()
                 .background(
                     VerticalGradient(
-                        0.0f to Color.White,
-                        1.0f to Color(0xFFE7E7E7),
+                        0.0f to MovieColors.backgroundStart,
+                        1.0f to MovieColors.backgroundEnd,
                         startY = 0f,
                         endY = constraints.maxHeight.toFloat()
                     )

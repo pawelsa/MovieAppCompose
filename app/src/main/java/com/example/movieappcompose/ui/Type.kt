@@ -76,25 +76,43 @@ val ethnocentricFont = fontFamily(
 private val defaultTypography = Typography()
 val appTypography = Typography(
     h1 = defaultTypography.h1.copy(fontFamily = appFontFamily),
-    h2 = defaultTypography.h2.copy(fontFamily = appFontFamily),
-    h3 = defaultTypography.h3.copy(fontFamily = appFontFamily),
-    h4 = defaultTypography.h4.copy(fontFamily = appFontFamily),
-    h5 = defaultTypography.h5.copy(fontFamily = appFontFamily),
-    h6 = defaultTypography.h6.copy(
+    h2 = defaultTypography.h2.copy(
         fontFamily = appFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = Dimen.titleTextSize,
         color = Color.Black
     ),
+    h3 = defaultTypography.h3.copy(
+        fontFamily = appFontFamily,
+        color = MovieColors.greyText,
+        fontSize = Dimen.descriptionTextSize,
+    ),
+    h4 = defaultTypography.h4.copy(
+        fontFamily = appFontFamily,
+        color = Color.Black,
+        fontSize = Dimen.nameTextSize,
+        fontWeight = FontWeight.SemiBold
+    ),
+    h5 = defaultTypography.h5.copy(
+        fontFamily = appFontFamily,
+        color = MovieColors.greyText,
+        fontSize = Dimen.roleTextSize,
+        fontWeight = FontWeight.Normal
+    ),
+    h6 = defaultTypography.h6.copy(fontFamily = appFontFamily),
     subtitle1 = defaultTypography.subtitle1.copy(
         fontFamily = appFontFamily,
         fontSize = Dimen.detailTextSize,
-        color = MovieColors.detailText,
+        color = MovieColors.greyText,
     ),
     subtitle2 = defaultTypography.subtitle2.copy(fontFamily = appFontFamily),
     body1 = defaultTypography.body1.copy(fontFamily = appFontFamily),
     body2 = defaultTypography.body2.copy(fontFamily = appFontFamily),
-    button = defaultTypography.button.copy(fontFamily = appFontFamily),
+    button = defaultTypography.button.copy(
+        fontFamily = appFontFamily,
+        color = Color.White,
+        fontSize = Dimen.buttonTextSize
+    ),
     caption = defaultTypography.caption.copy(fontFamily = appFontFamily),
     overline = defaultTypography.overline.copy(fontFamily = appFontFamily)
 )

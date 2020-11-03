@@ -18,42 +18,44 @@ private val TitleIconModifier = Modifier.fillMaxHeight()
 
 @Composable
 fun MovieAppBar(
-    title: @Composable () -> Unit,
+    title: @Composable (() -> Unit)? = null,
     navigationIcon: @Composable (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
-){
-        Row(
-            Modifier.fillMaxWidth()
-                .padding(start = AppBarHorizontalPadding, end = AppBarHorizontalPadding)
-                .preferredHeight(AppBarHeight),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            children = {
-                val emphasisLevels = AmbientEmphasisLevels.current
-                if (navigationIcon == null) {
-                    Spacer(TitleInsetWithoutIcon)
-                } else {
-                    Row(TitleIconModifier, verticalAlignment = Alignment.CenterVertically) {
-                        ProvideEmphasis(emphasisLevels.high, navigationIcon)
-                    }
+) {
+    Row(
+        Modifier.fillMaxWidth()
+            .padding(start = AppBarHorizontalPadding, end = AppBarHorizontalPadding)
+            .preferredHeight(AppBarHeight),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        children = {
+            val emphasisLevels = AmbientEmphasisLevels.current
+            if (navigationIcon == null) {
+                Spacer(TitleInsetWithoutIcon)
+            } else {
+                Row(TitleIconModifier, verticalAlignment = Alignment.CenterVertically) {
+                    ProvideEmphasis(emphasisLevels.high, navigationIcon)
                 }
+            }
 
+            title?.let {
                 Row(
                     Modifier.fillMaxHeight().weight(1f),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     ProvideTextStyle(value = MaterialTheme.typography.h6.copy(fontFamily = ethnocentricFont)) {
-                        ProvideEmphasis(emphasisLevels.high, title)
+                        ProvideEmphasis(emphasisLevels.high, it)
                     }
                 }
-
-                ProvideEmphasis(emphasisLevels.medium) {
-                    Row(
-                        Modifier.fillMaxHeight(),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically,
-                        children = actions
-                    )
-                }
             }
-        )
+
+            ProvideEmphasis(emphasisLevels.medium) {
+                Row(
+                    Modifier.fillMaxHeight(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                    children = actions
+                )
+            }
+        }
+    )
 }

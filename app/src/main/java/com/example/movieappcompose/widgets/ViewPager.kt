@@ -86,6 +86,8 @@ fun ViewPager(
     width: Dp = 0.dp,
     topYDelta: Float = 0f,
     bottomYDelta: Float = 0f,
+    selectedPage: Int = 0,
+    onPageChanged: (Int) -> Unit = {},
     pagerContent: @Composable (index: Int, itemWidthInDp: Dp) -> Unit
 ) {
     var screenWidth = width
@@ -98,21 +100,29 @@ fun ViewPager(
     val spacingPx = state.spacingPx
     val animatedOffset = state.animatedOffset
 
+    val centers = (0..noItems).map { spacingPx * it }
+    val currentPage = remember(selectedPage) { mutableStateOf(selectedPage) }
+
     Box(
         Modifier.fillMaxSize()
-            .scrollable(Orientation.Horizontal, state.scrollableController)
+                .scrollable(Orientation.Horizontal, state.scrollableController)
     ) {
-        (0..noItems).forEach { index ->
+        (0 until noItems).forEach { index ->
             val center = spacingPx * index
             Column(
                 Modifier
-                    .zIndex(1f)
-                    .offset(getX = {
-                        center + animatedOffset.value
-                    }, getY = {
-                        val distFromCenter = abs(animatedOffset.value + center) / spacingPx
-                        lerp(state.topYDelta, state.bottomYDelta, distFromCenter)
-                    }).align(Alignment.TopCenter)
+                        .zIndex(1f)
+                        .offset(getX = {
+                            val indexOfCurrentPage = centers.indexOf(abs(animatedOffset.value))
+                            if (indexOfCurrentPage != -1 && indexOfCurrentPage != currentPage.value){
+                                currentPage.value = indexOfCurrentPage
+                                onPageChanged(currentPage.value)
+                            }
+                            center + animatedOffset.value
+                        }, getY = {
+                            val distFromCenter = abs(animatedOffset.value + center) / spacingPx
+                            lerp(state.topYDelta, state.bottomYDelta, distFromCenter)
+                        }).align(Alignment.TopCenter)
             ) {
                 pagerContent(index, state.initWithInDp)
             }

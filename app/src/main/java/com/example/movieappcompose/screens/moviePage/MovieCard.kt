@@ -74,10 +74,10 @@ fun MovieCard(title: String, onClick: OnClick = {}) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = title, style = MaterialTheme.typography.h6)
+                    Text(text = title, style = MaterialTheme.typography.h2)
                     Text(
                         text = "8.0",
-                        style = MaterialTheme.typography.h6.copy(color = MovieColors.yellow)
+                        style = MaterialTheme.typography.h2.copy(color = MovieColors.yellow)
                     )
                 }
                 Spacer(modifier = Modifier.height(Dimen.spacerMedium))

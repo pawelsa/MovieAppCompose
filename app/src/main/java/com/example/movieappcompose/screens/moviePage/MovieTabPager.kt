@@ -17,7 +17,7 @@ fun MainScreenTabBarPager(
     pageSelected: Int,
     onPageSelected: (Int) -> Unit,
 ) {
-    MovieTabRow(pageSelected = pageSelected, onPageSelected = onPageSelected)
+    MovieHomeTabRow(pageSelected = pageSelected, onPageSelected = onPageSelected)
     Spacer(modifier = Modifier.height(Dimen.marginSmall).fillMaxWidth())
     ViewPager(
         selectedPage = pageSelected,

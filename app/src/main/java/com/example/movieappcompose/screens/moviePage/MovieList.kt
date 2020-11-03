@@ -5,6 +5,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import com.example.movieappcompose.base.OnItemClick
 import com.example.movieappcompose.screens.moviePage.viewModel.BaseMoviesListViewModel
+import com.example.movieappcompose.utlis.ActionsAmbient
 import com.example.movieappcompose.widgets.Center
 
 
@@ -15,9 +16,13 @@ fun MainScreenMovieList(viewModel: BaseMoviesListViewModel) {
     if (movieList.isEmpty()) {
         viewModel.getMovies()
     }
+    val selectMovie = ActionsAmbient.current.selectMovie
+
     MainScreenMovieList(
         movieList = viewModel.movieList
-    ){}
+    ){
+        selectMovie(it.toLong())
+    }
 }
 
 @Composable
