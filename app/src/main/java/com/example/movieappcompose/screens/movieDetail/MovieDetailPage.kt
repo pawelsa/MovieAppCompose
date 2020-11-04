@@ -27,7 +27,8 @@ fun MovieDetailPage(
     }
     Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) {
         // TODO: 04/11/2020 fix the visible difference between back layer and front layer,
-        //  when the front one is closed, we can see that back layer starts at the top of frontlayer, and is not on the bottom
+        //  when the front one is closed, we can see that back layer starts at the top of frontlayer,
+        //  and is not on the bottom
         BackdropScaffold(
             appBar = {},
             peekHeight = Dimen.backLayerPeekHeight,
