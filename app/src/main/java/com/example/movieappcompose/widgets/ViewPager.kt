@@ -1,6 +1,5 @@
 package com.example.movieappcompose.widgets
 
-import android.util.Log
 import androidx.compose.animation.animatedFloat
 import androidx.compose.animation.asDisposableClock
 import androidx.compose.animation.core.AnimatedFloat
@@ -8,7 +7,6 @@ import androidx.compose.animation.core.AnimationClockObservable
 import androidx.compose.animation.core.TargetAnimation
 import androidx.compose.foundation.animation.AndroidFlingDecaySpec
 import androidx.compose.foundation.animation.FlingConfig
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollableController
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
@@ -19,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.*
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AnimationClockAmbient
 import androidx.compose.ui.platform.ConfigurationAmbient
 import androidx.compose.ui.platform.DensityAmbient

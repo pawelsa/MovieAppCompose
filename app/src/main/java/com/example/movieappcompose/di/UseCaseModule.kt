@@ -1,5 +1,6 @@
 package com.example.movieappcompose.di
 
+import com.example.movieappcompose.data.repositories.MovieRepository
 import com.example.movieappcompose.usecase.GetPopularMoviesUseCase
 import com.example.movieappcompose.usecase.GetUpcomingMoviesUseCase
 import dagger.Module
@@ -14,10 +15,12 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesPopularMovies(): GetPopularMoviesUseCase = GetPopularMoviesUseCase()
+    fun providesPopularMovies(movieRepository: MovieRepository): GetPopularMoviesUseCase =
+        GetPopularMoviesUseCase(movieRepository)
 
     @Provides
     @Singleton
-    fun providesUpcomingMovies(): GetUpcomingMoviesUseCase = GetUpcomingMoviesUseCase()
+    fun providesUpcomingMovies(movieRepository: MovieRepository): GetUpcomingMoviesUseCase =
+        GetUpcomingMoviesUseCase(movieRepository)
 
 }
