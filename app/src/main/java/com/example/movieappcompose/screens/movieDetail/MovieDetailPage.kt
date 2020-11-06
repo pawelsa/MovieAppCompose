@@ -8,6 +8,7 @@ import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.onCommit
 import androidx.compose.ui.viewinterop.viewModel
+import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.screens.movieDetail.backLayer.MovieDetailBackLayer
 import com.example.movieappcompose.screens.movieDetail.frontLayer.FrontLayer
@@ -18,12 +19,12 @@ import com.example.movieappcompose.widgets.Page
 @ExperimentalMaterialApi
 @Composable
 fun MovieDetailPage(
-    movieId: Long,
+    movie: Movie,
     viewModel: MovieDetailViewModel = viewModel(),
 ) {
     val mainActivityViewModel: MainActivityViewModel = viewModel()
-    onCommit(movieId) {
-        viewModel.setMovie(movieId)
+    onCommit(movie.id) {
+        viewModel.setMovie(movie)
     }
     Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) {
         // TODO: 04/11/2020 fix the visible difference between back layer and front layer,

@@ -33,7 +33,7 @@ fun MovieScreen(mainActivityViewModel: MainActivityViewModel, backDispatcher: On
                 is Destination.MovieDetail -> {
                     mainActivityViewModel.showBottomNavigationBar = false
                     MovieDetailPage(
-                        movieId = destination.movieId
+                        movie = destination.movie
                     )
                 }
                 is Destination.SelectingMovieSeat -> Box { }

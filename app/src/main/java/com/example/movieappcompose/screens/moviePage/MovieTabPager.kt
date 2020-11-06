@@ -1,12 +1,10 @@
 package com.example.movieappcompose.screens.moviePage
 
-import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onActive
 import androidx.compose.ui.Modifier
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListState
@@ -80,17 +78,11 @@ fun MoviesPager(
     upcomingMovies: List<Movie>,
 ) {
     val selectMovie = ActionsAmbient.current.selectMovie
-    onActive {
-        Log.d(
-            "MovieTabPager",
-            "MoviesPager: popular: ${popularMovies.map { it.popularity }}\n\n$upcomingMovies"
-        )
-    }
     ViewPager(
         selectedPage = pageSelected,
         onPageChanged = onPageSelected,
         items = listOf(popularMovies, upcomingMovies)
     ) { movies, _ ->
-        MainScreenMovieList(movies) { selectMovie(it.toLong()) }
+        MainScreenMovieList(movies) { selectMovie(it) }
     }
 }

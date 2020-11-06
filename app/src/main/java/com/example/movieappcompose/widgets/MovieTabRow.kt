@@ -65,7 +65,7 @@ fun Modifier.defaultTabIndicatorOffset(
     currentTabPosition: TabPosition
 ): Modifier = composed {
     // TODO: should we animate the width of the indicator as it moves between tabs of different
-    // sizes inside a scrollable tab row?
+    //  sizes inside a scrollable tab row?
     val currentTabWidth = currentTabPosition.width
     val middleOfSelectedTab = currentTabPosition.left + currentTabWidth / 2 - 15.dp
     val indicatorOffset = animate(

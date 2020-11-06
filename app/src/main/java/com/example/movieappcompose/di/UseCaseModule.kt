@@ -2,6 +2,8 @@ package com.example.movieappcompose.di
 
 import com.example.movieappcompose.data.repositories.MovieRepository
 import com.example.movieappcompose.usecase.GetPopularMoviesUseCase
+import com.example.movieappcompose.usecase.GetReviewsUseCase
+import com.example.movieappcompose.usecase.GetReviewsUseCaseImpl
 import com.example.movieappcompose.usecase.GetUpcomingMoviesUseCase
 import dagger.Module
 import dagger.Provides
@@ -23,4 +25,8 @@ object UseCaseModule {
     fun providesUpcomingMovies(movieRepository: MovieRepository): GetUpcomingMoviesUseCase =
         GetUpcomingMoviesUseCase(movieRepository)
 
+    @Provides
+    @Singleton
+    fun providesMovieReviews(movieRepository: MovieRepository): GetReviewsUseCase =
+        GetReviewsUseCaseImpl(movieRepository)
 }

@@ -1,7 +1,10 @@
 package com.example.movieappcompose.screens.movieDetail
 
+import com.example.movieappcompose.data.models.DetailedMovie
+import com.example.movieappcompose.data.models.Movie
+
 sealed class MovieDetailState {
     object Init : MovieDetailState()
-    data class LoadedMovie(val movie: Long) : MovieDetailState()
-    data class LoadedMovieDetails(val movie: Long) : MovieDetailState()
+    data class LoadedMovie(val movie: Movie) : MovieDetailState()
+    data class LoadedMovieDetails(val movie: DetailedMovie) : MovieDetailState()
 }

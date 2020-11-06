@@ -11,6 +11,8 @@
     <string name="detail_introducion">Introduction</string>
     <string name="starring">Starring: %1$s</string>
     <string name="director">Director: %1$s</string>
-    <string name="detail_comments">Comments</string>
+    <string name="detail_reviews">Reviews</string>
     <string name="detail_discuss">Discuss</string>
+    <string name="detail_no_reviews">Sorry, there is no reviews</string>
+    <string name="detail_no_discussions">Sorry, there is no discussion going on</string>
 </resources>

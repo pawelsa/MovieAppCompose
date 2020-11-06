@@ -75,7 +75,12 @@ val ethnocentricFont = fontFamily(
 
 private val defaultTypography = Typography()
 val appTypography = Typography(
-    h1 = defaultTypography.h1.copy(fontFamily = appFontFamily),
+    h1 = defaultTypography.h1.copy(
+        fontFamily = appFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = Dimen.text.noDiscussionData,
+        color = MovieColors.greyText
+    ),
     h2 = defaultTypography.h2.copy(
         fontFamily = appFontFamily,
         fontWeight = FontWeight.Bold,
@@ -113,6 +118,10 @@ val appTypography = Typography(
         color = Color.White,
         fontSize = Dimen.text.button
     ),
-    caption = defaultTypography.caption.copy(fontFamily = appFontFamily),
+    caption = defaultTypography.caption.copy(
+        fontFamily = appFontFamily,
+        color = MovieColors.greyText,
+        fontWeight = FontWeight.Medium
+    ),
     overline = defaultTypography.overline.copy(fontFamily = appFontFamily)
 )

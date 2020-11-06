@@ -1,11 +1,9 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
 import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
@@ -16,16 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
+import com.example.movieappcompose.data.models.Cast
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
+import com.example.movieappcompose.utlis.imageWidth500Url
+import com.example.movieappcompose.widgets.GlideImage
 
 
 @Composable
-fun ActorsSection(onShowMorePressed: OnClick) {
+fun ActorsSection(onShowMorePressed: OnClick, actors: List<Cast>) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -48,74 +49,44 @@ fun ActorsSection(onShowMorePressed: OnClick) {
         }
     }
     Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-        for (x in 0 until 4) {
+        for (actor in actors.take(4)) {
             ActorDetail(
                 modifier = Modifier
                         .padding(Dimen.padding.medium)
                         .weight(1f),
-                name = "Jakiś gość",
-                role = "Grał kogoś",
+                actor = actor,
             )
         }
     }
 }
 
 @Composable
-fun ActorsSectionLoading(onShowMorePressed: OnClick) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = stringResource(id = R.string.detail_actors),
-            style = MaterialTheme.typography.h2
-        )
-        TextButton(
-            onClick = onShowMorePressed,
-            backgroundColor = Color.Transparent,
-            contentColor = MovieColors.greyText,
-        ) {
-            Text(
-                text = stringResource(id = R.string.detail_see_more),
-                style = MaterialTheme.typography.body1
-            )
-            Icon(Icons.Sharp.ArrowForward)
-        }
-    }
-    Box(
-        modifier = Modifier
-                .padding(vertical = Dimen.padding.big)
-                .fillMaxWidth(), alignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-fun ActorDetail(modifier: Modifier, name: String, role: String) {
+fun ActorDetail(modifier: Modifier, actor: Cast) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            asset = imageResource(id = R.drawable.fight_club),
+
+        GlideImage(
+            imageWidth500Url(actor.profilePicture),
             modifier = Modifier
                     .padding(Dimen.padding.medium)
                     .aspectRatio(Dimen.squareRatio)
                     .clip(
                         CircleShape
                     ),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
         Text(
-            text = name,
+            text = actor.name,
             style = MaterialTheme.typography.h4,
+            textAlign = TextAlign.Center,
         )
         Text(
-            text = role,
+            text = actor.character,
             style = MaterialTheme.typography.h5,
+            textAlign = TextAlign.Center,
         )
     }
 }

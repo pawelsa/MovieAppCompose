@@ -11,13 +11,17 @@ val ApiResponseToMovie: (MovieApi, GenreListApi, CreditsApi) -> Movie =
             id = movieApi.id,
             title = movieApi.title,
             overview = movieApi.overview,
-            original_title = movieApi.original_title,
-            original_language = movieApi.original_language,
+            originalTitle = movieApi.original_title,
+            originalLanguage = movieApi.original_language,
             posterPath = movieApi.poster_path,
-            release_date = movieApi.release_date,
-            vote_average = movieApi.vote_average,
+            releaseDate = movieApi.release_date,
+            grade = movieApi.vote_average,
             popularity = movieApi.popularity,
-            genres = genreListApi.mapToDomain(),
+            genres = movieApi.genre_ids.map { id ->
+                genreListApi.genres.first { genre ->
+                    genre.id == id
+                }.name
+            },
             cast = creditsApi.cast.mapToDomain(),
             crew = creditsApi.crew.mapToDomain()
         )
