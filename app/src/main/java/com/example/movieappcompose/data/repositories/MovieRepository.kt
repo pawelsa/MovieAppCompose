@@ -8,6 +8,8 @@ import com.example.movieappcompose.data.models.Discussion
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.data.models.Review
 import com.example.movieappcompose.data.models.mappers.ApiResponseToMovie
+import com.example.movieappcompose.data.models.mappers.ApiResponseToMovieDb
+import com.example.movieappcompose.data.models.mappers.mapToDb
 import com.example.movieappcompose.data.models.mappers.mapToDomain
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Flowable
@@ -44,6 +46,12 @@ class MovieRepository(private val api: MoviesApi, private val movieDao: MovieDao
 
     private fun getMovies(type: Flowable<MovieApi>): @NonNull Single<List<Movie>> {
         return getGenres()
+                .flatMap {
+                    Single.fromCallable {
+                        movieDao.insertGenres(it.mapToDb())
+                        it
+                    }
+                }
                 .concatMap { genreList ->
                     type
                             // TODO: 04/11/2020 test how parallel improves the results,
@@ -56,8 +64,23 @@ class MovieRepository(private val api: MoviesApi, private val movieDao: MovieDao
                             .sequential()
                             .flatMapSingle { movie ->
                                 getCredits(movie.id)
-                                        .map { credits ->
-                                            ApiResponseToMovie(movie, genreList, credits)
+                                        .flatMap { credits ->
+                                            movieDao
+                                                    .insert(
+                                                        ApiResponseToMovieDb(
+                                                            movie,
+                                                            genreList,
+                                                            credits
+                                                        )
+                                                    )
+                                                    .toSingle { }
+                                                    .map {
+                                                        ApiResponseToMovie(
+                                                            movie,
+                                                            genreList,
+                                                            credits
+                                                        )
+                                                    }
                                         }
                             }
                             .sorted { movie, movie2 -> movie2.popularity.compareTo(movie.popularity) }

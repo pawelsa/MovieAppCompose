@@ -14,6 +14,4 @@ data class MovieDb(
     val overview: String,
     val release_date: String,
     val popularity: Double,
-/*    val cast: List<Cast>,
-    val crew: List<Crew>*/
 )

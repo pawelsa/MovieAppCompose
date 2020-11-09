@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.movieappcompose.data.dataSources.db.models.MovieDb
+import com.example.movieappcompose.data.dataSources.db.models.*
 
-@Database(entities = arrayOf(MovieDb::class), version = 1)
+@Database(
+    entities = [MovieDb::class, CastDb::class, CrewDb::class, GenreDb::class, /*MovieToCrewAndCastRelationship::class,*/ MovieGenreCrossRef::class],
+    version = 1
+)
 abstract class MoviesDB : RoomDatabase() {
     abstract fun movieDao(): MovieDao
 
