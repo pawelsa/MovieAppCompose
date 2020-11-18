@@ -52,11 +52,14 @@ fun Grade(grade: Double) {
     val marginBetweenStarsAndGrade = Dimen.margin.medium + ghostStarsMargin
     Row(verticalAlignment = Alignment.CenterVertically) {
         for (x in 0 until fullStars) {
-            Icon(asset = Icons.Filled.Star)
+            Icon(asset = Icons.Filled.Star, tint = MovieColors.yellow, modifier = starModifier)
         }
         if (isHalfStar) {
-            starModifier.clip(CutHalfShape(CutHalfShapeType.RIGHT))
-            Icon(asset = Icons.Filled.Star)
+            Icon(
+                asset = Icons.Filled.Star,
+                tint = MovieColors.yellow,
+                modifier = starModifier.clip(CutHalfShape(CutHalfShapeType.RIGHT))
+            )
         }
         Spacer(modifier = Modifier.width(marginBetweenStarsAndGrade))
         Text(

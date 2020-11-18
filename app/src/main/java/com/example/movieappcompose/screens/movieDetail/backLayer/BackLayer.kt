@@ -88,6 +88,7 @@ private fun WithConstraintsScope.MovieDetailCard(movie: Movie) {
             Surface(
                 elevation = Dimen.elevation.poster,
                 modifier = Modifier
+                        .zIndex(4.dp.value)
                         .width(Dimen.posterWidth)
                         .aspectRatio(0.73f)
                         .clip(RoundedCornerShape(Dimen.corner.poster))
@@ -97,7 +98,8 @@ private fun WithConstraintsScope.MovieDetailCard(movie: Movie) {
                         }) {
                 GlideImage(
                     imageWidth500Url(movie.posterPath),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.zIndex(5.dp.value)
                 )
             }
 
@@ -113,7 +115,7 @@ private fun WithConstraintsScope.MovieDetailCard(movie: Movie) {
                                 topRight = Dimen.corner.bigCard,
                             )
                         )
-                        .zIndex(4.dp.value)
+                        .zIndex(3.dp.value)
                         .background(
                             VerticalGradient(
                                 0.0f to MovieColors.backgroundStart,

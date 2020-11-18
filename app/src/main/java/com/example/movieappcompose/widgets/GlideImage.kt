@@ -34,7 +34,7 @@ fun GlideImage(
     customize: RequestBuilder<Bitmap>.() -> RequestBuilder<Bitmap> = { this }
 ) {
     WithConstraints {
-        val image = mutableStateOf<ImageAsset?>(null)
+        val image = remember { mutableStateOf<ImageAsset?>(null) }
         val drawable = mutableStateOf<Drawable?>(null)
         val context = ContextAmbient.current
 
