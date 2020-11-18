@@ -1,35 +1,33 @@
 package com.example.movieappcompose.data.models.mappers
 
 import com.example.movieappcompose.data.dataSources.api.models.CreditsApi
-import com.example.movieappcompose.data.dataSources.api.models.GenreListApi
 import com.example.movieappcompose.data.dataSources.api.models.MovieApi
 import com.example.movieappcompose.data.dataSources.db.models.*
+import com.example.movieappcompose.data.models.Genre
 import com.example.movieappcompose.data.models.Movie
 
-val ApiResponseToMovie: (MovieApi, GenreListApi, CreditsApi) -> Movie =
-    { movieApi, genreListApi, creditsApi ->
+val ApiResponseToMovie: (MovieApi, List<Genre>, CreditsApi) -> Movie =
+    { movieApi, genreList, creditsApi ->
         Movie(
             id = movieApi.id,
             title = movieApi.title,
             overview = movieApi.overview,
             originalTitle = movieApi.original_title,
             originalLanguage = movieApi.original_language,
-            posterPath = movieApi.poster_path,
+            posterPath = movieApi.poster_path ?: "",
             releaseDate = movieApi.release_date,
             grade = movieApi.vote_average,
             popularity = movieApi.popularity,
-            genres = movieApi.genre_ids.map { id ->
-                genreListApi.genres.first { genre ->
-                    genre.id == id
-                }.name
+            genres = genreList.filter {
+                movieApi.genre_ids.contains(it.genre_id)
             },
             cast = creditsApi.cast.mapToDomain(),
             crew = creditsApi.crew.mapToDomain()
         )
     }
 
-val ApiResponseToMovieDb: (MovieApi, GenreListApi, CreditsApi) -> MovieToCrewAndCastRelationship =
-    { movie, genres, credits ->
+val ApiResponseToMovieDb: (MovieApi, List<Genre>, CreditsApi, List<MovieOrderDb>) -> MovieToCrewAndCastRelationship =
+    { movie, genres, credits, order ->
         MovieToCrewAndCastRelationship(
             movieDb = MovieDb(
                 movie_id = movie.id,
@@ -40,24 +38,24 @@ val ApiResponseToMovieDb: (MovieApi, GenreListApi, CreditsApi) -> MovieToCrewAnd
                 overview = movie.overview,
                 title = movie.title,
                 grade = movie.vote_average,
-                poster_path = movie.poster_path
+                poster_path = movie.poster_path ?: ""
             ),
             castList = credits.cast.map { cast ->
                 CastDb(
                     id = cast.id,
                     movie_id = movie.id,
                     name = cast.name,
-                    character = cast.character,
+                    character = cast.character ?: "",
                     gender = cast.gender,
-                    order = cast.order,
-                    profile_path = cast.profile_path
+                    order = cast.order ?: -1,
+                    profile_path = cast.profile_path ?: ""
                 )
             },
             crewList = credits.crew.map { crew ->
                 CrewDb(
                     id = crew.id,
                     movie_id = movie.id,
-                    profile_path = crew.profile_path,
+                    profile_path = crew.profile_path ?: "",
                     gender = crew.gender,
                     name = crew.name,
                     job = crew.job,
@@ -65,12 +63,32 @@ val ApiResponseToMovieDb: (MovieApi, GenreListApi, CreditsApi) -> MovieToCrewAnd
                 )
             },
             genres = movie.genre_ids.map { genreId ->
-                val genre = genres.genres.find { it.id == genreId }
+                val genre = genres.find { it.genre_id == genreId }
                 GenreDb(
                     name = genre?.name ?: "",
-                    genre_id = genre?.id ?: -1
+                    genre_id = genre?.genre_id ?: -1
                 )
-            }
+            },
+            orders = order
         )
 
     }
+
+fun List<MovieToCrewAndCastRelationship>.mapToDomain() = map(DbResponseToDomain)
+
+val DbResponseToDomain: (MovieToCrewAndCastRelationship) -> Movie = { movie ->
+    Movie(
+        id = movie.movieDb.movie_id,
+        posterPath = movie.movieDb.poster_path,
+        title = movie.movieDb.title,
+        originalLanguage = movie.movieDb.original_language,
+        originalTitle = movie.movieDb.original_title,
+        grade = movie.movieDb.grade,
+        overview = movie.movieDb.overview,
+        releaseDate = movie.movieDb.release_date,
+        popularity = movie.movieDb.popularity,
+        genres = movie.genres.mapToDomain(),
+        cast = movie.castList.mapToDomain(),
+        crew = movie.crewList.mapToDomain()
+    )
+}

@@ -26,7 +26,7 @@ import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
 import com.example.movieappcompose.widgets.Genres
-import com.example.movieappcompose.widgets.GlideImage
+import com.koduok.compose.glideimage.GlideImage
 
 @Composable
 fun MovieCard(movie: Movie, onClick: OnClick = {}) {
@@ -38,7 +38,7 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
                     .clickable(onClick = onClick)
                     .padding(maxWidth.times(0.03f))
         ) {
-            val (poster, card, info) = createRefs()
+            val (poster, card, info, grade) = createRefs()
 
             Box(modifier = Modifier
                     .width(maxWidth.times(0.24f))
@@ -72,22 +72,40 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
                         }
             )
 
-            Column(Modifier
-                    .padding(vertical = 15.dp)
-                    .zIndex(5.dp.value)
-                    .constrainAs(info) {
-                        start.linkTo(poster.end, margin = maxWidth.times(0.045f))
-                        end.linkTo(card.end, margin = Dimen.margin.medium)
-                        bottom.linkTo(poster.bottom)
-                        width = Dimension.fillToConstraints
-                    }) {
+            Text(
+                modifier = Modifier
+                        .padding(top = 15.dp)
+                        .zIndex(5.dp.value)
+                        .constrainAs(grade) {
+                            top.linkTo(info.top)
+                            end.linkTo(card.end, margin = Dimen.margin.medium)
+                            width = Dimension.wrapContent
+                        },
+                textAlign = TextAlign.End,
+                text = movie.grade.toString(),
+                style = MaterialTheme.typography.h2.copy(color = MovieColors.yellow),
+                maxLines = 1,
+            )
+
+            Column(
+                Modifier
+                        .padding(vertical = 15.dp)
+                        .zIndex(5.dp.value)
+                        .constrainAs(info) {
+                            start.linkTo(poster.end, margin = maxWidth.times(0.045f))
+                            end.linkTo(grade.start, margin = Dimen.margin.medium)
+                            bottom.linkTo(poster.bottom)
+                            width = Dimension.fillToConstraints
+                        },
+                horizontalAlignment = Alignment.Start
+            ) {
                 TitleWithGrade(movie)
                 Genres(genreList = movie.genres)
                 ProvideTextStyle(value = MaterialTheme.typography.subtitle1) {
                     Text(
                         text = stringResource(
                             id = R.string.director,
-                            movie.director
+                            movie.director?.name ?: stringResource(id = R.string.unknown)
                         )
                     )
                     Text(
@@ -112,7 +130,7 @@ private fun TitleWithGrade(movie: Movie) {
     ) {
         Box(
             Modifier
-                    .weight(7f)
+//                    .weight(7f)
                     .fillMaxWidth(), alignment = Alignment.CenterStart
         ) {
             Text(
@@ -123,7 +141,7 @@ private fun TitleWithGrade(movie: Movie) {
                 overflow = TextOverflow.Ellipsis
             )
         }
-        Box(
+        /*Box(
             Modifier
                     .weight(1.5f)
                     .fillMaxWidth(), alignment = Alignment.CenterEnd
@@ -134,6 +152,6 @@ private fun TitleWithGrade(movie: Movie) {
                 style = MaterialTheme.typography.h2.copy(color = MovieColors.yellow),
                 maxLines = 1,
             )
-        }
+        }*/
     }
 }

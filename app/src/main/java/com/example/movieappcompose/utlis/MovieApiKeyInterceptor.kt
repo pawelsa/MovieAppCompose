@@ -1,4 +1,4 @@
-package com.example.movieappcompose.data.dataSources.api
+package com.example.movieappcompose.utlis
 
 import com.example.movieappcompose.BuildConfig
 import okhttp3.Interceptor

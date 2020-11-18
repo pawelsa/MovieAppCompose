@@ -7,15 +7,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.WithConstraints
-import androidx.compose.ui.WithConstraintsScope
+import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.VerticalGradient
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.DensityAmbient
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.example.movieappcompose.base.OnClick
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailState
@@ -23,7 +20,7 @@ import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
 import com.example.movieappcompose.widgets.Center
-import com.example.movieappcompose.widgets.GlideImage
+import com.koduok.compose.glideimage.GlideImage
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 
@@ -140,7 +137,8 @@ private fun WithConstraintsScope.MovieDetailCard(movie: Movie) {
                             end.linkTo(body.end, margin = Dimen.margin.big)
                             bottom.linkTo(content.top)
                             width = Dimension.fillToConstraints
-                        }
+                        },
+                horizontalAlignment = Alignment.Start
             ) {
                 GeneralMovieInfo(movie = movie)
             }

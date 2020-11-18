@@ -1,6 +1,5 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -22,7 +21,7 @@ import com.example.movieappcompose.data.models.Cast
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
-import com.example.movieappcompose.widgets.GlideImage
+import com.koduok.compose.glideimage.GlideImage
 
 
 @Composable

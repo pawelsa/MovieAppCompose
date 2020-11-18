@@ -2,36 +2,35 @@ package com.example.movieappcompose.widgets
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.movieappcompose.data.models.Genre
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 
 
 @Composable
-fun Genres(genreList: List<String>) {
-    Row(
-        Modifier
+fun Genres(genreList: List<Genre>) {
+    OverflowRow(
+        modifier = Modifier
                 .padding(
                     top = Dimen.padding.medium,
                     bottom = Dimen.padding.medium,
-                    end = Dimen.padding.big
-                )
-                .fillMaxWidth()
-    ) {
-        for (genre in genreList.take(3)) {
-            GenreTag(name = genre, color = MovieColors.yellow)
-        }
-        if (genreList.size > 3) {
+                ),
+        spacing = Dimen.padding.small,
+        children = {
+            for (genre in genreList) {
+                GenreTag(name = genre.name, color = MovieColors.yellow)
+            }
+        },
+        overflow = {
             GenreTag(name = "...", color = MovieColors.yellow)
-        }
-    }
+        })
+
 }
 
 @Composable
@@ -41,7 +40,8 @@ fun GenreTag(name: String, color: Color) {
     )
     Text(
         text = name,
-        modifier = Modifier.genreTag(color),
+        modifier = Modifier
+                .genreTag(color),
         style = tagTextStyle.copy(
             color = color
         )
@@ -50,7 +50,6 @@ fun GenreTag(name: String, color: Color) {
 
 private fun Modifier.genreTag(color: Color) =
     this
-            .padding(end = Dimen.padding.medium)
             .border(
                 width = Dimen.tagBorder,
                 color = color,

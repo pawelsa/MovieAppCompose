@@ -1,11 +1,18 @@
 package com.example.movieappcompose.di
 
 import android.content.Context
+import androidx.datastore.DataStore
+import androidx.datastore.createDataStore
+import com.example.movieappcompose.LastUpdated
 import com.example.movieappcompose.data.dataSources.api.ApiConsts
-import com.example.movieappcompose.data.dataSources.api.MovieApiKeyInterceptor
 import com.example.movieappcompose.data.dataSources.api.MoviesApi
-import com.example.movieappcompose.data.dataSources.db.MovieDao
 import com.example.movieappcompose.data.dataSources.db.MoviesDB
+import com.example.movieappcompose.data.dataSources.db.dao.GenreDao
+import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
+import com.example.movieappcompose.data.datastore.Settings
+import com.example.movieappcompose.data.datastore.SettingsSerializer
+import com.example.movieappcompose.utlis.ConnectivityInterceptor
+import com.example.movieappcompose.utlis.MovieApiKeyInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +33,7 @@ object DataSourceModule {
     fun providesMovieApi(): MoviesApi {
         val client = OkHttpClient
                 .Builder()
+                .addInterceptor(ConnectivityInterceptor())
                 .addInterceptor(MovieApiKeyInterceptor())
                 .build()
 
@@ -48,4 +56,20 @@ object DataSourceModule {
     @Singleton
     fun providesMovieDb(moviesDb: MoviesDB): MovieDao = moviesDb.movieDao()
 
+    @Provides
+    @Singleton
+    fun providesGenreDao(moviesDb: MoviesDB): GenreDao = moviesDb.genreDao()
+
+    @Provides
+    @Singleton
+    fun providesMovieDataStore(@ApplicationContext context: Context): DataStore<LastUpdated> =
+        context.createDataStore(
+            fileName = "modie_ds.pb",
+            serializer = SettingsSerializer
+        )
+
+    @Provides
+    @Singleton
+    fun providesSettings(movieDataStore: DataStore<LastUpdated>): Settings =
+        Settings(movieDataStore)
 }

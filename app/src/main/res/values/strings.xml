@@ -15,4 +15,5 @@
     <string name="detail_discuss">Discuss</string>
     <string name="detail_no_reviews">Sorry, there is no reviews</string>
     <string name="detail_no_discussions">Sorry, there is no discussion going on</string>
+    <string name="unknown">Unknown</string>
 </resources>

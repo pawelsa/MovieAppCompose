@@ -31,6 +31,12 @@ fun MainScreenTabBarPager(
         pageSelected = pageSelected,
         onPageSelected = onPageSelected,
         state = viewModel.state,
+        loadMoreData = {
+            when (it) {
+                0 -> viewModel.getPopular()
+                1 -> viewModel.getUpcoming()
+            }
+        }
     )
 }
 
@@ -38,6 +44,7 @@ fun MainScreenTabBarPager(
 fun MainScreenTabBarPager(
     pageSelected: Int,
     onPageSelected: (Int) -> Unit,
+    loadMoreData: (Int) -> Unit,
     state: MovieListState
 ) {
     when (state) {
@@ -49,7 +56,8 @@ fun MainScreenTabBarPager(
             pageSelected = pageSelected,
             onPageSelected = onPageSelected,
             popularMovies = state.popularMovies,
-            upcomingMovies = state.upcomingMovies
+            upcomingMovies = state.upcomingMovies,
+            loadMoreData = loadMoreData
         )
     }
 }
@@ -74,6 +82,7 @@ fun LoadingMoviesPager(
 fun MoviesPager(
     pageSelected: Int,
     onPageSelected: (Int) -> Unit,
+    loadMoreData: (Int) -> Unit,
     popularMovies: List<Movie>,
     upcomingMovies: List<Movie>,
 ) {
@@ -83,6 +92,8 @@ fun MoviesPager(
         onPageChanged = onPageSelected,
         items = listOf(popularMovies, upcomingMovies)
     ) { movies, _ ->
-        MainScreenMovieList(movies) { selectMovie(it) }
+        MainScreenMovieList(movies, loadMoreData = {
+            loadMoreData(pageSelected)
+        }) { selectMovie(it) }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ProvideTextStyle
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
@@ -28,7 +27,15 @@ fun GeneralMovieInfo(movie: Movie) {
     // TODO: 05/11/2020 create wrap widget and display all categories
     Genres(movie.genres)
     ProvideTextStyle(value = MaterialTheme.typography.subtitle1) {
-        Text(text = stringResource(id = R.string.director, formatArgs = arrayOf(movie.director)))
+        Text(
+            text = stringResource(
+                id = R.string.director, formatArgs = arrayOf(
+                    movie.director?.name ?: stringResource(
+                        id = R.string.unknown
+                    )
+                )
+            )
+        )
         Spacer(modifier = Modifier.height(Dimen.margin.small))
         Text(text = stringResource(id = R.string.starring, formatArgs = arrayOf(movie.starring)))
     }
@@ -45,14 +52,11 @@ fun Grade(grade: Double) {
     val marginBetweenStarsAndGrade = Dimen.margin.medium + ghostStarsMargin
     Row(verticalAlignment = Alignment.CenterVertically) {
         for (x in 0 until fullStars) {
-            Icon(asset = Icons.Filled.Star, tint = MovieColors.yellow, modifier = starModifier)
+            Icon(asset = Icons.Filled.Star)
         }
         if (isHalfStar) {
-            Icon(
-                asset = Icons.Filled.Star,
-                tint = MovieColors.yellow,
-                modifier = starModifier.clip(CutHalfShape(CutHalfShapeType.RIGHT))
-            )
+            starModifier.clip(CutHalfShape(CutHalfShapeType.RIGHT))
+            Icon(asset = Icons.Filled.Star)
         }
         Spacer(modifier = Modifier.width(marginBetweenStarsAndGrade))
         Text(

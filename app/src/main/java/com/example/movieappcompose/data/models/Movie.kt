@@ -12,23 +12,29 @@ data class Movie(
     val originalLanguage: String,
     val originalTitle: String,
     val grade: Double,
-    val overview: String,
+    val overview: String = "",
     val releaseDate: String,
     val popularity: Double,
-    val genres: List<String>,
+    val genres: List<Genre>,
     val cast: List<Cast>,
     val crew: List<Crew>
 ) : Parcelable {
     @IgnoredOnParcel
-    val starring = cast
-            .take(2)
-            .map {
-                it.name
-                        .split(" ")
-                        .last()
-            }
-            .joinToString(" / ")
+    val starring
+        get() = cast
+                .take(2)
+                .map {
+                    it.name
+                            .split(" ")
+                            .last()
+                }
+                .joinToString(" / ")
 
     @IgnoredOnParcel
-    val director = crew.first { it.job.toLowerCase() == "director" }.name
+    val director
+        get() = crew.firstOrNull {
+            it.job
+                    .toLowerCase()
+                    .contains("director")
+        }
 }

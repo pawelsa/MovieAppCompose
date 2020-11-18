@@ -1,5 +1,6 @@
 package com.example.movieappcompose.data.dataSources.db.models
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,5 +13,6 @@ data class CrewDb(
     val gender: Int,
     val job: String,
     val name: String,
-    val profile_path: String?
+    @ColumnInfo(defaultValue = "")
+    val profile_path: String? = ""
 )

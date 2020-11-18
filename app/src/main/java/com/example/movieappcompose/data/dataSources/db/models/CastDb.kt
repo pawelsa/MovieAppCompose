@@ -9,11 +9,12 @@ data class CastDb(
     @PrimaryKey
     val id: Int,
     val movie_id: Int,
-    val character: String,
+    @ColumnInfo(defaultValue = "")
+    val character: String = "",
     val gender: Int,
     val name: String,
     @ColumnInfo(defaultValue = "-1")
-    val order: Int?,
+    val order: Int = -1,
     @ColumnInfo(defaultValue = "")
-    val profile_path: String?
+    val profile_path: String = ""
 )

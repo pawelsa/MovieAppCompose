@@ -2,9 +2,10 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id "com.google.protobuf" version "0.8.12"
 }
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
@@ -53,7 +54,7 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.ui:ui-tooling:$compose_version"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha06'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -81,22 +82,46 @@ dependencies {
     // compose glide
     // TODO for now it did not support fitting image, so I copied and modified code,
     //  if pull request gets accepted should be changed to use new version
-//    implementation "com.github.mvarnagiris:compose-glide-image:$glide_version"
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+    implementation "com.github.mvarnagiris:compose-glide-image:$glide_version"
     implementation "jp.wasabeef:glide-transformations:$glide_transformations_version"
 
     // room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-ktx:$room_rx_version"
     implementation "androidx.room:room-rxjava3:$room_rx_version"
 
     // timber
     implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // dataStore
+    implementation "androidx.datastore:datastore-core:$datastore_version"
+    implementation "com.google.protobuf:protobuf-javalite:3.10.0"
+
+    // corutines to rx
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-rx3:1.3.9'
 }
 
 
 kapt {
     correctErrorTypes true
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }

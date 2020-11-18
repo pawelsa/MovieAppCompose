@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.example.movieappcompose";
+option java_multiple_files = true;
+
+message LastUpdated {
+  int64 upcomingMovies = 1;
+  int64 popularMovies = 2;
+  int64 genres = 3;
+  fixed32 upcomingMoviesPages = 4;
+  fixed32 popularMoviesPages = 5;
+}
+
