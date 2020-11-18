@@ -24,7 +24,7 @@ import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
 import com.example.movieappcompose.widgets.Center
-import com.koduok.compose.glideimage.GlideImage
+import com.example.movieappcompose.widgets.GlideImage
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 

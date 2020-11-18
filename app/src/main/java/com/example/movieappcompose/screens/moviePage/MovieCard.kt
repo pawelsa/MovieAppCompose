@@ -26,7 +26,7 @@ import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
 import com.example.movieappcompose.widgets.Genres
-import com.koduok.compose.glideimage.GlideImage
+import com.example.movieappcompose.widgets.GlideImage
 
 @Composable
 fun MovieCard(movie: Movie, onClick: OnClick = {}) {
