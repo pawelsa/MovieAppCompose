@@ -7,12 +7,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.VerticalGradient
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.WithConstraints
+import androidx.compose.ui.layout.WithConstraintsScope
 import androidx.compose.ui.platform.DensityAmbient
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.movieappcompose.base.OnClick
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailState

@@ -1,11 +1,12 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonConstants
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,9 +27,11 @@ fun TicketButtons(
             modifier = Modifier
                     .weight(1f)
                     .padding(Dimen.padding.medium),
-            backgroundColor = MovieColors.greyButton,
+            colors = ButtonConstants.defaultButtonColors(
+                backgroundColor = MovieColors.greyButton
+            ),
             contentPadding = PaddingValues(Dimen.padding.button),
-            elevation = Dimen.elevation.button,
+            elevation = ButtonConstants.defaultElevation(Dimen.elevation.button),
             onClick = onCollectPressed,
         ) {
             Text(
@@ -40,44 +43,10 @@ fun TicketButtons(
             modifier = Modifier
                     .weight(2f)
                     .padding(Dimen.padding.medium),
-            backgroundColor = MovieColors.yellow,
+            colors = ButtonConstants.defaultButtonColors(backgroundColor = MovieColors.yellow),
             contentPadding = PaddingValues(Dimen.padding.button),
-            elevation = Dimen.elevation.button,
+            elevation = ButtonConstants.defaultElevation(Dimen.elevation.button),
             onClick = onBuyPressed,
-        ) {
-            Text(text = stringResource(id = R.string.detail_buy_now))
-        }
-    }
-}
-
-@Composable
-fun TicketsButtonLoading() {
-    Row {
-        // TODO: 02/11/2020 make this buttons as widgets
-        Button(
-            modifier = Modifier
-                    .weight(1f)
-                    .padding(Dimen.padding.medium),
-            backgroundColor = MovieColors.greyButton,
-            contentPadding = PaddingValues(Dimen.padding.button),
-            elevation = Dimen.elevation.button,
-            onClick = { },
-            enabled = false
-        ) {
-            Text(
-                text = stringResource(id = R.string.detail_collect),
-                style = MaterialTheme.typography.button.copy(color = MovieColors.greyButtonText)
-            )
-        }
-        Button(
-            modifier = Modifier
-                    .weight(2f)
-                    .padding(Dimen.padding.medium),
-            backgroundColor = MovieColors.yellow,
-            contentPadding = PaddingValues(Dimen.padding.button),
-            elevation = Dimen.elevation.button,
-            onClick = { },
-            enabled = false
         ) {
             Text(text = stringResource(id = R.string.detail_buy_now))
         }

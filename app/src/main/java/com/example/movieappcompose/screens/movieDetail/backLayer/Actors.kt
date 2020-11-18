@@ -1,10 +1,8 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowForward
 import androidx.compose.runtime.Composable
@@ -37,8 +35,10 @@ fun ActorsSection(onShowMorePressed: OnClick, actors: List<Cast>) {
         )
         TextButton(
             onClick = onShowMorePressed,
-            backgroundColor = Color.Transparent,
-            contentColor = MovieColors.greyText,
+            colors = ButtonConstants.defaultButtonColors(
+                contentColor = MovieColors.greyText,
+                backgroundColor = Color.Transparent
+            ),
         ) {
             Text(
                 text = stringResource(id = R.string.detail_see_more),

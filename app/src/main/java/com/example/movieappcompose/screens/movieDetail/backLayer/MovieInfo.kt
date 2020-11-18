@@ -1,9 +1,10 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
-import androidx.compose.foundation.ProvideTextStyle
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
@@ -24,7 +25,6 @@ import com.example.movieappcompose.widgets.Genres
 @Composable
 fun GeneralMovieInfo(movie: Movie) {
     Text(text = movie.title, style = MaterialTheme.typography.h2)
-    // TODO: 05/11/2020 create wrap widget and display all categories
     Genres(movie.genres)
     ProvideTextStyle(value = MaterialTheme.typography.subtitle1) {
         Text(

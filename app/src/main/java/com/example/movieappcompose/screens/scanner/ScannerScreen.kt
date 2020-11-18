@@ -1,23 +1,15 @@
 package com.example.movieappcompose.screens.scanner
 
-import android.os.Parcelable
-import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.preferredHeight
-import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.onActive
 import androidx.compose.runtime.onDispose
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.WithConstraints
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.VerticalGradient
 import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -25,12 +17,11 @@ import com.example.movieappcompose.widgets.MovieAppBar
 import com.example.movieappcompose.widgets.Page
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
-import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.camera.CameraSettings
-import java.nio.charset.Charset
+import timber.log.Timber
 
 @Composable
 fun ScannerScreen(showBottomBar:Boolean) {
@@ -57,15 +48,19 @@ fun ScannerView() {
             override fun barcodeResult(result: BarcodeResult) {
                 try {
                     when (result.barcodeFormat) {
-                        BarcodeFormat.DATA_MATRIX -> Toast.makeText(
-                            context,
-                            result.text,
-                            Toast.LENGTH_LONG
-                        ).show()
-                        else -> Toast.makeText(context, result.text, Toast.LENGTH_LONG).show()
+                        BarcodeFormat.DATA_MATRIX -> Toast
+                                .makeText(
+                                    context,
+                                    result.text,
+                                    Toast.LENGTH_LONG
+                                )
+                                .show()
+                        else -> Toast
+                                .makeText(context, result.text, Toast.LENGTH_LONG)
+                                .show()
                     }
                 } catch (ex: Exception) {
-                    Log.e("ScannerScreen", "Parse Error $ex")
+                    Timber.e("ScannerScreen", "Parse Error $ex")
                 }
             }
 

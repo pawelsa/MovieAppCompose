@@ -1,19 +1,19 @@
 package com.example.movieappcompose.screens.moviePage
 
-import androidx.compose.foundation.ProvideTextStyle
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.WithConstraints
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -99,7 +99,7 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
                         },
                 horizontalAlignment = Alignment.Start
             ) {
-                TitleWithGrade(movie)
+                Title(movie)
                 Genres(genreList = movie.genres)
                 ProvideTextStyle(value = MaterialTheme.typography.subtitle1) {
                     Text(
@@ -123,35 +123,13 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
 }
 
 @Composable
-private fun TitleWithGrade(movie: Movie) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Box(
-            Modifier
-//                    .weight(7f)
-                    .fillMaxWidth(), alignment = Alignment.CenterStart
-        ) {
-            Text(
-                textAlign = TextAlign.Start,
-                text = movie.title,
-                style = MaterialTheme.typography.h2,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-        /*Box(
-            Modifier
-                    .weight(1.5f)
-                    .fillMaxWidth(), alignment = Alignment.CenterEnd
-        ) {
-            Text(
-                textAlign = TextAlign.End,
-                text = movie.grade.toString(),
-                style = MaterialTheme.typography.h2.copy(color = MovieColors.yellow),
-                maxLines = 1,
-            )
-        }*/
-    }
+private fun Title(movie: Movie) {
+    Text(
+        textAlign = TextAlign.Start,
+        text = movie.title,
+        style = MaterialTheme.typography.h2,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+
 }

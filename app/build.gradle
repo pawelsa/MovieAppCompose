@@ -80,8 +80,6 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
 
     // compose glide
-    // TODO for now it did not support fitting image, so I copied and modified code,
-    //  if pull request gets accepted should be changed to use new version
     implementation "com.github.mvarnagiris:compose-glide-image:$glide_version"
     implementation "jp.wasabeef:glide-transformations:$glide_transformations_version"
 

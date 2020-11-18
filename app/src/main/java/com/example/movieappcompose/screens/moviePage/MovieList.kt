@@ -13,15 +13,12 @@ fun MainScreenMovieList(
     loadMoreData: () -> Unit = {},
     onItemClick: (Movie) -> Unit
 ) {
-    // TODO: 05/11/2020 add pagination
-
     LazyColumnForIndexed(
         items = movieList
     ) { index, movie ->
         MovieCard(
             movie = movie,
             onClick = {
-                // TODO: 04/11/2020 movie id or model should be passed
                 onItemClick(movie)
             })
         if (movieList.lastIndex == index) {

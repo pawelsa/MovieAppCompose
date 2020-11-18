@@ -17,8 +17,7 @@ import timber.log.Timber
 class MovieListViewModel @ViewModelInject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
-) :
-    BaseViewModel<MovieListState>(MovieListState.Init) {
+) : BaseViewModel<MovieListState>(MovieListState.Init) {
     private var popularMovies = emptyList<Movie>()
     private var upcomingMovies = emptyList<Movie>()
     private var popularMoviesPage by mutableStateOf(1)
