@@ -26,7 +26,7 @@ import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
 import com.example.movieappcompose.widgets.Genres
-import com.example.movieappcompose.widgets.GlideImage
+import dev.chrisbanes.accompanist.glide.GlideImage
 
 @Composable
 fun MovieCard(movie: Movie, onClick: OnClick = {}) {
@@ -52,7 +52,7 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
                     }) {
                 // TODO: 05/11/2020 add placeholder and loading image
                 GlideImage(
-                    imageWidth500Url(movie.posterPath),
+                    data = imageWidth500Url(movie.posterPath),
                     contentScale = ContentScale.Crop
                 )
             }

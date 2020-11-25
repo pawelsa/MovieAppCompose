@@ -17,6 +17,7 @@ import androidx.compose.ui.layout.WithConstraintsScope
 import androidx.compose.ui.platform.DensityAmbient
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.bumptech.glide.request.RequestOptions
 import com.example.movieappcompose.base.OnClick
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailState
@@ -24,7 +25,7 @@ import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
 import com.example.movieappcompose.widgets.Center
-import com.example.movieappcompose.widgets.GlideImage
+import dev.chrisbanes.accompanist.glide.GlideImage
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 
@@ -55,14 +56,17 @@ fun LoadedMovieDetails(onMorePressed: OnClick, movie: Movie) {
             Modifier.fillMaxSize()
         ) {
             GlideImage(
-                imageWidth500Url(movie.posterPath),
+                data = imageWidth500Url(movie.posterPath),
                 modifier = Modifier
                         .fillMaxWidth()
                         .preferredHeight(maxHeight / 2),
-                contentScale = ContentScale.Crop
-            ) {
-                transform(BlurTransformation(20))
-            }
+                contentScale = ContentScale.Crop,
+                requestBuilder = {
+                    val options = RequestOptions()
+                    options.transform(BlurTransformation(20))
+                    apply(options)
+                }
+            )
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween

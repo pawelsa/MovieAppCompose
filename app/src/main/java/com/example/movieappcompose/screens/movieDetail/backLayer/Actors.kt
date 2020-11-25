@@ -19,7 +19,7 @@ import com.example.movieappcompose.data.models.Cast
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url
-import com.example.movieappcompose.widgets.GlideImage
+import dev.chrisbanes.accompanist.glide.GlideImage
 
 
 @Composable
@@ -68,7 +68,7 @@ fun ActorDetail(modifier: Modifier, actor: Cast) {
     ) {
 
         GlideImage(
-            imageWidth500Url(actor.profilePicture),
+            data = imageWidth500Url(actor.profilePicture),
             modifier = Modifier
                     .padding(Dimen.padding.medium)
                     .aspectRatio(Dimen.squareRatio)

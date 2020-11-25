@@ -3,10 +3,10 @@ package com.example.movieappcompose.widgets
 import androidx.compose.animation.animate
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Edit
@@ -27,7 +27,9 @@ import com.example.movieappcompose.ui.MovieColors
 @Composable
 fun BottomNavigationBar(show: Boolean, current: Int, onSelect: (Int) -> Unit) {
 
-    val modifier = Modifier.height(animate(target = if (show) Dimen.bottomBarHeight else 0.dp))
+    val modifier = Modifier.height(
+        animate(target = if (show) Dimen.bottomBarHeight else 0.dp)
+    )
     Box(
         modifier = modifier
                 .clip(
@@ -66,13 +68,11 @@ fun BottomNavigationBar(show: Boolean, current: Int, onSelect: (Int) -> Unit) {
 fun BottomNavigationBarItem(icon: VectorAsset, isSelected: Boolean, onClick: () -> Unit) {
     val iconColor = if (isSelected) MovieColors.yellow else MovieColors.nonSelectedText
     IconButton(onClick = onClick) {
-        Icon(
-            icon,
-            tint = animate(
-                target = iconColor,
-                animSpec = tween(durationMillis = 250, easing = LinearEasing)
-            )
+        animate(
+            target = iconColor,
+            animSpec = tween(durationMillis = 250, easing = LinearEasing)
         )
+        Icon(icon)
     }
 }
 

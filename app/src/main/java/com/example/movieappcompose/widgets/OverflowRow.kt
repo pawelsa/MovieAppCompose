@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.extensions.skipLast
@@ -33,11 +32,9 @@ fun OverflowRow(
         val toDisplay = mutableListOf<Placeable>()
         var currentMainAxisSize: Int
 
-        val childConstraints = Constraints(maxWidth = maxWidth)
-
         fun List<Placeable>.overflow(): Placeable = this.last()
 
-        val placeables = measurables.map { it.measure(childConstraints) }
+        val placeables = measurables.map { it.measure(constraints) }
         val widthOfAllPlaceablesButOverflow = placeables
                 .skipLast(1)
                 .sumBy { it.width + spacingPx } - spacingPx
