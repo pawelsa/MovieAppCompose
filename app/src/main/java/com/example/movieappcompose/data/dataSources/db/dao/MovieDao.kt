@@ -23,10 +23,17 @@ abstract class MovieDao {
     abstract fun getUpcomingMovies(): Single<List<MovieToCrewAndCastRelationship>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOrder(orderDb: MovieOrderDb)
+    abstract fun insertOrder(orderDb: MovieOrderDb): Completable
 
-    fun insert(movieToCrewAndCastRelationship: MovieToCrewAndCastRelationship): Completable {
-        return Completable.merge(listOf(
+    fun insertAllOrders(listOfOrders: List<MovieOrderDb>): Completable {
+        return Completable.merge(listOfOrders.map { insertOrder(it) })
+    }
+
+    fun insertAll(listOfMovies: List<MovieToCrewAndCastRelationship>): Completable =
+        Completable.merge(listOfMovies.map { insert(it) })
+
+    fun insert(movieToCrewAndCastRelationship: MovieToCrewAndCastRelationship): Completable =
+        Completable.merge(listOf(
             _insertMovie(movieToCrewAndCastRelationship.movieDb),
             _insertAllCast(movieToCrewAndCastRelationship.castList),
             _insertAllCrew(movieToCrewAndCastRelationship.crewList),
@@ -37,7 +44,6 @@ abstract class MovieDao {
                 )
             })
         ))
-    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun _insertMovie(movieDb: MovieDb): Completable
@@ -52,5 +58,6 @@ abstract class MovieDao {
     abstract fun _insertAllGenres(genreList: List<MovieGenreCrossRef>): Completable
 
     @Query("DELETE FROM movie_order WHERE movie_order.type = :movieType")
-    abstract fun deleteOrder(movieType: Int)
+    abstract fun deleteOrder(movieType: Int): Completable
+
 }
