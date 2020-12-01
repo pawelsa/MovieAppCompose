@@ -41,10 +41,8 @@ class PersistGenreImpl(
     }
 
     override fun getLocal(): Observable<List<Genre>> {
-        return Single
-                .fromCallable {
-                    genreDao.getAll()
-                }
+        return genreDao
+                .getAll()
                 .map {
                     it.map { genreDb ->
                         Genre(
