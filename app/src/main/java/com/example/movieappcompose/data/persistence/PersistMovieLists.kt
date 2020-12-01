@@ -20,8 +20,6 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.zipWith
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.rx3.asObservable
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -31,7 +29,7 @@ abstract class PersistMovieLists(
     protected val api: MoviesApi,
     private val persistGenre: PersistGenre,
     protected val settings: Settings,
-    private val movieListType: Int
+    private val movieListType: Int,
 ) : PersistenceWithParam<PersistMovieLists.Param, List<Movie>, List<PersistMovieLists.MovieTransfer>>() {
 
     data class Param(val page: Int)
@@ -109,35 +107,44 @@ abstract class PersistMovieLists(
     }
 
     private fun saveMovieInDatabaseWithOrder(
-        it: List<MovieTransfer>,
-        page: Int
+        movieTransferList: List<MovieTransfer>,
+        page: Int,
     ): @NonNull Single<List<MovieTransfer>> {
-        return Observable
-                .fromCallable {
+        return Single
+                .just(movieTransferList)
+                .flatMap {
                     if (page == 1) {
-                        movieDao.deleteOrder(movieListType)
+                        return@flatMap movieDao
+                                .deleteOrder(movieListType)
+                                .andThen(Single.just(movieTransferList))
                     }
-                    it
+                    return@flatMap Single.just(movieTransferList)
                 }
-                .flatMapIterable { it }
                 .map {
-                    val movieOrderDb = MovieOrderDb(
-                        order = it.numberInOrder,
-                        movie_id = it.movieApi.id,
-                        type = movieListType
-                    )
-                    movieDao.insertOrder(movieOrderDb)
-                    movieDao.insert(
-                        ApiResponseToMovieDb(
+                    val moviePairs = it.map {
+                        val movieOrderDb = MovieOrderDb(
+                            order = it.numberInOrder,
+                            movie_id = it.movieApi.id,
+                            type = movieListType
+                        )
+                        val movieDb = ApiResponseToMovieDb(
                             it.movieApi,
                             it.genres,
                             it.creditsApi,
                             listOf(movieOrderDb)
                         )
-                    )
-                    it
+                        movieOrderDb to movieDb
+                    }
+                    moviePairs
                 }
-                .toList()
+                .flatMap {
+                    movieDao
+                            .insertAll(it.map { it.second })
+                            .concatWith(
+                                movieDao.insertAllOrders(it.map { it.first })
+                            )
+                            .andThen(Single.just(movieTransferList))
+                }
                 .saveInSettings {
                     if (movieListType == MOVIE_POPULAR) {
                         setLastTimePopularMoviesSaved(System.currentTimeMillis()).flatMap {
@@ -152,7 +159,7 @@ abstract class PersistMovieLists(
     }
 
     private fun <T, R> Single<T>.saveInSettings(
-        method: Settings.() -> Single<R>
+        method: Settings.() -> Single<R>,
     ): Single<T> =
         flatMap { data ->
             method(settings).map {
@@ -164,7 +171,7 @@ abstract class PersistMovieLists(
         val movieApi: MovieApi,
         val genres: List<Genre>,
         val creditsApi: CreditsApi,
-        val numberInOrder: Int
+        val numberInOrder: Int,
     )
 }
 
@@ -172,7 +179,7 @@ class PersistPopularMoviesList(
     movieDao: MovieDao,
     api: MoviesApi,
     persistGenre: PersistGenre,
-    settings: Settings
+    settings: Settings,
 ) :
     PersistMovieLists(movieDao, api, persistGenre, settings, MOVIE_POPULAR) {
     override fun remoteSource(page: Int): Single<MovieListApi> =
@@ -209,11 +216,10 @@ class PersistPopularMoviesList(
     override fun getLocal(param: Param): Observable<List<Movie>> {
         return movieDao
                 .getPopularMovies()
-                .take(1)
-                .asObservable()
                 .map {
                     it.mapToDomain()
                 }
+                .toObservable()
     }
 
 }
@@ -222,7 +228,7 @@ class PersistUpcomingMoviesList(
     movieDao: MovieDao,
     api: MoviesApi,
     persistGenre: PersistGenre,
-    settings: Settings
+    settings: Settings,
 ) :
     PersistMovieLists(movieDao, api, persistGenre, settings, MOVIE_UPCOMING) {
     override fun remoteSource(page: Int): Single<MovieListApi> =
@@ -249,11 +255,10 @@ class PersistUpcomingMoviesList(
     override fun getLocal(param: Param): Observable<List<Movie>> {
         return movieDao
                 .getUpcomingMovies()
-                .take(1)
-                .asObservable()
                 .map {
                     it.mapToDomain()
                 }
+                .toObservable()
     }
 
 }
