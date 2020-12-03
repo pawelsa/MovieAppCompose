@@ -68,11 +68,10 @@ fun BottomNavigationBar(show: Boolean, current: Int, onSelect: (Int) -> Unit) {
 fun BottomNavigationBarItem(icon: VectorAsset, isSelected: Boolean, onClick: () -> Unit) {
     val iconColor = if (isSelected) MovieColors.yellow else MovieColors.nonSelectedText
     IconButton(onClick = onClick) {
-        animate(
+        Icon(icon, tint = animate(
             target = iconColor,
             animSpec = tween(durationMillis = 250, easing = LinearEasing)
-        )
-        Icon(icon)
+        ))
     }
 }
 
