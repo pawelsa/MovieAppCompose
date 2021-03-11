@@ -36,10 +36,10 @@ fun GeneralMovieInfo(movie: Movie) {
                 )
             )
         )
-        Spacer(modifier = Modifier.height(Dimen.margin.small))
+        Spacer(modifier = Modifier.requiredHeight(Dimen.margin.small))
         Text(text = stringResource(id = R.string.starring, formatArgs = arrayOf(movie.starring)))
     }
-    Spacer(modifier = Modifier.height(Dimen.margin.medium))
+    Spacer(modifier = Modifier.requiredHeight(Dimen.margin.medium))
     Grade(grade = movie.grade)
 }
 
@@ -47,21 +47,22 @@ fun GeneralMovieInfo(movie: Movie) {
 fun Grade(grade: Double) {
     val fullStars = (grade / 2).toInt()
     val isHalfStar = grade % 2 != 0.0
-    val starModifier = Modifier.size(Dimen.starSize)
+    val starModifier = Modifier.requiredSize(Dimen.starSize)
     val ghostStarsMargin = Dimen.starSize * (5 - fullStars)
     val marginBetweenStarsAndGrade = Dimen.margin.medium + ghostStarsMargin
     Row(verticalAlignment = Alignment.CenterVertically) {
         for (x in 0 until fullStars) {
-            Icon(asset = Icons.Filled.Star, tint = MovieColors.yellow, modifier = starModifier)
+            Icon(Icons.Filled.Star, "", tint = MovieColors.yellow, modifier = starModifier)
         }
         if (isHalfStar) {
             Icon(
-                asset = Icons.Filled.Star,
+                Icons.Filled.Star,
+                "",
                 tint = MovieColors.yellow,
                 modifier = starModifier.clip(CutHalfShape(CutHalfShapeType.RIGHT))
             )
         }
-        Spacer(modifier = Modifier.width(marginBetweenStarsAndGrade))
+        Spacer(modifier = Modifier.requiredWidth(marginBetweenStarsAndGrade))
         Text(
             text = grade
                     .roundTo(1)

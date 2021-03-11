@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun Center(content: @Composable ()->Unit){
-    Box(modifier = Modifier.fillMaxSize(), alignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         content()
     }
 }

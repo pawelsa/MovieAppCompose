@@ -3,12 +3,8 @@ package com.example.movieappcompose.ui
 import android.os.Parcelable
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
-import androidx.compose.runtime.ProvidableAmbient
-import androidx.compose.runtime.ambientOf
-import androidx.compose.runtime.savedinstancestate.listSaver
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.toMutableStateList
-import com.example.movieappcompose.screens.movieScreen.Actions
-import kotlinx.android.parcel.Parcelize
 
 /**
  * A simple navigator which maintains a back stack.

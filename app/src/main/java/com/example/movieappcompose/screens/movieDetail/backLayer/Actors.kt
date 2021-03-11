@@ -35,7 +35,7 @@ fun ActorsSection(onShowMorePressed: OnClick, actors: List<Cast>) {
         )
         TextButton(
             onClick = onShowMorePressed,
-            colors = ButtonConstants.defaultButtonColors(
+            colors = ButtonDefaults.buttonColors(
                 contentColor = MovieColors.greyText,
                 backgroundColor = Color.Transparent
             ),
@@ -44,7 +44,7 @@ fun ActorsSection(onShowMorePressed: OnClick, actors: List<Cast>) {
                 text = stringResource(id = R.string.detail_see_more),
                 style = MaterialTheme.typography.body1
             )
-            Icon(Icons.Sharp.ArrowForward)
+            Icon(Icons.Sharp.ArrowForward, "")
         }
     }
     Row(horizontalArrangement = Arrangement.SpaceEvenly) {

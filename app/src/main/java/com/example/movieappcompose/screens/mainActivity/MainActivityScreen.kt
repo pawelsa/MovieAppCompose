@@ -26,7 +26,7 @@ fun MainScreen(
             )
         }
     ) {
-        Crossfade(current = mainActivityViewModel.currentSelectedItemInNavigationBar) { currentPage ->
+        Crossfade(targetState = mainActivityViewModel.currentSelectedItemInNavigationBar) { currentPage ->
             when (currentPage) {
                 1 -> ScannerScreen(mainActivityViewModel.showBottomNavigationBar)
                 2 -> Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) { }

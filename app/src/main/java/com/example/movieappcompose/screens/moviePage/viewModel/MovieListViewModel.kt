@@ -3,20 +3,22 @@ package com.example.movieappcompose.screens.moviePage.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.hilt.lifecycle.ViewModelInject
 import com.example.movieappcompose.base.BaseViewModel
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.usecase.GetMoviesUseCase
 import com.example.movieappcompose.usecase.GetPopularMoviesUseCase
 import com.example.movieappcompose.usecase.GetUpcomingMoviesUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
-class MovieListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MovieListViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
+    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
 ) : BaseViewModel<MovieListState>(MovieListState.Init) {
     private var popularMovies = emptyList<Movie>()
     private var upcomingMovies = emptyList<Movie>()

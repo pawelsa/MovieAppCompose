@@ -2,8 +2,9 @@ package com.example.movieappcompose.screens.movieDetail.frontLayer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -12,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.viewinterop.viewModel
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnSelected
 import com.example.movieappcompose.data.models.Discussion
@@ -47,15 +48,15 @@ fun FrontLayer(
         Box(
             modifier = Modifier
                     .padding(vertical = Dimen.padding.big)
-                    .height(Dimen.pillHeight)
-                    .width(Dimen.pillWidth)
+                    .requiredHeight(Dimen.pillHeight)
+                    .requiredWidth(Dimen.pillWidth)
                     .clip(RoundedCornerShape(Dimen.corner.pill))
                     .background(MovieColors.greyPill)
                     .align(Alignment.CenterHorizontally),
         ) {}
         Spacer(
             modifier = Modifier
-                    .height(Dimen.margin.medium)
+                    .requiredHeight(Dimen.margin.medium)
                     .fillMaxWidth()
         )
         when (movieDetailState) {
@@ -160,13 +161,13 @@ private fun TabText(title: String, isLoading: Boolean, count: Int) {
             text = title,
             style = MaterialTheme.typography.h2
         )
-        Spacer(modifier = Modifier.width(Dimen.padding.small))
+        Spacer(modifier = Modifier.requiredWidth(Dimen.padding.small))
         if (isLoading) {
             CircularProgressIndicator(
                 strokeWidth = Dimen.tabProgressIndicatorStroke,
                 modifier = Modifier
                         .padding(bottom = Dimen.padding.medium)
-                        .size(Dimen.tabProgressIndicator)
+                        .requiredSize(Dimen.tabProgressIndicator)
             )
         } else {
             Text(
@@ -193,7 +194,7 @@ private fun ReviewsTab(
                         .fillMaxWidth()
             ) {
                 Text(text = review.author, style = MaterialTheme.typography.h4)
-                Spacer(modifier = Modifier.height(Dimen.margin.medium))
+                Spacer(modifier = Modifier.requiredHeight(Dimen.margin.medium))
                 Text(text = review.content, style = MaterialTheme.typography.h5)
             }
         }
@@ -219,11 +220,11 @@ fun <T> TabContent(
     if (data.isEmpty()) {
         ContentEmpty(emptyMessage)
     } else {
-        LazyColumnFor(
+        LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            items = data,
-            itemContent = content
-        )
+        ) {
+            items(data, itemContent = content)
+        }
     }
 }
 
@@ -234,7 +235,7 @@ private fun ContentEmpty(text: String) {
             text = text,
             style = MaterialTheme.typography.h1,
             textAlign = TextAlign.Center,
-            lineHeight = TextUnit.Companion.Sp(Dimen.text.noDiscussionData.value * 1.5),
+            lineHeight = (Dimen.text.noDiscussionData.value * 1.5).sp,
             modifier = Modifier.padding(Dimen.padding.big)
         )
     }

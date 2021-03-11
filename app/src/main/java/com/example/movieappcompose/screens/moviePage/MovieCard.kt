@@ -13,12 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
 import com.example.movieappcompose.data.models.Movie
@@ -30,7 +31,7 @@ import dev.chrisbanes.accompanist.glide.GlideImage
 
 @Composable
 fun MovieCard(movie: Movie, onClick: OnClick = {}) {
-    WithConstraints {
+    BoxWithConstraints {
         ConstraintLayout(
             Modifier
                     .padding(maxWidth.times(0.03f))
@@ -41,13 +42,14 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
             val (poster, card, info, grade) = createRefs()
 
             Box(modifier = Modifier
-                    .width(maxWidth.times(0.24f))
+                    .requiredWidth(this@BoxWithConstraints.maxWidth.times(0.24f))
                     .zIndex(5.dp.value)
                     .aspectRatio(Dimen.posterAspectRatio)
                     .clip(RoundedCornerShape(Dimen.corner.poster))
                     .constrainAs(poster) {
                         top.linkTo(parent.top)
-                        start.linkTo(card.start, margin = maxWidth.times(0.045f))
+                        start.linkTo(card.start,
+                            margin = this@BoxWithConstraints.maxWidth.times(0.045f))
                         bottom.linkTo(info.bottom, margin = Dimen.margin.big)
                     }) {
                 // TODO: 05/11/2020 add placeholder and loading image
@@ -92,7 +94,8 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
                         .padding(vertical = 15.dp)
                         .zIndex(5.dp.value)
                         .constrainAs(info) {
-                            start.linkTo(poster.end, margin = maxWidth.times(0.045f))
+                            start.linkTo(poster.end,
+                                margin = this@BoxWithConstraints.maxWidth.times(0.045f))
                             end.linkTo(grade.start, margin = Dimen.margin.medium)
                             bottom.linkTo(poster.bottom)
                             width = Dimension.fillToConstraints

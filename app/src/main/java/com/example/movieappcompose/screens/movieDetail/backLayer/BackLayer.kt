@@ -1,22 +1,22 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.VerticalGradient
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.WithConstraints
-import androidx.compose.ui.layout.WithConstraintsScope
-import androidx.compose.ui.platform.DensityAmbient
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieappcompose.base.OnClick
 import com.example.movieappcompose.data.models.Movie
@@ -51,7 +51,7 @@ fun MovieDetailBackLayer(movieDetailState: MovieDetailState) {
 
 @Composable
 fun LoadedMovieDetails(onMorePressed: OnClick, movie: Movie) {
-    WithConstraints {
+    BoxWithConstraints {
         Box(
             Modifier.fillMaxSize()
         ) {
@@ -59,7 +59,7 @@ fun LoadedMovieDetails(onMorePressed: OnClick, movie: Movie) {
                 data = imageWidth500Url(movie.posterPath),
                 modifier = Modifier
                         .fillMaxWidth()
-                        .preferredHeight(maxHeight / 2),
+                        .requiredHeight(this@BoxWithConstraints.maxHeight / 2),
                 contentScale = ContentScale.Crop,
                 requestBuilder = {
                     val options = RequestOptions()
@@ -79,11 +79,12 @@ fun LoadedMovieDetails(onMorePressed: OnClick, movie: Movie) {
 }
 
 @Composable
-private fun WithConstraintsScope.MovieDetailCard(movie: Movie) {
-    ScrollableColumn(
+private fun MovieDetailCard(movie: Movie) {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Bottom
     ) {
-        Spacer(modifier = Modifier.height(Dimen.spaceFromTopOfDetailScreen))
+        Spacer(modifier = Modifier.requiredHeight(Dimen.spaceFromTopOfDetailScreen))
         ConstraintLayout(
             Modifier.fillMaxSize()
         ) {
@@ -93,7 +94,7 @@ private fun WithConstraintsScope.MovieDetailCard(movie: Movie) {
                 elevation = Dimen.elevation.poster,
                 modifier = Modifier
                         .zIndex(4.dp.value)
-                        .width(Dimen.posterWidth)
+                        .requiredWidth(Dimen.posterWidth)
                         .aspectRatio(0.73f)
                         .clip(RoundedCornerShape(Dimen.corner.poster))
                         .constrainAs(poster) {
@@ -107,25 +108,19 @@ private fun WithConstraintsScope.MovieDetailCard(movie: Movie) {
                 )
             }
 
-
-            val scale = DensityAmbient.current.density
-            val dpAsPixels = (maxHeight.value * scale + 0.5f)
             Box(
                 Modifier
                         .fillMaxWidth()
                         .clip(
                             RoundedCornerShape(
-                                topLeft = Dimen.corner.bigCard,
-                                topRight = Dimen.corner.bigCard,
+                                topStart = Dimen.corner.bigCard,
+                                topEnd = Dimen.corner.bigCard,
                             )
                         )
                         .zIndex(3.dp.value)
                         .background(
-                            VerticalGradient(
-                                0.0f to MovieColors.backgroundStart,
-                                1.0f to MovieColors.backgroundEnd,
-                                startY = 0f,
-                                endY = dpAsPixels,
+                            Brush.Companion.linearGradient(colors = listOf(MovieColors.backgroundStart,
+                                MovieColors.backgroundEnd)
                             )
                         )
                         .constrainAs(body) {

@@ -1,8 +1,8 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,12 +12,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.example.movieappcompose.R
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.ActionsAmbient
+import com.example.movieappcompose.utlis.LocalActions
 
 
 @Composable
 fun DetailsPart(movie: Movie) {
-    val actionAmbient = ActionsAmbient.current
+    val actionAmbient = LocalActions.current
 
     val onCollectPressed = {
         // TODO: 03/11/2020 add some action
@@ -41,11 +41,11 @@ fun DetailsPart(movie: Movie) {
         maxLines = 4,
         overflow = TextOverflow.Ellipsis,
     )
-    Spacer(modifier = Modifier.height(Dimen.margin.big))
+    Spacer(modifier = Modifier.requiredHeight(Dimen.margin.big))
     TicketButtons(
         onCollectPressed = onCollectPressed,
         onBuyPressed = onBuyPressed
     )
-    Spacer(modifier = Modifier.height(Dimen.margin.big))
+    Spacer(modifier = Modifier.requiredHeight(Dimen.margin.big))
     ActorsSection(onShowMorePressed = onShowMoreActorsPressed, movie.cast)
 }

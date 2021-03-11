@@ -3,14 +3,12 @@ package com.example.movieappcompose.screens.scanner
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.preferredHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onActive
-import androidx.compose.runtime.onDispose
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.movieappcompose.widgets.MovieAppBar
@@ -21,7 +19,6 @@ import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.camera.CameraSettings
-import timber.log.Timber
 
 @Composable
 fun ScannerScreen(showBottomBar:Boolean) {
@@ -36,13 +33,16 @@ fun ScannerScreen(showBottomBar:Boolean) {
 }
 
 @Composable
-fun ScannerView() {
-    val context = ContextAmbient.current
+fun ScannerView(
+) {
+    val context = LocalContext.current
     val barcodeView = remember {
         DecoratedBarcodeView(context)
     }
 
-    AndroidView({ barcodeView }, modifier = Modifier.fillMaxWidth().preferredHeight(300.dp)) {
+    AndroidView({ barcodeView }, modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)) {
 
         it.decodeContinuous(object : BarcodeCallback {
             override fun barcodeResult(result: BarcodeResult) {
@@ -60,7 +60,7 @@ fun ScannerView() {
                                 .show()
                     }
                 } catch (ex: Exception) {
-                    Timber.e("ScannerScreen", "Parse Error $ex")
+//                    Timber.e("ScannerScreen", "Parse Error $ex")
                 }
             }
 
@@ -83,14 +83,15 @@ fun ScannerView() {
             isContinuousFocusEnabled = false
         }
     }
-
-    onActive {
+/*
+    LaunchedEffect{
         barcodeView.resume()
     }
 
+
     onDispose {
         barcodeView.pause()
-    }
+    }*/
 
 }
 

@@ -23,11 +23,11 @@ fun OverflowRow(
         overflow()
     }
     Layout(
-        children = childrenWithOverflow,
+        content = childrenWithOverflow,
         modifier = modifier
     ) { measurables, constraints ->
         val maxWidth = constraints.maxWidth
-        val spacingPx = spacing.toIntPx()
+        val spacingPx = spacing.roundToPx()
 
         val toDisplay = mutableListOf<Placeable>()
         var currentMainAxisSize: Int

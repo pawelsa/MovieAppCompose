@@ -1,8 +1,9 @@
 package com.example.movieappcompose.widgets
 
-import androidx.compose.foundation.ProvideTextStyle
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.LocalAbsoluteElevation
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,9 +13,10 @@ import com.example.movieappcompose.ui.ethnocentricFont
 
 private val AppBarHeight = 56.dp
 private val AppBarHorizontalPadding = 4.dp
-private val TitleInsetWithoutIcon = Modifier.preferredWidth(16.dp - AppBarHorizontalPadding)
-private val TitleIconModifier = Modifier.fillMaxHeight()
-    .preferredWidth(72.dp - AppBarHorizontalPadding)
+private val TitleInsetWithoutIcon = Modifier.width(16.dp - AppBarHorizontalPadding)
+private val TitleIconModifier = Modifier
+        .fillMaxHeight()
+        .width(72.dp - AppBarHorizontalPadding)
 
 @Composable
 fun MovieAppBar(
@@ -23,39 +25,44 @@ fun MovieAppBar(
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
-        Modifier.fillMaxWidth()
-            .padding(start = AppBarHorizontalPadding, end = AppBarHorizontalPadding)
-            .preferredHeight(AppBarHeight),
+        Modifier
+                .fillMaxWidth()
+                .padding(start = AppBarHorizontalPadding, end = AppBarHorizontalPadding)
+                .height(AppBarHeight),
         horizontalArrangement = Arrangement.SpaceBetween,
-        children = {
-            val emphasisLevels = AmbientEmphasisLevels.current
+        content = {
+            val emphasisLevels = LocalAbsoluteElevation.current
             if (navigationIcon == null) {
                 Spacer(TitleInsetWithoutIcon)
             } else {
                 Row(TitleIconModifier, verticalAlignment = Alignment.CenterVertically) {
-                    ProvideEmphasis(emphasisLevels.high, navigationIcon)
+//                    Elevation(emphasisLevels.high, navigationIcon)
+                    navigationIcon
                 }
             }
 
             title?.let {
                 Row(
-                    Modifier.fillMaxHeight().weight(1f),
+                    Modifier
+                            .fillMaxHeight()
+                            .weight(1f),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     ProvideTextStyle(value = MaterialTheme.typography.h6.copy(fontFamily = ethnocentricFont)) {
-                        ProvideEmphasis(emphasisLevels.high, it)
+//                        ProvideEmphasis(emphasisLevels.high, it)
+                        it
                     }
                 }
             }
 
-            ProvideEmphasis(emphasisLevels.medium) {
+//            CompositionLocalProvider(emphasisLevels.medium) {
                 Row(
                     Modifier.fillMaxHeight(),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
-                    children = actions
+                    content = actions
                 )
-            }
+//            }
         }
     )
 }

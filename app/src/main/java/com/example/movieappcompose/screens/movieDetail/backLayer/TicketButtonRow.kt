@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonConstants
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,11 +27,11 @@ fun TicketButtons(
             modifier = Modifier
                     .weight(1f)
                     .padding(Dimen.padding.medium),
-            colors = ButtonConstants.defaultButtonColors(
+            colors = ButtonDefaults.buttonColors(
                 backgroundColor = MovieColors.greyButton
             ),
             contentPadding = PaddingValues(Dimen.padding.button),
-            elevation = ButtonConstants.defaultElevation(Dimen.elevation.button),
+            elevation = ButtonDefaults.elevation(Dimen.elevation.button),
             onClick = onCollectPressed,
         ) {
             Text(
@@ -43,9 +43,9 @@ fun TicketButtons(
             modifier = Modifier
                     .weight(2f)
                     .padding(Dimen.padding.medium),
-            colors = ButtonConstants.defaultButtonColors(backgroundColor = MovieColors.yellow),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MovieColors.yellow),
             contentPadding = PaddingValues(Dimen.padding.button),
-            elevation = ButtonConstants.defaultElevation(Dimen.elevation.button),
+            elevation = ButtonDefaults.elevation(Dimen.elevation.button),
             onClick = onBuyPressed,
         ) {
             Text(text = stringResource(id = R.string.detail_buy_now))

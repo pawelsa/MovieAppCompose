@@ -2,7 +2,7 @@ package com.example.movieappcompose.screens.moviePage
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,7 +10,7 @@ import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListState
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListViewModel
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.ActionsAmbient
+import com.example.movieappcompose.utlis.LocalActions
 import com.example.movieappcompose.widgets.Center
 import com.example.movieappcompose.widgets.ViewPager
 
@@ -24,7 +24,7 @@ fun MainScreenTabBarPager(
     MovieHomeTabRow(pageSelected = pageSelected, onPageSelected = onPageSelected)
     Spacer(
         modifier = Modifier
-                .height(Dimen.margin.small)
+                .requiredHeight(Dimen.margin.small)
                 .fillMaxWidth()
     )
     MainScreenTabBarPager(
@@ -86,7 +86,7 @@ fun MoviesPager(
     popularMovies: List<Movie>,
     upcomingMovies: List<Movie>,
 ) {
-    val selectMovie = ActionsAmbient.current.selectMovie
+    val selectMovie = LocalActions.current.selectMovie
     ViewPager(
         selectedPage = pageSelected,
         onPageChanged = onPageSelected,

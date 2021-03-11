@@ -3,7 +3,10 @@ package com.example.movieappcompose.ui
 import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.movieappcompose.R
 
@@ -28,34 +31,34 @@ caption = TextStyle(
 */
 )
 
-private val appFontFamily = fontFamily(
+private val appFontFamily = FontFamily(
     fonts = listOf(
-        ResourceFont(
+        Font(
             resId = R.font.itc_avant_garde_std_bk,
             weight = FontWeight.Light,
             style = FontStyle.Normal
         ),
-        ResourceFont(
+        Font(
             resId = R.font.itc_avant_garde_std_bk_obl,
             weight = FontWeight.Light,
             style = FontStyle.Italic
         ),
-        ResourceFont(
+        Font(
             resId = R.font.itc_avant_garde_std_md,
             weight = FontWeight.Normal,
             style = FontStyle.Normal
         ),
-        ResourceFont(
+        Font(
             resId = R.font.itc_avant_garde_std_md_obl,
             weight = FontWeight.Normal,
             style = FontStyle.Italic
         ),
-        ResourceFont(
+        Font(
             resId = R.font.itc_avant_garde_std_bold,
             weight = FontWeight.Bold,
             style = FontStyle.Normal
         ),
-        ResourceFont(
+        Font(
             resId = R.font.itc_avant_garde_std_bold_obl,
             weight = FontWeight.Bold,
             style = FontStyle.Italic
@@ -63,9 +66,9 @@ private val appFontFamily = fontFamily(
     )
 )
 
-val ethnocentricFont = fontFamily(
+val ethnocentricFont = FontFamily(
     fonts = listOf(
-        ResourceFont(
+        Font(
             resId = R.font.ethnocentric,
             weight = FontWeight.Normal,
             style = FontStyle.Normal

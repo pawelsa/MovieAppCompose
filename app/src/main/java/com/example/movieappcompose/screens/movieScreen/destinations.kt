@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.ui.Navigator
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Models the screens in the app and any arguments they require.

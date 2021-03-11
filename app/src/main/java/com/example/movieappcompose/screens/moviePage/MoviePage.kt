@@ -1,15 +1,14 @@
 package com.example.movieappcompose.screens.moviePage
 
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onActive
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.viewinterop.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.screens.moviePage.viewModel.MainScreenViewModel
@@ -38,16 +37,16 @@ fun MoviePage(
     onPageSelected: (Int) -> Unit,
 ) {
     val viewModel: MovieListViewModel = viewModel()
-    onActive {
+    /*onActive {
         viewModel.getMovies()
-    }
+    }*/
 
     Column {
         MovieAppBar(
             title = { Text(text = stringResource(id = R.string.main_title)) },
             actions = {
                 IconButton(onClick = onSearchPressed) {
-                    Icon(Icons.Outlined.Search)
+                    Icon(Icons.Outlined.Search, "")
                 }
             })
         MainScreenTabBarPager(

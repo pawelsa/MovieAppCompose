@@ -6,8 +6,7 @@ import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onCommit
-import androidx.compose.ui.viewinterop.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.screens.movieDetail.backLayer.MovieDetailBackLayer
@@ -23,9 +22,9 @@ fun MovieDetailPage(
     viewModel: MovieDetailViewModel = viewModel(),
 ) {
     val mainActivityViewModel: MainActivityViewModel = viewModel()
-    onCommit(movie.id) {
+    /*onCommit(movie.id) {
         viewModel.setMovie(movie)
-    }
+    }*/
     Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) {
         // TODO: 04/11/2020 fix the visible difference between back layer and front layer,
         //  when the front one is closed, we can see that back layer starts at the top of frontlayer,
@@ -36,8 +35,8 @@ fun MovieDetailPage(
             headerHeight = Dimen.frontLayerPeekHeight,
             scaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed),
             frontLayerShape = RoundedCornerShape(
-                topLeft = Dimen.corner.bottomSheet,
-                topRight = Dimen.corner.bottomSheet
+                topStart = Dimen.corner.bottomSheet,
+                topEnd = Dimen.corner.bottomSheet
             ),
             backLayerBackgroundColor = MovieColors.backgroundEnd,
             backLayerContent = { MovieDetailBackLayer(viewModel.state) },

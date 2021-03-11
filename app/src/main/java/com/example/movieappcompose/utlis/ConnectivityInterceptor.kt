@@ -17,6 +17,6 @@ class ConnectivityInterceptor : Interceptor {
 }
 
 class NoInternetException : IOException() {
-    override val message: String?
+    override val message: String
         get() = "No internet connection"
 }

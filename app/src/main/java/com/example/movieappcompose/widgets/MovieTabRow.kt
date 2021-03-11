@@ -1,8 +1,5 @@
 package com.example.movieappcompose.widgets
 
-import androidx.compose.animation.animate
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,15 +43,15 @@ fun DefaultIndicator(currentTabPosition: TabPosition) {
         Box(
             Modifier
                     .padding(end = 5.dp)
-                    .width(20.dp)
-                    .preferredHeight(5.dp)
+                    .requiredWidth(20.dp)
+                    .height(5.dp)
                     .clip(RoundedCornerShape(2.5.dp))
                     .background(color = MovieColors.yellow)
         )
         Box(
             Modifier
-                    .width(5.dp)
-                    .preferredHeight(5.dp)
+                    .requiredWidth(5.dp)
+                    .height(5.dp)
                     .clip(RoundedCornerShape(2.5.dp))
                     .background(color = MovieColors.yellow)
         )
@@ -68,12 +65,12 @@ fun Modifier.defaultTabIndicatorOffset(
     //  sizes inside a scrollable tab row?
     val currentTabWidth = currentTabPosition.width
     val middleOfSelectedTab = currentTabPosition.left + currentTabWidth / 2 - 15.dp
-    val indicatorOffset = animate(
+    /*val indicatorOffset = animate(
         target = middleOfSelectedTab,
         animSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
-    )
+    )*/
     fillMaxWidth()
             .wrapContentSize(Alignment.BottomStart)
-            .offset(x = indicatorOffset)
-            .preferredWidth(currentTabWidth)
+//            .offset(x = indicatorOffset)
+            .width(currentTabWidth)
 }
