@@ -5,6 +5,7 @@ import androidx.compose.material.LocalAbsoluteElevation
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,13 +32,14 @@ fun MovieAppBar(
                 .height(AppBarHeight),
         horizontalArrangement = Arrangement.SpaceBetween,
         content = {
-            val emphasisLevels = LocalAbsoluteElevation.current
+
             if (navigationIcon == null) {
                 Spacer(TitleInsetWithoutIcon)
             } else {
                 Row(TitleIconModifier, verticalAlignment = Alignment.CenterVertically) {
-//                    Elevation(emphasisLevels.high, navigationIcon)
-                    navigationIcon
+                    CompositionLocalProvider(LocalAbsoluteElevation provides 2.dp) {
+                        navigationIcon()
+                    }
                 }
             }
 
@@ -49,20 +51,21 @@ fun MovieAppBar(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     ProvideTextStyle(value = MaterialTheme.typography.h6.copy(fontFamily = ethnocentricFont)) {
-//                        ProvideEmphasis(emphasisLevels.high, it)
-                        it
+                        CompositionLocalProvider(LocalAbsoluteElevation provides 2.dp) {
+                            it()
+                        }
                     }
                 }
             }
 
-//            CompositionLocalProvider(emphasisLevels.medium) {
+            CompositionLocalProvider(LocalAbsoluteElevation provides 2.dp) {
                 Row(
                     Modifier.fillMaxHeight(),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
                     content = actions
                 )
-//            }
+            }
         }
     )
 }
