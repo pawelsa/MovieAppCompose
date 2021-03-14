@@ -1,5 +1,9 @@
 package com.example.movieappcompose.widgets
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +14,7 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -17,14 +22,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 
 @Composable
 fun BottomNavigationBar(show: Boolean, current: Int, onSelect: (Int) -> Unit) {
 
+    val height by animateDpAsState(targetValue = if (show) Dimen.bottomBarHeight else 0.dp)
+
     val modifier = Modifier
-//            .requiredHeight(        animate(targetValue = if (show) Dimen.bottomBarHeight else 0.dp) )
+            .requiredHeight(height)
     Box(
         modifier = modifier
                 .clip(
@@ -61,14 +69,15 @@ fun BottomNavigationBar(show: Boolean, current: Int, onSelect: (Int) -> Unit) {
 
 @Composable
 fun BottomNavigationBarItem(icon: ImageVector, isSelected: Boolean, onClick: () -> Unit) {
-    val iconColor = if (isSelected) MovieColors.yellow else MovieColors.nonSelectedText
+    val iconColor by animateColorAsState(
+        targetValue = if (isSelected) MovieColors.yellow else MovieColors.nonSelectedText,
+        animationSpec = tween(durationMillis = 250, easing = LinearEasing)
+    )
+
     IconButton(onClick = onClick) {
         Icon(
-            icon, "",
-//            tint = animate(
-//            target = iconColor,
-//            animSpec = tween(durationMillis = 250, easing = LinearEasing)
-//        )
+            imageVector = icon, contentDescription = "",
+            tint = iconColor,
         )
     }
 }
