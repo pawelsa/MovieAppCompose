@@ -1,11 +1,15 @@
 package com.example.movieappcompose.widgets
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.TabPosition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -65,12 +69,12 @@ fun Modifier.defaultTabIndicatorOffset(
     //  sizes inside a scrollable tab row?
     val currentTabWidth = currentTabPosition.width
     val middleOfSelectedTab = currentTabPosition.left + currentTabWidth / 2 - 15.dp
-    /*val indicatorOffset = animate(
-        target = middleOfSelectedTab,
-        animSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
-    )*/
+    val indicatorOffset by animateDpAsState(
+        targetValue = middleOfSelectedTab,
+        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
+    )
     fillMaxWidth()
             .wrapContentSize(Alignment.BottomStart)
-//            .offset(x = indicatorOffset)
+            .offset(x = indicatorOffset)
             .width(currentTabWidth)
 }

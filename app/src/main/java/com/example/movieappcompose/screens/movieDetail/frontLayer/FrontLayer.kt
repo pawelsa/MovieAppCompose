@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,7 +25,11 @@ import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.widgets.Center
 import com.example.movieappcompose.widgets.MovieTabRow
-import com.example.movieappcompose.widgets.ViewPager
+import com.example.movieappcompose.widgets.pager_temp.ExperimentalPagerApi
+import com.example.movieappcompose.widgets.pager_temp.HorizontalPager
+import com.example.movieappcompose.widgets.pager_temp.PagerState
+import com.example.movieappcompose.widgets.pager_temp.rememberPagerState
+import kotlinx.coroutines.launch
 
 @Composable
 fun FrontLayer(
@@ -38,12 +43,29 @@ fun FrontLayer(
     )
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun FrontLayer(
     pageSelected: Int,
     onPageSelected: OnSelected,
-    movieDetailState: MovieDetailState
+    movieDetailState: MovieDetailState,
 ) {
+
+    val pagerState = rememberPagerState(
+        pageCount = 2,
+        pageChanged = onPageSelected,
+        initialPage = pageSelected,
+    )
+
+    val coroutineScope = rememberCoroutineScope()
+    val onSelected: OnSelected = {
+        coroutineScope.launch {
+            pagerState.animateScrollToPage(it)
+        }
+        onPageSelected(it)
+    }
+
+
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -61,59 +83,53 @@ fun FrontLayer(
         )
         when (movieDetailState) {
             is MovieDetailState.LoadedMovieDetails -> DataLoadedViewPager(
-                pageSelected = pageSelected,
-                onPageSelected = onPageSelected,
+                pagerState = pagerState,
+                onPageSelected = onSelected,
                 reviews = movieDetailState.movie.reviews,
                 discussionMessages = movieDetailState.movie.discussion
             )
             else -> LoadingDatingViewPage(
-                pageSelected = pageSelected,
-                onPageSelected = onPageSelected
+                pagerState = pagerState,
+                onPageSelected = onSelected
             )
         }
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun DataLoadedViewPager(
-    pageSelected: Int,
+    pagerState: PagerState,
     onPageSelected: OnSelected,
     reviews: List<Review>,
     discussionMessages: List<Discussion>,
 ) {
     DiscussionTabRow(
-        pageSelected = pageSelected,
+        pageSelected = pagerState.currentPage,
         onPageSelected = onPageSelected,
         noReview = reviews.size,
         noDiscussion = discussionMessages.size
     )
-    ViewPager(
-        noItems = 2,
-        selectedPage = pageSelected,
-        onPageChanged = onPageSelected,
-    ) { index, _ ->
-        if (index == 0)
-            ReviewsTab(reviews)
-        else
-            DiscussionTab(discussionMessages)
+    HorizontalPager(state = pagerState) { page ->
+        when (page) {
+            0 -> ReviewsTab(reviews)
+            else -> DiscussionTab(discussionMessages)
+        }
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun LoadingDatingViewPage(
-    pageSelected: Int,
+    pagerState: PagerState,
     onPageSelected: OnSelected,
 ) {
     DiscussionTabRow(
-        pageSelected = pageSelected,
+        pageSelected = pagerState.currentPage,
         onPageSelected = onPageSelected,
         isLoading = true
     )
-    ViewPager(
-        noItems = 2,
-        selectedPage = pageSelected,
-        onPageChanged = onPageSelected,
-    ) { _, _ ->
+    HorizontalPager(state = pagerState) {
         Center {
             CircularProgressIndicator()
         }
@@ -126,7 +142,7 @@ private fun DiscussionTabRow(
     onPageSelected: OnSelected,
     isLoading: Boolean = false,
     noReview: Int = 0,
-    noDiscussion: Int = 0
+    noDiscussion: Int = 0,
 ) {
     MovieTabRow(pageSelected = pageSelected) {
         Tab(
@@ -137,7 +153,8 @@ private fun DiscussionTabRow(
             TabText(
                 title = stringResource(id = R.string.detail_reviews),
                 isLoading = isLoading,
-                count = noReview
+                count = noReview,
+                isSelected = pageSelected == 0
             )
         }
         Tab(
@@ -148,18 +165,24 @@ private fun DiscussionTabRow(
             TabText(
                 title = stringResource(id = R.string.detail_discuss),
                 isLoading = isLoading,
-                count = noDiscussion
+                count = noDiscussion,
+                isSelected = pageSelected == 1
             )
         }
     }
 }
 
 @Composable
-private fun TabText(title: String, isLoading: Boolean, count: Int) {
+private fun TabText(title: String, isLoading: Boolean, count: Int, isSelected: Boolean) {
+    val selectedTabTextStyle = MaterialTheme.typography.h2
+    val notSelectedTabTextStyle =
+        MaterialTheme.typography.h2.copy(color = MovieColors.nonSelectedText)
+    val textStyle = if (isSelected) selectedTabTextStyle else notSelectedTabTextStyle
+
     Row {
         Text(
             text = title,
-            style = MaterialTheme.typography.h2
+            style = textStyle
         )
         Spacer(modifier = Modifier.requiredWidth(Dimen.padding.small))
         if (isLoading) {
@@ -181,7 +204,7 @@ private fun TabText(title: String, isLoading: Boolean, count: Int) {
 
 @Composable
 private fun ReviewsTab(
-    reviews: List<Review>
+    reviews: List<Review>,
 ) {
     TabContent(
         data = reviews,
@@ -215,7 +238,7 @@ fun DiscussionTab(discussionMessages: List<Discussion>) {
 fun <T> TabContent(
     data: List<T>,
     emptyMessage: String,
-    content: @Composable LazyItemScope.(T) -> Unit
+    content: @Composable LazyItemScope.(T) -> Unit,
 ) {
     if (data.isEmpty()) {
         ContentEmpty(emptyMessage)
