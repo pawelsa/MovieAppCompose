@@ -1,5 +1,7 @@
 package com.example.movieappcompose.widgets
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.scrollable
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.LayoutModifier
@@ -22,6 +25,8 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -44,7 +49,7 @@ fun <T> ViewPager(
     state.update(items.size, screenWidth, topYDelta, bottomYDelta)
 
     val spacingPx = state.spacingPx
-//    val animatedOffset = state.animatedOffset
+    val animatedOffset = state.animatedOffset
 
     val centers = (0..items.size).map { spacingPx * it }
     val currentPage = remember(selectedPage) { mutableStateOf(selectedPage) }
@@ -61,15 +66,14 @@ fun <T> ViewPager(
                 Modifier
                         .zIndex(1f)
                         .offset(getX = {
-                            val indexOfCurrentPage = 1//centers.indexOf(abs(animatedOffset.value))
+                            val indexOfCurrentPage = centers.indexOf(abs(animatedOffset.value))
                             if (indexOfCurrentPage != -1 && indexOfCurrentPage != currentPage.value) {
                                 currentPage.value = indexOfCurrentPage
                                 onPageChanged(currentPage.value)
                             }
-//                        center + animatedOffset.value
-                            center
+                            center + animatedOffset.value
                         }, getY = {
-                            val distFromCenter = abs(/*animatedOffset.value + */center) / spacingPx
+                            val distFromCenter = abs(animatedOffset.value + center) / spacingPx
                             lerp(state.topYDelta, state.bottomYDelta, distFromCenter)
                         })
                         .align(Alignment.TopCenter)
@@ -98,7 +102,7 @@ fun ViewPager(
     state.update(noItems, screenWidth, topYDelta, bottomYDelta)
 
     val spacingPx = state.spacingPx
-//    val animatedOffset = state.animatedOffset
+    val animatedOffset = state.animatedOffset
 
     val centers = (0..noItems).map { spacingPx * it }
     val currentPage = remember(selectedPage) { mutableStateOf(selectedPage) }
@@ -115,15 +119,14 @@ fun ViewPager(
                 Modifier
                         .zIndex(1f)
                         .offset(getX = {
-                            val indexOfCurrentPage = 1//centers.indexOf(abs(animatedOffset.value))
+                            val indexOfCurrentPage = centers.indexOf(abs(animatedOffset.value))
                             if (indexOfCurrentPage != -1 && indexOfCurrentPage != currentPage.value) {
                                 currentPage.value = indexOfCurrentPage
                                 onPageChanged(currentPage.value)
                             }
-//                            center + animatedOffset.value
-                            center
+                            center + animatedOffset.value
                         }, getY = {
-                            val distFromCenter = abs(/*animatedOffset.value +*/ center) / spacingPx
+                            val distFromCenter = abs(animatedOffset.value + center) / spacingPx
                             lerp(state.topYDelta, state.bottomYDelta, distFromCenter)
                         })
                         .align(Alignment.TopCenter)
@@ -162,12 +165,14 @@ fun Modifier.offset(
 fun rememberCarouselState(): ViewPagerState {
     val density = LocalDensity.current
 //    val clock = AnimationClockAmbient.current.asDisposableClock()
-    val animatedOffset = androidx.compose.animation.core.Animatable(0f)
+    val coroutineScope = rememberCoroutineScope()
+    val animatedOffset = Animatable(0f)
 
     return remember(density) {
         ViewPagerState(
             density,
-//            animatedOffset,
+            animatedOffset,
+            coroutineScope
 //            clock,
         )
     }
@@ -175,10 +180,13 @@ fun rememberCarouselState(): ViewPagerState {
 
 class ViewPagerState(
     private val density: Density,
-//    val animatedOffset: Animatable,
+    val animatedOffset: Animatable<Float, AnimationVector1D>,
+    val coroutineScope: CoroutineScope,
 ) {
+    //    private val flingConfig = FlingConfig(AndroidFlingDecaySpec(density)) { adjustTarget(it) }
     internal val scrollableController =
         ScrollableState { consumeScrollDelta(it) }
+
 
     private var itemCount: Int = 0
     var spacingPx: Float = 0f
@@ -204,20 +212,22 @@ class ViewPagerState(
 
     private fun consumeScrollDelta(delta: Float): Float {
 
-        var target = /*animatedOffset.value +*/ delta
+        var target = animatedOffset.value + delta
         var consumed = delta
         when {
             target > upperBound -> {
-                consumed = upperBound// - animatedOffset.value
+                consumed = upperBound - animatedOffset.value
                 target = upperBound
             }
             target < lowerBound -> {
-                consumed = lowerBound// - animatedOffset.value
+                consumed = lowerBound - animatedOffset.value
                 target = lowerBound
             }
         }
 
-//        animatedOffset.snapTo(target)
+        coroutineScope.launch {
+            animatedOffset.snapTo(target)
+        }
         return consumed
     }
 }

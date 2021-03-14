@@ -13,11 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.bumptech.glide.request.RequestOptions
+import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailState
@@ -60,6 +62,7 @@ fun LoadedMovieDetails(onMorePressed: OnClick, movie: Movie) {
                 modifier = Modifier
                         .fillMaxWidth()
                         .requiredHeight(this@BoxWithConstraints.maxHeight / 2),
+                contentDescription = stringResource(id = R.string.poster_description, movie.title),
                 contentScale = ContentScale.Crop,
                 requestBuilder = {
                     val options = RequestOptions()
@@ -104,6 +107,8 @@ private fun MovieDetailCard(movie: Movie) {
                 GlideImage(
                     imageWidth500Url(movie.posterPath),
                     contentScale = ContentScale.Crop,
+                    contentDescription = stringResource(id = R.string.poster_description,
+                        movie.title),
                     modifier = Modifier.zIndex(5.dp.value)
                 )
             }

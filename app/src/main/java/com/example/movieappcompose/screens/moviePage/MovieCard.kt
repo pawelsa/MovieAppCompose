@@ -55,8 +55,11 @@ fun MovieCard(movie: Movie, onClick: OnClick = {}) {
                 // TODO: 05/11/2020 add placeholder and loading image
                 GlideImage(
                     data = imageWidth500Url(movie.posterPath),
+                    contentDescription = stringResource(id = R.string.poster_description,
+                        movie.title),
                     contentScale = ContentScale.Crop
                 )
+
             }
 
             Box(

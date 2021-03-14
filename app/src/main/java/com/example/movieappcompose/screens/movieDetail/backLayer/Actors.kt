@@ -69,13 +69,14 @@ fun ActorDetail(modifier: Modifier, actor: Cast) {
 
         GlideImage(
             data = imageWidth500Url(actor.profilePicture),
+            contentDescription = stringResource(id = R.string.actor_photo_description, actor.name),
             modifier = Modifier
                     .padding(Dimen.padding.medium)
                     .aspectRatio(Dimen.squareRatio)
                     .clip(
                         CircleShape
                     ),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Crop
         )
         Text(
             text = actor.name,

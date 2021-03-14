@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListState
@@ -12,24 +13,42 @@ import com.example.movieappcompose.screens.moviePage.viewModel.MovieListViewMode
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.utlis.LocalActions
 import com.example.movieappcompose.widgets.Center
-import com.example.movieappcompose.widgets.ViewPager
+import com.example.movieappcompose.widgets.pager_temp.ExperimentalPagerApi
+import com.example.movieappcompose.widgets.pager_temp.HorizontalPager
+import com.example.movieappcompose.widgets.pager_temp.PagerState
+import com.example.movieappcompose.widgets.pager_temp.rememberPagerState
+import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MainScreenTabBarPager(
     pageSelected: Int,
     onPageSelected: (Int) -> Unit,
-    viewModel: MovieListViewModel
+    viewModel: MovieListViewModel,
 ) {
-    MovieHomeTabRow(pageSelected = pageSelected, onPageSelected = onPageSelected)
+    val pagerState =
+        rememberPagerState(
+            pageCount = 2,
+            pageChanged = onPageSelected,
+            initialPage = pageSelected,
+        )
+
+    val scope = rememberCoroutineScope()
+
+    MovieHomeTabRow(pagerState = pagerState, onPageSelected = {
+        scope.launch {
+            pagerState.animateScrollToPage(it)
+        }
+        onPageSelected(it)
+    })
     Spacer(
         modifier = Modifier
                 .requiredHeight(Dimen.margin.small)
                 .fillMaxWidth()
     )
     MainScreenTabBarPager(
-        pageSelected = pageSelected,
-        onPageSelected = onPageSelected,
+        pagerState = pagerState,
         state = viewModel.state,
         loadMoreData = {
             when (it) {
@@ -40,21 +59,20 @@ fun MainScreenTabBarPager(
     )
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MainScreenTabBarPager(
-    pageSelected: Int,
-    onPageSelected: (Int) -> Unit,
+    pagerState: PagerState,
     loadMoreData: (Int) -> Unit,
-    state: MovieListState
+    state: MovieListState,
 ) {
+
     when (state) {
         is MovieListState.Init -> LoadingMoviesPager(
-            pageSelected = pageSelected,
-            onPageSelected = onPageSelected,
+            pagerState = pagerState,
         )
         is MovieListState.Loaded -> MoviesPager(
-            pageSelected = pageSelected,
-            onPageSelected = onPageSelected,
+            pagerState = pagerState,
             popularMovies = state.popularMovies,
             upcomingMovies = state.upcomingMovies,
             loadMoreData = loadMoreData
@@ -62,38 +80,35 @@ fun MainScreenTabBarPager(
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun LoadingMoviesPager(
-    pageSelected: Int,
-    onPageSelected: (Int) -> Unit,
+    pagerState: PagerState,
 ) {
-    ViewPager(
-        noItems = 2,
-        selectedPage = pageSelected,
-        onPageChanged = onPageSelected,
-    ) { _, _ ->
+    HorizontalPager(state = pagerState) {
         Center {
             CircularProgressIndicator()
         }
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MoviesPager(
-    pageSelected: Int,
-    onPageSelected: (Int) -> Unit,
+    pagerState: PagerState,
     loadMoreData: (Int) -> Unit,
     popularMovies: List<Movie>,
     upcomingMovies: List<Movie>,
 ) {
     val selectMovie = LocalActions.current.selectMovie
-    ViewPager(
-        selectedPage = pageSelected,
-        onPageChanged = onPageSelected,
-        items = listOf(popularMovies, upcomingMovies)
-    ) { movies, _ ->
+
+    HorizontalPager(state = pagerState, offscreenLimit = 3) { page ->
+        val movies = when (page) {
+            1 -> popularMovies
+            else -> upcomingMovies
+        }
         MainScreenMovieList(movies, loadMoreData = {
-            loadMoreData(pageSelected)
+            loadMoreData(page)
         }) { selectMovie(it) }
     }
 }

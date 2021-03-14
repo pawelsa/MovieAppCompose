@@ -16,4 +16,6 @@
     <string name="detail_no_reviews">Sorry, there is no reviews</string>
     <string name="detail_no_discussions">Sorry, there is no discussion going on</string>
     <string name="unknown">Unknown</string>
+    <string name="poster_description">Poster for %1$s</string>
+    <string name="actor_photo_description">Photo of %1$s</string>
 </resources>
