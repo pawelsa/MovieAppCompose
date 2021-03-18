@@ -6,7 +6,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -104,7 +107,7 @@ fun DataLoadedViewPager(
     reviews: List<Review>,
     discussionMessages: List<Discussion>,
 ) {
-    DiscussionTabRow(
+    FrontCardTabRow(
         pageSelected = pagerState.currentPage,
         onPageSelected = onPageSelected,
         noReview = reviews.size,
@@ -124,7 +127,7 @@ fun LoadingDatingViewPage(
     pagerState: PagerState,
     onPageSelected: OnSelected,
 ) {
-    DiscussionTabRow(
+    FrontCardTabRow(
         pageSelected = pagerState.currentPage,
         onPageSelected = onPageSelected,
         isLoading = true
@@ -137,52 +140,41 @@ fun LoadingDatingViewPage(
 }
 
 @Composable
-private fun DiscussionTabRow(
+private fun FrontCardTabRow(
     pageSelected: Int,
     onPageSelected: OnSelected,
     isLoading: Boolean = false,
     noReview: Int = 0,
     noDiscussion: Int = 0,
 ) {
-    MovieTabRow(pageSelected = pageSelected) {
-        Tab(
-            selected = pageSelected == 0,
-            onClick = { onPageSelected(0) },
-            modifier = Modifier.padding(Dimen.padding.small)
-        ) {
-            TabText(
-                title = stringResource(id = R.string.detail_reviews),
-                isLoading = isLoading,
-                count = noReview,
-                isSelected = pageSelected == 0
-            )
-        }
-        Tab(
-            selected = pageSelected == 1,
-            onClick = { onPageSelected(1) },
-            modifier = Modifier.padding(Dimen.padding.small)
-        ) {
-            TabText(
-                title = stringResource(id = R.string.detail_discuss),
-                isLoading = isLoading,
-                count = noDiscussion,
-                isSelected = pageSelected == 1
-            )
-        }
+
+    val tabs = listOf(
+        DetailTab(R.string.detail_reviews, noReview),
+        DetailTab(R.string.detail_discuss, noDiscussion),
+    )
+
+    MovieTabRow(
+        pageSelected = pageSelected,
+        tabs = tabs,
+        onPageSelected = onPageSelected,
+    ) { page ->
+        TabText(
+            title = stringResource(id = page.text),
+            isLoading = isLoading,
+            count = page.count,
+        )
     }
 }
 
+data class DetailTab(val text: Int, val count: Int)
+
 @Composable
-private fun TabText(title: String, isLoading: Boolean, count: Int, isSelected: Boolean) {
-    val selectedTabTextStyle = MaterialTheme.typography.h2
-    val notSelectedTabTextStyle =
-        MaterialTheme.typography.h2.copy(color = MovieColors.nonSelectedText)
-    val textStyle = if (isSelected) selectedTabTextStyle else notSelectedTabTextStyle
+private fun TabText(title: String, isLoading: Boolean, count: Int) {
 
     Row {
         Text(
             text = title,
-            style = textStyle
+            modifier = Modifier.padding(Dimen.padding.small)
         )
         Spacer(modifier = Modifier.requiredWidth(Dimen.padding.small))
         if (isLoading) {
@@ -245,6 +237,7 @@ fun <T> TabContent(
     } else {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Top
         ) {
             items(data, itemContent = content)
         }

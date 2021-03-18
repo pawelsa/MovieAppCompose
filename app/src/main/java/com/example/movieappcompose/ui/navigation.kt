@@ -3,8 +3,11 @@ package com.example.movieappcompose.ui
 import android.os.Parcelable
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.toMutableStateList
+import com.example.movieappcompose.screens.movieScreen.Destination
 
 /**
  * A simple navigator which maintains a back stack.
@@ -50,4 +53,12 @@ class Navigator<T : Parcelable> private constructor(
                 restore = { backstack -> Navigator(backstack, backDispatcher) }
             )
     }
+}
+
+@Composable
+fun rememberNavigator(
+    backDispatcher: OnBackPressedDispatcher,
+    initDestination: Destination,
+): Navigator<Destination> = rememberSaveable(saver = Navigator.saver(backDispatcher)) {
+    Navigator(initDestination, backDispatcher)
 }

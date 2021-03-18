@@ -15,7 +15,7 @@ import com.example.movieappcompose.widgets.Page
 @Composable
 fun MainScreen(
     mainActivityViewModel: MainActivityViewModel,
-    backDispatcher: OnBackPressedDispatcher
+    backDispatcher: OnBackPressedDispatcher,
 ) {
     Scaffold(
         bottomBar = {

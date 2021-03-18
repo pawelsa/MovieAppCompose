@@ -23,7 +23,11 @@ sealed class Destination : Parcelable {
 
     @Immutable
     @Parcelize
-    data class MovieTicket(val movieId: Long):Destination()
+    data class MovieTicket(val movieId: Long) : Destination()
+
+    @Immutable
+    @Parcelize
+    data class ActorsList(val movie: Movie) : Destination()
 }
 
 /**
@@ -38,6 +42,9 @@ class Actions(navigator: Navigator<Destination>) {
     }
     val showTicket: (Long) -> Unit = { movieId ->
         navigator.navigate(Destination.MovieTicket(movieId))
+    }
+    val showMoreActors: (Movie) -> Unit = { movie ->
+        navigator.navigate(Destination.ActorsList(movie))
     }
     val upPress: () -> Unit = {
         navigator.back()

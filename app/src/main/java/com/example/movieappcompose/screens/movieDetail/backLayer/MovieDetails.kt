@@ -1,12 +1,16 @@
 package com.example.movieappcompose.screens.movieDetail.backLayer
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.movieappcompose.R
@@ -18,6 +22,7 @@ import com.example.movieappcompose.utlis.LocalActions
 @Composable
 fun DetailsPart(movie: Movie) {
     val actionAmbient = LocalActions.current
+    var isDescriptionExtended by remember { mutableStateOf(false) }
 
     val onCollectPressed = {
         // TODO: 03/11/2020 add some action
@@ -28,6 +33,7 @@ fun DetailsPart(movie: Movie) {
     }
     val onShowMoreActorsPressed = {
         // TODO: 03/11/2020 implement showing actors list
+        actionAmbient.showMoreActors(movie)
     }
 
     Text(
@@ -36,9 +42,17 @@ fun DetailsPart(movie: Movie) {
         modifier = Modifier.padding(vertical = Dimen.padding.medium)
     )
     Text(
+        modifier = Modifier
+                .clip(RoundedCornerShape(Dimen.corner.tag))
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) {
+                    isDescriptionExtended = true
+                },
         text = movie.overview,
         style = MaterialTheme.typography.h3,
-        maxLines = 4,
+        maxLines = if (isDescriptionExtended) 16 else 4,
         overflow = TextOverflow.Ellipsis,
     )
     Spacer(modifier = Modifier.requiredHeight(Dimen.margin.big))

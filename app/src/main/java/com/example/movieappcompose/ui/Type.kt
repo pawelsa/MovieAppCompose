@@ -128,3 +128,18 @@ val appTypography = Typography(
     ),
     overline = defaultTypography.overline.copy(fontFamily = appFontFamily)
 )
+
+
+val selectedTabTextStyle = defaultTypography.h2.copy(
+    fontFamily = appFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = Dimen.text.title,
+    color = Color.Black
+)
+
+val notSelectedTabTextStyle = defaultTypography.h2.copy(
+    fontFamily = appFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = Dimen.text.title,
+    color = MovieColors.nonSelectedText
+)

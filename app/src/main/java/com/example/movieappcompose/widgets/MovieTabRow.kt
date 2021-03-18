@@ -6,7 +6,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.Tab
 import androidx.compose.material.TabPosition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,19 +18,26 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.movieappcompose.base.OnSelected
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
+import com.example.movieappcompose.ui.notSelectedTabTextStyle
+import com.example.movieappcompose.ui.selectedTabTextStyle
 
 
 @Composable
-fun MovieTabRow(
+fun <T> MovieTabRow(
+    tabs: List<T>,
     pageSelected: Int,
-    tabs: @Composable ()->Unit,
+    onPageSelected: OnSelected,
+    modifier: Modifier = Modifier,
+    content: @Composable (page: T) -> Unit,
 ) {
 
     // TODO: 28/10/2020 modify [ScrollableTabRow] to allow adding padding between tabs and indicator
     // TODO: 02/11/2020 add configuration for text style for both selected and un-selected tab
     ScrollableTabRow(
+        modifier = modifier,
         selectedTabIndex = pageSelected,
         backgroundColor = Color.Transparent,
         edgePadding = Dimen.tabBarBorderSpacer,
@@ -36,7 +45,17 @@ fun MovieTabRow(
             DefaultIndicator(it[pageSelected])
         },
         divider = { },
-        tabs = tabs,
+        tabs = {
+            for (page in tabs.indices) {
+                val isSelected = page == pageSelected
+                ProvideTextStyle(value = if (isSelected) selectedTabTextStyle else notSelectedTabTextStyle) {
+                    Tab(selected = isSelected, onClick = { onPageSelected(page) }) {
+                        content(tabs[page])
+                    }
+                }
+
+            }
+        },
     )
 }
 
@@ -63,7 +82,7 @@ fun DefaultIndicator(currentTabPosition: TabPosition) {
 }
 
 fun Modifier.defaultTabIndicatorOffset(
-    currentTabPosition: TabPosition
+    currentTabPosition: TabPosition,
 ): Modifier = composed {
     // TODO: should we animate the width of the indicator as it moves between tabs of different
     //  sizes inside a scrollable tab row?

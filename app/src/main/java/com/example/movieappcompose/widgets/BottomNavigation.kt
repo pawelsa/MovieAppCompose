@@ -38,7 +38,7 @@ fun BottomNavigationBar(show: Boolean, current: Int, onSelect: (Int) -> Unit) {
                 .clip(
                     RoundedCornerShape(
                         topStart = Dimen.corner.big,
-                        topEnd = Dimen.corner.big
+                        topEnd = Dimen.corner.big,
                     )
                 )
                 .background(Color.White)

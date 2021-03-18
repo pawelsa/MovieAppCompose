@@ -7,20 +7,20 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import com.example.movieappcompose.screens.actors.ActorsPage
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.screens.movieDetail.MovieDetailPage
 import com.example.movieappcompose.screens.moviePage.MoviePage
-import com.example.movieappcompose.ui.Navigator
+import com.example.movieappcompose.ui.rememberNavigator
 import com.example.movieappcompose.utlis.LocalActions
 
 @ExperimentalMaterialApi
 @Composable
-fun MovieScreen(mainActivityViewModel: MainActivityViewModel, backDispatcher: OnBackPressedDispatcher) {
-    val navigator: Navigator<Destination> =
-        rememberSaveable(saver = Navigator.saver(backDispatcher)) {
-            Navigator(Destination.Home, backDispatcher)
-        }
+fun MovieScreen(
+    mainActivityViewModel: MainActivityViewModel,
+    backDispatcher: OnBackPressedDispatcher,
+) {
+    val navigator = rememberNavigator(backDispatcher, Destination.Home)
     val actions = remember(navigator) { Actions(navigator) }
 
     CompositionLocalProvider(LocalActions provides actions) {
@@ -38,6 +38,10 @@ fun MovieScreen(mainActivityViewModel: MainActivityViewModel, backDispatcher: On
                 }
                 is Destination.SelectingMovieSeat -> Box { }
                 is Destination.MovieTicket -> Box { }
+                is Destination.ActorsList -> {
+                    mainActivityViewModel.showBottomNavigationBar = false
+                    ActorsPage(destination.movie)
+                }
             }
         }
     }

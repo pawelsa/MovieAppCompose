@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.ui.ethnocentricFont
 
-
 private val AppBarHeight = 56.dp
 private val AppBarHorizontalPadding = 4.dp
 private val TitleInsetWithoutIcon = Modifier.width(16.dp - AppBarHorizontalPadding)
@@ -32,7 +31,6 @@ fun MovieAppBar(
                 .height(AppBarHeight),
         horizontalArrangement = Arrangement.SpaceBetween,
         content = {
-
             if (navigationIcon == null) {
                 Spacer(TitleInsetWithoutIcon)
             } else {
