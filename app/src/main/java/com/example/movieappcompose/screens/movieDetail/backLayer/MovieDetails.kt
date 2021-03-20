@@ -13,19 +13,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
 import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.screens.movieDetail.MovieDetailViewModel
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.utlis.LocalActions
 
 
 @Composable
 fun DetailsPart(movie: Movie) {
+    val movieDetailViewModel: MovieDetailViewModel = viewModel()
     val actionAmbient = LocalActions.current
     var isDescriptionExtended by remember { mutableStateOf(false) }
 
     val onCollectPressed = {
-        // TODO: 03/11/2020 add some action
+        movieDetailViewModel.collectMovie(movie)
     }
     val onBuyPressed = {
         // TODO: 03/11/2020 change to movieId

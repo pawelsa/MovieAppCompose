@@ -36,4 +36,8 @@ class MovieDetailViewModel @Inject constructor(
                     Timber.e(it)
                 })
     }
+
+    fun collectMovie(movie: Movie) {
+
+    }
 }
