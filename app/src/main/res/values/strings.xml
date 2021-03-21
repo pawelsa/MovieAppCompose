@@ -22,4 +22,7 @@
     <string name="cast">Cast</string>
     <string name="crew">Crew</string>
     <string name="detail_collected">Collected</string>
+    <string name="tv_shows_title">Tv shows</string>
+    <string name="tv_shows_popular_title">Popular</string>
+    <string name="tv_shows_top_rated_title">Top rated</string>
 </resources>

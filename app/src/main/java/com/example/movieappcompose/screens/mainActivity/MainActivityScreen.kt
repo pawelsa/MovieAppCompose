@@ -6,7 +6,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import com.example.movieappcompose.screens.movieScreen.MovieScreen
-import com.example.movieappcompose.screens.scanner.ScannerScreen
+import com.example.movieappcompose.screens.tv_shows.TvShowsPage
 import com.example.movieappcompose.widgets.BottomNavigationBar
 import com.example.movieappcompose.widgets.Page
 
@@ -28,7 +28,7 @@ fun MainScreen(
     ) {
         Crossfade(targetState = mainActivityViewModel.currentSelectedItemInNavigationBar) { currentPage ->
             when (currentPage) {
-                1 -> ScannerScreen(mainActivityViewModel.showBottomNavigationBar)
+                1 -> TvShowsPage()
                 2 -> Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) { }
                 else -> MovieScreen(mainActivityViewModel, backDispatcher)
             }
