@@ -60,4 +60,15 @@ abstract class MovieDao {
     @Query("DELETE FROM movie_order WHERE movie_order.type = :movieType")
     abstract fun deleteOrder(movieType: Int): Completable
 
+    @Insert
+    abstract fun collectMovie(collectedDb: CollectedDb): Completable
+
+    @Delete
+    abstract fun uncollectMovie(collectedDb: CollectedDb): Completable
+
+    fun isMovieCollected(movieId: Int): Single<Boolean> = _isMovieCollected(movieId).map { it != 0 }
+
+    @Query("SELECT EXISTS (SELECT 1 FROM collected WHERE movieId = :movieId)")
+    abstract fun _isMovieCollected(movieId: Int): Single<Int>
+
 }

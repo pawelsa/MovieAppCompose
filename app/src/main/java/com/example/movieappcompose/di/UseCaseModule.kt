@@ -1,10 +1,7 @@
 package com.example.movieappcompose.di
 
 import com.example.movieappcompose.data.repositories.MovieRepository
-import com.example.movieappcompose.usecase.GetPopularMoviesUseCase
-import com.example.movieappcompose.usecase.GetReviewsUseCase
-import com.example.movieappcompose.usecase.GetReviewsUseCaseImpl
-import com.example.movieappcompose.usecase.GetUpcomingMoviesUseCase
+import com.example.movieappcompose.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +24,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesMovieReviews(movieRepository: MovieRepository): GetReviewsUseCase =
-        GetReviewsUseCaseImpl(movieRepository)
+    fun providesMovieReviews(movieRepository: MovieRepository): GetDetailedMoviesUseCase =
+        GetDetailedMoviesUseCaseImpl(movieRepository)
+
+    @Provides
+    @Singleton
+    fun providesMovieCollectedStatus(movieRepository: MovieRepository): ChangeMovieCollectedStatusUseCase =
+        ChangeMovieCollectedStatusUseCaseImpl(movieRepository)
 }

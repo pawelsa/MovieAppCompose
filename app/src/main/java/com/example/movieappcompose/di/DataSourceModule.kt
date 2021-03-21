@@ -54,7 +54,7 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesMovieDb(moviesDb: MoviesDB): MovieDao = moviesDb.movieDao()
+    fun providesMovieDao(moviesDb: MoviesDB): MovieDao = moviesDb.movieDao()
 
     @Provides
     @Singleton

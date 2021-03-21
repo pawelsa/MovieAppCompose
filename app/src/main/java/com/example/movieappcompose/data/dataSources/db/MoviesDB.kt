@@ -9,7 +9,7 @@ import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
 import com.example.movieappcompose.data.dataSources.db.models.*
 
 @Database(
-    entities = [MovieDb::class, CastDb::class, CrewDb::class, GenreDb::class, /*MovieToCrewAndCastRelationship::class,*/ MovieGenreCrossRef::class, MovieOrderDb::class],
+    entities = [MovieDb::class, CastDb::class, CrewDb::class, GenreDb::class, MovieGenreCrossRef::class, MovieOrderDb::class, CollectedDb::class],
     version = 1
 )
 abstract class MoviesDB : RoomDatabase() {
@@ -20,12 +20,12 @@ abstract class MoviesDB : RoomDatabase() {
     companion object {
         fun createInstance(context: Context): MoviesDB {
             return Room
-                    .databaseBuilder(
-                        context,
-                        MoviesDB::class.java,
-                        "movies_db"
-                    )
-                    .build()
+                .databaseBuilder(
+                    context,
+                    MoviesDB::class.java,
+                    "movies_db"
+                )
+                .build()
         }
     }
 }

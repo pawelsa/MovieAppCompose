@@ -1,6 +1,7 @@
 package com.example.movieappcompose.di
 
 import com.example.movieappcompose.data.dataSources.api.MoviesApi
+import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
 import com.example.movieappcompose.data.persistence.PersistPopularMoviesList
 import com.example.movieappcompose.data.persistence.PersistUpcomingMoviesList
 import com.example.movieappcompose.data.repositories.MovieRepository
@@ -19,7 +20,8 @@ object RepositoryModule {
     fun providesMovieRepository(
         moviesApi: MoviesApi,
         persistPopularMoviesList: PersistPopularMoviesList,
-        persistUpcomingMoviesList: PersistUpcomingMoviesList
+        persistUpcomingMoviesList: PersistUpcomingMoviesList,
+        movieDao: MovieDao
     ): MovieRepository =
-        MovieRepository(moviesApi, persistPopularMoviesList, persistUpcomingMoviesList)
+        MovieRepository(moviesApi, persistPopularMoviesList, persistUpcomingMoviesList, movieDao)
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
+import com.example.movieappcompose.data.models.DetailedMovie
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailViewModel
 import com.example.movieappcompose.ui.Dimen
@@ -22,13 +23,13 @@ import com.example.movieappcompose.utlis.LocalActions
 
 
 @Composable
-fun DetailsPart(movie: Movie) {
+fun DetailsPart(movie: DetailedMovie) {
     val movieDetailViewModel: MovieDetailViewModel = viewModel()
     val actionAmbient = LocalActions.current
     var isDescriptionExtended by remember { mutableStateOf(false) }
 
     val onCollectPressed = {
-        movieDetailViewModel.collectMovie(movie)
+        movieDetailViewModel.changeCollectedStatus(movie.movie)
     }
     val onBuyPressed = {
         // TODO: 03/11/2020 change to movieId
@@ -36,7 +37,7 @@ fun DetailsPart(movie: Movie) {
     }
     val onShowMoreActorsPressed = {
         // TODO: 03/11/2020 implement showing actors list
-        actionAmbient.showMoreActors(movie)
+        actionAmbient.showMoreActors(movie.movie)
     }
 
     Text(
@@ -46,23 +47,24 @@ fun DetailsPart(movie: Movie) {
     )
     Text(
         modifier = Modifier
-                .clip(RoundedCornerShape(Dimen.corner.tag))
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                ) {
-                    isDescriptionExtended = true
-                },
-        text = movie.overview,
+            .clip(RoundedCornerShape(Dimen.corner.tag))
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+            ) {
+                isDescriptionExtended = true
+            },
+        text = movie.movie.overview,
         style = MaterialTheme.typography.h3,
         maxLines = if (isDescriptionExtended) 16 else 4,
         overflow = TextOverflow.Ellipsis,
     )
     Spacer(modifier = Modifier.requiredHeight(Dimen.margin.big))
     TicketButtons(
+        isCollected = movie.isCollected,
         onCollectPressed = onCollectPressed,
         onBuyPressed = onBuyPressed
     )
     Spacer(modifier = Modifier.requiredHeight(Dimen.margin.big))
-    ActorsSection(onShowMorePressed = onShowMoreActorsPressed, movie.cast)
+    ActorsSection(onShowMorePressed = onShowMoreActorsPressed, movie.movie.cast)
 }

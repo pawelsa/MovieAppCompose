@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
@@ -18,6 +19,7 @@ import com.example.movieappcompose.ui.MovieColors
 
 @Composable
 fun TicketButtons(
+    isCollected: Boolean,
     onCollectPressed: OnClick,
     onBuyPressed: OnClick,
 ) {
@@ -28,15 +30,15 @@ fun TicketButtons(
                     .weight(1f)
                     .padding(Dimen.padding.medium),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MovieColors.greyButton
+                backgroundColor = if(isCollected) MovieColors.greyButton else MovieColors.yellow
             ),
             contentPadding = PaddingValues(Dimen.padding.button),
             elevation = ButtonDefaults.elevation(Dimen.elevation.button),
             onClick = onCollectPressed,
         ) {
             Text(
-                text = stringResource(id = R.string.detail_collect),
-                style = MaterialTheme.typography.button.copy(color = MovieColors.greyButtonText)
+                text = stringResource(id = if(isCollected) R.string.detail_collected else R.string.detail_collect),
+                style = MaterialTheme.typography.button.copy(color = if(isCollected) MovieColors.greyButtonText else Color.White)
             )
         }
         Button(

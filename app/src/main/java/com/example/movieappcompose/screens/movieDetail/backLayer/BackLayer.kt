@@ -21,6 +21,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
+import com.example.movieappcompose.data.models.DetailedMovie
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailState
 import com.example.movieappcompose.ui.Dimen
@@ -42,17 +43,18 @@ fun MovieDetailBackLayer(movieDetailState: MovieDetailState) {
         }
         is MovieDetailState.LoadedMovie -> LoadedMovieDetails(
             onMorePressed = onMorePressed,
-            movie = movieDetailState.movie
+            detailedMovie = movieDetailState.movie
         )
         is MovieDetailState.LoadedMovieDetails -> LoadedMovieDetails(
             onMorePressed = onMorePressed,
-            movie = movieDetailState.movie.movie
+            detailedMovie = movieDetailState.movie
         )
     }
 }
 
 @Composable
-fun LoadedMovieDetails(onMorePressed: OnClick, movie: Movie) {
+fun LoadedMovieDetails(onMorePressed: OnClick, detailedMovie: DetailedMovie) {
+    val movie = detailedMovie.movie
     BoxWithConstraints {
         Box(
             Modifier.fillMaxSize()
@@ -75,14 +77,14 @@ fun LoadedMovieDetails(onMorePressed: OnClick, movie: Movie) {
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 MovieDetailAppBar(onMorePressed = onMorePressed)
-                MovieDetailCard(movie = movie)
+                MovieDetailCard(movie = detailedMovie)
             }
         }
     }
 }
 
 @Composable
-private fun MovieDetailCard(movie: Movie) {
+private fun MovieDetailCard(movie: DetailedMovie) {
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Bottom
@@ -105,10 +107,10 @@ private fun MovieDetailCard(movie: Movie) {
                             bottom.linkTo(content.top, margin = Dimen.margin.big)
                         }) {
                 GlideImage(
-                    imageWidth500Url(movie.posterPath),
+                    imageWidth500Url(movie.movie.posterPath),
                     contentScale = ContentScale.Crop,
                     contentDescription = stringResource(id = R.string.poster_description,
-                        movie.title),
+                        movie.movie.title),
                     modifier = Modifier.zIndex(5.dp.value)
                 )
             }
@@ -150,7 +152,7 @@ private fun MovieDetailCard(movie: Movie) {
                         },
                 horizontalAlignment = Alignment.Start
             ) {
-                GeneralMovieInfo(movie = movie)
+                GeneralMovieInfo(movie = movie.movie)
             }
 
             Column(modifier = Modifier
