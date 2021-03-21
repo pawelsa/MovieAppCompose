@@ -63,8 +63,8 @@ abstract class MovieDao {
     @Insert
     abstract fun collectMovie(collectedDb: CollectedDb): Completable
 
-    @Delete
-    abstract fun uncollectMovie(collectedDb: CollectedDb): Completable
+    @Query("DELETE FROM collected WHERE movieId = :movieId")
+    abstract fun uncollectMovie(movieId: Int): Completable
 
     fun isMovieCollected(movieId: Int): Single<Boolean> = _isMovieCollected(movieId).map { it != 0 }
 

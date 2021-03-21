@@ -6,7 +6,7 @@ import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.data.models.Movie
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
@@ -24,7 +24,7 @@ fun MovieDetailPage(
 ) {
     val mainActivityViewModel: MainActivityViewModel = viewModel()
 
-    SideEffect { viewModel.setMovie(movie) }
+    LaunchedEffect(key1 = movie.id) { viewModel.setMovie(movie) }
 
     Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) {
         // TODO: 04/11/2020 fix the visible difference between back layer and front layer,

@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
@@ -38,10 +37,6 @@ fun MoviePage(
     onPageSelected: (Int) -> Unit,
 ) {
     val viewModel: MovieListViewModel = viewModel()
-
-    LaunchedEffect(key1 = 1) {
-        viewModel.getMovies()
-    }
 
     Column {
         MovieAppBar(

@@ -15,7 +15,7 @@ val ApiResponseToMovie: (MovieApi, List<Genre>, CreditsApi) -> Movie =
             originalTitle = movieApi.original_title,
             originalLanguage = movieApi.original_language,
             posterPath = movieApi.poster_path ?: "",
-            releaseDate = movieApi.release_date,
+            releaseDate = movieApi.release_date ?: "",
             grade = movieApi.vote_average,
             popularity = movieApi.popularity,
             genres = genreList.filter {
@@ -32,7 +32,7 @@ val ApiResponseToMovieDb: (MovieApi, List<Genre>, CreditsApi, List<MovieOrderDb>
             movieDb = MovieDb(
                 movie_id = movie.id,
                 popularity = movie.popularity,
-                release_date = movie.release_date,
+                release_date = movie.release_date ?: "",
                 original_language = movie.original_language,
                 original_title = movie.original_title,
                 overview = movie.overview,

@@ -37,7 +37,12 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun changeCollectedStatus(movie: Movie) {
-        disposables += changeMovieCollectedStatusUseCase(ChangeMovieCollectedStatusUseCase.Param(movie.id))
+        disposables += changeMovieCollectedStatusUseCase(
+            ChangeMovieCollectedStatusUseCase.Param(
+                movie.id,
+                this.movie.isCollected
+            )
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

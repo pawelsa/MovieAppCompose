@@ -29,26 +29,30 @@ class MovieListViewModel @Inject constructor(
         private const val PAGE_SIZE = 20
     }
 
-    fun getMovies() {
+    init {
+        getMovies()
+    }
+
+    private fun getMovies() {
         getPopular()
         getUpcoming()
     }
 
     fun getUpcoming() {
         disposables += getUpcomingMoviesUseCase(GetMoviesUseCase.Param(upcomingMoviesPage++))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    upcomingMovies = it
-                    upcomingMoviesPage = upcomingMovies.size / PAGE_SIZE + 1
-                    state = MovieListState.Loaded(
-                        popularMovies = popularMovies,
-                        upcomingMovies = upcomingMovies
-                    )
-                    Timber.d("Result - up: ${upcomingMovies.size}, po: ${popularMovies.size}")
-                }, {
-                    Timber.e(it)
-                }, {
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                upcomingMovies = it
+                upcomingMoviesPage = upcomingMovies.size / PAGE_SIZE + 1
+                state = MovieListState.Loaded(
+                    popularMovies = popularMovies,
+                    upcomingMovies = upcomingMovies
+                )
+                Timber.d("Result - up: ${upcomingMovies.size}, po: ${popularMovies.size}")
+            }, {
+                Timber.e(it)
+            }, {
                     Timber.d("Completed upcoming")
                 })
     }

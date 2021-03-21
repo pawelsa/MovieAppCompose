@@ -13,7 +13,6 @@ import com.example.movieappcompose.data.persistence.PersistMovieLists
 import com.example.movieappcompose.data.persistence.PersistPopularMoviesList
 import com.example.movieappcompose.data.persistence.PersistUpcomingMoviesList
 import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
@@ -47,16 +46,14 @@ class MovieRepository(
 
     fun isMovieCollected(movieId: Int) = movieDao.isMovieCollected(movieId = movieId)
 
-    fun changeMovieCollectStatus(movieId: Int): Single<Boolean> {
-        return movieDao.isMovieCollected(movieId = movieId).flatMap {
+    fun changeMovieCollectStatus(movieId: Int, isCollected: Boolean): Single<Boolean> {
+        return if (isCollected) {
+            movieDao.uncollectMovie(movieId = movieId)
+        } else {
             val collectedDb = CollectedDb(movieId = movieId, true)
-            if (it) {
-                movieDao.uncollectMovie(collectedDb = collectedDb)
-            } else {
-                movieDao.collectMovie(collectedDb = collectedDb)
-            }
-            .andThen(movieDao.isMovieCollected(movieId))
+            movieDao.collectMovie(collectedDb = collectedDb)
         }
+            .andThen(Single.just(!isCollected))
     }
 
 }
