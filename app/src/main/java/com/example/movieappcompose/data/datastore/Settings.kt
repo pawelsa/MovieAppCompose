@@ -20,10 +20,37 @@ class Settings(private val dataStore: DataStore<LastUpdated>) {
         }
     }
 
+    fun setLastTimePopularShowsSaved(timestamp: Long): Single<Long> {
+        return rxSingle {
+            dataStore.updateData {
+                it
+                        .toBuilder()
+                        .setPopularShows(timestamp)
+                        .build()
+            }.popularShows
+        }
+    }
+
     @ExperimentalCoroutinesApi
     fun getLastTimePopularMoviesSaved(): Single<Long> {
         return dataStore.data
                 .map { it.popularMovies }
+                .asObservable()
+                .firstOrError()
+    }
+
+    @ExperimentalCoroutinesApi
+    fun getLastTimePopularShowsSaved(): Single<Long> {
+        return dataStore.data
+                .map { it.popularShows }
+                .asObservable()
+                .firstOrError()
+    }
+
+    @ExperimentalCoroutinesApi
+    fun getLastTimeTopRatedShowsSaved(): Single<Long> {
+        return dataStore.data
+                .map { it.topRatedShows }
                 .asObservable()
                 .firstOrError()
     }
@@ -36,6 +63,17 @@ class Settings(private val dataStore: DataStore<LastUpdated>) {
                         .setPopularMovies(timestamp)
                         .build()
             }.popularMovies
+        }
+    }
+
+    fun setLastTimeTopRatedShowsSaved(timestamp: Long): Single<Long> {
+        return rxSingle {
+            dataStore.updateData {
+                it
+                        .toBuilder()
+                        .setTopRatedShows(timestamp)
+                        .build()
+            }.topRatedShows
         }
     }
 
@@ -77,12 +115,50 @@ class Settings(private val dataStore: DataStore<LastUpdated>) {
         }
     }
 
+    fun setPopularShowsLastPage(lastPage: Int): Single<Long> {
+        return rxSingle {
+            dataStore.updateData {
+                it
+                        .toBuilder()
+                        .setPopularShowsPages(lastPage)
+                        .build()
+            }.popularShows
+        }
+    }
+
     @ExperimentalCoroutinesApi
     fun getPopularMoviesLastPage(): Single<Int> {
         return dataStore.data
                 .map { it.popularMoviesPages }
                 .asObservable()
                 .firstOrError()
+    }
+
+    @ExperimentalCoroutinesApi
+    fun getPopularShowsLastPage(): Single<Int> {
+        return dataStore.data
+                .map { it.popularShowsPages }
+                .asObservable()
+                .firstOrError()
+    }
+
+    @ExperimentalCoroutinesApi
+    fun getTopRatedShowsLastPage(): Single<Int> {
+        return dataStore.data
+                .map { it.topRatedShowsPages }
+                .asObservable()
+                .firstOrError()
+    }
+
+    fun setTopRatedShowLastPage(lastPage: Int): Single<Long> {
+        return rxSingle {
+            dataStore.updateData {
+                it
+                        .toBuilder()
+                        .setTopRatedShowsPages(lastPage)
+                        .build()
+            }.topRatedShows
+        }
     }
 
     fun setUpcomingMoviesLastPage(lastPage: Int): Single<Long> {

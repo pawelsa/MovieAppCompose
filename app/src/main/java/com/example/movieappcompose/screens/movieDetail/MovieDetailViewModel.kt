@@ -1,8 +1,8 @@
 package com.example.movieappcompose.screens.movieDetail
 
 import com.example.movieappcompose.base.BaseViewModel
-import com.example.movieappcompose.data.models.DetailedMovie
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.DetailedMovie
+import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.usecase.ChangeMovieCollectedStatusUseCase
 import com.example.movieappcompose.usecase.GetDetailedMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

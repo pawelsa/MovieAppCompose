@@ -2,7 +2,8 @@ package com.example.movieappcompose.screens.movieScreen
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
+import com.example.movieappcompose.data.models.tv_shows.TvShow
 import com.example.movieappcompose.ui.Navigator
 import kotlinx.parcelize.Parcelize
 
@@ -16,6 +17,10 @@ sealed class Destination : Parcelable {
     @Immutable
     @Parcelize
     data class MovieDetail(val movie: Movie) : Destination()
+
+    @Immutable
+    @Parcelize
+    data class ShowDetail(val show: TvShow) : Destination()
 
     @Immutable
     @Parcelize
@@ -36,6 +41,9 @@ sealed class Destination : Parcelable {
 class Actions(navigator: Navigator<Destination>) {
     val selectMovie: (Movie) -> Unit = { movie ->
         navigator.navigate(Destination.MovieDetail(movie))
+    }
+    val selectShow: (TvShow) -> Unit = { show ->
+        navigator.navigate(Destination.ShowDetail(show))
     }
     val selectMovieSeat: (Long) -> Unit = { movieId ->
         navigator.navigate(Destination.SelectingMovieSeat(movieId))

@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
-import com.example.movieappcompose.data.models.Cast
+import com.example.movieappcompose.data.models.movie.Cast
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url

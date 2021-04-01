@@ -1,7 +1,6 @@
 package com.example.movieappcompose.screens.movieDetail
 
-import com.example.movieappcompose.data.models.DetailedMovie
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.DetailedMovie
 
 sealed class MovieDetailState {
     object Init : MovieDetailState()

@@ -4,7 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
 import timber.log.Timber
 
 

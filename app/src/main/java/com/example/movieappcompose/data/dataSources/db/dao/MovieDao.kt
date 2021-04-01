@@ -1,7 +1,7 @@
 package com.example.movieappcompose.data.dataSources.db.dao
 
 import androidx.room.*
-import com.example.movieappcompose.data.dataSources.db.models.*
+import com.example.movieappcompose.data.dataSources.db.models.movie.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 

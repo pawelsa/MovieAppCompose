@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.utlis.imageWidth500Url

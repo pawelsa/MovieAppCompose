@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.utlis.LocalActions

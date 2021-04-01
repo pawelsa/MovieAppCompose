@@ -6,9 +6,11 @@ import androidx.datastore.createDataStore
 import com.example.movieappcompose.LastUpdated
 import com.example.movieappcompose.data.dataSources.api.ApiConsts
 import com.example.movieappcompose.data.dataSources.api.MoviesApi
+import com.example.movieappcompose.data.dataSources.api.TvShowsApi
 import com.example.movieappcompose.data.dataSources.db.MoviesDB
 import com.example.movieappcompose.data.dataSources.db.dao.GenreDao
 import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
+import com.example.movieappcompose.data.dataSources.db.dao.TvShowDao
 import com.example.movieappcompose.data.datastore.Settings
 import com.example.movieappcompose.data.datastore.SettingsSerializer
 import com.example.movieappcompose.utlis.ConnectivityInterceptor
@@ -49,12 +51,35 @@ object DataSourceModule {
 
     @Provides
     @Singleton
+    fun providesShowsApi(): TvShowsApi {
+        val client = OkHttpClient
+                .Builder()
+                .addInterceptor(ConnectivityInterceptor())
+                .addInterceptor(MovieApiKeyInterceptor())
+                .build()
+
+        val retrofit = Retrofit
+                .Builder()
+                .client(client)
+                .baseUrl(ApiConsts.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .build()
+        return retrofit.create(TvShowsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideMovieDB(@ApplicationContext context: Context): MoviesDB =
         MoviesDB.createInstance(context = context)
 
     @Provides
     @Singleton
     fun providesMovieDao(moviesDb: MoviesDB): MovieDao = moviesDb.movieDao()
+
+    @Provides
+    @Singleton
+    fun providesShowsDao(moviesDb: MoviesDB): TvShowDao = moviesDb.showDao()
 
     @Provides
     @Singleton

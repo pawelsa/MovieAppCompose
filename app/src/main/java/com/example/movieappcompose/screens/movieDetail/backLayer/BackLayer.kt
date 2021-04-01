@@ -21,8 +21,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnClick
-import com.example.movieappcompose.data.models.DetailedMovie
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.DetailedMovie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailState
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors

@@ -1,14 +1,14 @@
 package com.example.movieappcompose.data.repositories
 
 import com.example.movieappcompose.data.dataSources.api.MoviesApi
-import com.example.movieappcompose.data.dataSources.api.models.ReviewApi
-import com.example.movieappcompose.data.dataSources.api.models.ReviewListApi
+import com.example.movieappcompose.data.dataSources.api.models.movie.ReviewApi
+import com.example.movieappcompose.data.dataSources.api.models.movie.ReviewListApi
 import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
-import com.example.movieappcompose.data.dataSources.db.models.CollectedDb
-import com.example.movieappcompose.data.models.Discussion
-import com.example.movieappcompose.data.models.Movie
-import com.example.movieappcompose.data.models.Review
-import com.example.movieappcompose.data.models.mappers.mapToDomain
+import com.example.movieappcompose.data.dataSources.db.models.movie.CollectedDb
+import com.example.movieappcompose.data.models.movie.Discussion
+import com.example.movieappcompose.data.models.movie.Movie
+import com.example.movieappcompose.data.models.movie.Review
+import com.example.movieappcompose.data.models.movie.mappers.mapToDomain
 import com.example.movieappcompose.data.persistence.PersistMovieLists
 import com.example.movieappcompose.data.persistence.PersistPopularMoviesList
 import com.example.movieappcompose.data.persistence.PersistUpcomingMoviesList

@@ -3,7 +3,7 @@ package com.example.movieappcompose.data.persistence
 import io.reactivex.rxjava3.core.Observable
 import timber.log.Timber
 
-
+// TODO: 22/03/2021 remove it or replace with something better
 abstract class PersistenceWithParam<IN, MODEL, API_MODEL> {
     open fun get(param: IN): Observable<MODEL> = getLocal(param)
             .doOnSubscribe {

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.movieappcompose.data.dataSources.db.models.GenreDb
+import com.example.movieappcompose.data.dataSources.db.models.movie.GenreDb
 import io.reactivex.rxjava3.core.Single
 
 @Dao

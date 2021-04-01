@@ -9,5 +9,9 @@ message LastUpdated {
   int64 genres = 3;
   fixed32 upcomingMoviesPages = 4;
   fixed32 popularMoviesPages = 5;
+  int64 topRatedShows = 6;
+  int64 popularShows = 7;
+  fixed32 topRatedShowsPages = 8;
+  fixed32 popularShowsPages = 9;
 }
 

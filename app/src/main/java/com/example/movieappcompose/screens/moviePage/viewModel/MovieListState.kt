@@ -1,6 +1,6 @@
 package com.example.movieappcompose.screens.moviePage.viewModel
 
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
 
 sealed class MovieListState {
     object Init : MovieListState()

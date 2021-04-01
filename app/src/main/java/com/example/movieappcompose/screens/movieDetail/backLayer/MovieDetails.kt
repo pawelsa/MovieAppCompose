@@ -15,8 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
-import com.example.movieappcompose.data.models.DetailedMovie
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.DetailedMovie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailViewModel
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.utlis.LocalActions
@@ -47,13 +46,13 @@ fun DetailsPart(movie: DetailedMovie) {
     )
     Text(
         modifier = Modifier
-            .clip(RoundedCornerShape(Dimen.corner.tag))
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-            ) {
-                isDescriptionExtended = true
-            },
+                .clip(RoundedCornerShape(Dimen.corner.tag))
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) {
+                    isDescriptionExtended = true
+                },
         text = movie.movie.overview,
         style = MaterialTheme.typography.h3,
         maxLines = if (isDescriptionExtended) 16 else 4,

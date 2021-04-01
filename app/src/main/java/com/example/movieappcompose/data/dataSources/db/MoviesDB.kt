@@ -6,10 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.movieappcompose.data.dataSources.db.dao.GenreDao
 import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
-import com.example.movieappcompose.data.dataSources.db.models.*
+import com.example.movieappcompose.data.dataSources.db.dao.TvShowDao
+import com.example.movieappcompose.data.dataSources.db.models.movie.*
+import com.example.movieappcompose.data.dataSources.db.models.tvShow.ShowGenreCrossRef
+import com.example.movieappcompose.data.dataSources.db.models.tvShow.TvShowCastDb
+import com.example.movieappcompose.data.dataSources.db.models.tvShow.TvShowCrewDb
+import com.example.movieappcompose.data.dataSources.db.models.tvShow.TvShowDb
 
 @Database(
-    entities = [MovieDb::class, CastDb::class, CrewDb::class, GenreDb::class, MovieGenreCrossRef::class, MovieOrderDb::class, CollectedDb::class],
+    entities = [MovieDb::class, CastDb::class, CrewDb::class, GenreDb::class, MovieGenreCrossRef::class, MovieOrderDb::class, CollectedDb::class, TvShowDb::class, TvShowCrewDb::class, TvShowCastDb::class, ShowGenreCrossRef::class, TvShowOrderDb::class],
     version = 1
 )
 abstract class MoviesDB : RoomDatabase() {
@@ -17,15 +22,17 @@ abstract class MoviesDB : RoomDatabase() {
 
     abstract fun genreDao(): GenreDao
 
+    abstract fun showDao(): TvShowDao
+
     companion object {
         fun createInstance(context: Context): MoviesDB {
             return Room
-                .databaseBuilder(
-                    context,
-                    MoviesDB::class.java,
-                    "movies_db"
-                )
-                .build()
+                    .databaseBuilder(
+                        context,
+                        MoviesDB::class.java,
+                        "movies_db"
+                    )
+                    .build()
         }
     }
 }

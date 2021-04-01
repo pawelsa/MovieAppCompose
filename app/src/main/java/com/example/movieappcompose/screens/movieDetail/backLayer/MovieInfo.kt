@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import com.example.movieappcompose.R
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.extensions.roundTo
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors

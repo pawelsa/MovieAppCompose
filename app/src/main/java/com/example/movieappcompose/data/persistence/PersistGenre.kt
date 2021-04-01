@@ -1,12 +1,12 @@
 package com.example.movieappcompose.data.persistence
 
 import com.example.movieappcompose.data.dataSources.api.MoviesApi
-import com.example.movieappcompose.data.dataSources.api.models.GenreListApi
+import com.example.movieappcompose.data.dataSources.api.models.movie.GenreListApi
 import com.example.movieappcompose.data.dataSources.db.dao.GenreDao
 import com.example.movieappcompose.data.datastore.Settings
-import com.example.movieappcompose.data.models.Genre
-import com.example.movieappcompose.data.models.mappers.mapToDb
-import com.example.movieappcompose.data.models.mappers.mapToDomain
+import com.example.movieappcompose.data.models.movie.Genre
+import com.example.movieappcompose.data.models.movie.mappers.mapToDb
+import com.example.movieappcompose.data.models.movie.mappers.mapToDomain
 import com.example.movieappcompose.extensions.isDateOlderThan
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single

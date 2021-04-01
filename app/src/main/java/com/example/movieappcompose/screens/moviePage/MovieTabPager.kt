@@ -7,7 +7,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListState
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListViewModel
 import com.example.movieappcompose.ui.Dimen

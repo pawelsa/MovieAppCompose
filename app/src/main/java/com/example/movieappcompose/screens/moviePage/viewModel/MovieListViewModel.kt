@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.movieappcompose.base.BaseViewModel
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.usecase.GetMoviesUseCase
 import com.example.movieappcompose.usecase.GetPopularMoviesUseCase
 import com.example.movieappcompose.usecase.GetUpcomingMoviesUseCase

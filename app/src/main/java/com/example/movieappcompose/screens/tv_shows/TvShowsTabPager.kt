@@ -7,7 +7,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.tv_shows.TvShow
 import com.example.movieappcompose.screens.tv_shows.viewModel.TvShowListState
 import com.example.movieappcompose.screens.tv_shows.viewModel.TvShowListViewModel
 import com.example.movieappcompose.ui.Dimen
@@ -44,8 +44,8 @@ fun TvShowsTabBarPager(
     })
     Spacer(
         modifier = Modifier
-            .requiredHeight(Dimen.margin.small)
-            .fillMaxWidth()
+                .requiredHeight(Dimen.margin.small)
+                .fillMaxWidth()
     )
     TvShowsTabBarPager(
         pagerState = pagerState,
@@ -53,7 +53,7 @@ fun TvShowsTabBarPager(
         loadMoreData = {
             when (it) {
                 0 -> viewModel.getPopular()
-                1 -> viewModel.getUpcoming()
+                1 -> viewModel.getTopRated()
             }
         }
     )
@@ -73,8 +73,8 @@ fun TvShowsTabBarPager(
         )
         is TvShowListState.Loaded -> MoviesPager(
             pagerState = pagerState,
-            popularMovies = state.popularMovies,
-            upcomingMovies = state.upcomingMovies,
+            popularMovies = state.popularShows,
+            upcomingMovies = state.topShows,
             loadMoreData = loadMoreData
         )
     }
@@ -97,10 +97,10 @@ fun LoadingMoviesPager(
 fun MoviesPager(
     pagerState: PagerState,
     loadMoreData: (Int) -> Unit,
-    popularMovies: List<Movie>,
-    upcomingMovies: List<Movie>,
+    popularMovies: List<TvShow>,
+    upcomingMovies: List<TvShow>,
 ) {
-    val selectMovie = LocalActions.current.selectMovie
+    val selectMovie = LocalActions.current.selectShow
 
     HorizontalPager(state = pagerState, offscreenLimit = 3) { page ->
         val movies = when (page) {

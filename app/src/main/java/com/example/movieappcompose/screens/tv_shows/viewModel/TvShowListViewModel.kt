@@ -4,10 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.movieappcompose.base.BaseViewModel
-import com.example.movieappcompose.data.models.Movie
-import com.example.movieappcompose.usecase.GetMoviesUseCase
-import com.example.movieappcompose.usecase.GetPopularMoviesUseCase
-import com.example.movieappcompose.usecase.GetUpcomingMoviesUseCase
+import com.example.movieappcompose.data.models.tv_shows.TvShow
+import com.example.movieappcompose.usecase.GetPopularShowsUseCase
+import com.example.movieappcompose.usecase.GetShowsUseCase
+import com.example.movieappcompose.usecase.GetTopRatedShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -17,62 +17,58 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TvShowListViewModel @Inject constructor(
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
+    private val getPopularShowsUseCase: GetPopularShowsUseCase,
+    private val getTopRatedShowsUseCase: GetTopRatedShowsUseCase,
 ) : BaseViewModel<TvShowListState>(TvShowListState.Init) {
-    private var popularMovies = emptyList<Movie>()
-    private var upcomingMovies = emptyList<Movie>()
-    private var popularMoviesPage by mutableStateOf(1)
-    private var upcomingMoviesPage by mutableStateOf(1)
+    private var popularShows = emptyList<TvShow>()
+    private var topRatedShows = emptyList<TvShow>()
+    private var popularShowsPage by mutableStateOf(1)
+    private var topRatedShowsPage by mutableStateOf(1)
 
     companion object {
         private const val PAGE_SIZE = 20
     }
 
     init {
-        getMovies()
+        getShows()
     }
 
-    private fun getMovies() {
+    private fun getShows() {
         getPopular()
-        getUpcoming()
+        getTopRated()
     }
 
-    fun getUpcoming() {
-        disposables += getUpcomingMoviesUseCase(GetMoviesUseCase.Param(upcomingMoviesPage++))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                upcomingMovies = it
-                upcomingMoviesPage = upcomingMovies.size / PAGE_SIZE + 1
-                state = TvShowListState.Loaded(
-                    popularMovies = popularMovies,
-                    upcomingMovies = upcomingMovies
-                )
-                Timber.d("Result - up: ${upcomingMovies.size}, po: ${popularMovies.size}")
-            }, {
+    fun getTopRated() {
+        disposables += getTopRatedShowsUseCase(GetShowsUseCase.Param(topRatedShowsPage++))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    topRatedShows = it
+                    topRatedShowsPage = topRatedShows.size / PAGE_SIZE + 1
+                    state = TvShowListState.Loaded(
+                        popularShows = popularShows,
+                        topShows = topRatedShows
+                    )
+                    Timber.d("Result - up: ${topRatedShows.size}, po: ${popularShows.size}")
+                }, {
                 Timber.e(it)
-            }, {
-                Timber.d("Completed upcoming")
             })
     }
 
     fun getPopular() {
-        disposables += getPopularMoviesUseCase(GetMoviesUseCase.Param(popularMoviesPage++))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                popularMovies = it
-                popularMoviesPage = popularMovies.size / PAGE_SIZE + 1
-                state = TvShowListState.Loaded(
-                    popularMovies = popularMovies,
-                    upcomingMovies = upcomingMovies
-                )
-                Timber.d("Result - up: ${upcomingMovies.size}, po: ${popularMovies.size}")
-            }, {
+        disposables += getPopularShowsUseCase(GetShowsUseCase.Param(popularShowsPage++))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    popularShows = it
+                    popularShowsPage = popularShows.size / PAGE_SIZE + 1
+                    state = TvShowListState.Loaded(
+                        popularShows = popularShows,
+                        topShows = topRatedShows
+                    )
+                    Timber.d("Result - up: ${topRatedShows.size}, po: ${popularShows.size}")
+                }, {
                 Timber.e(it)
-            }, {
-                Timber.d("Completed popular")
             })
     }
 }

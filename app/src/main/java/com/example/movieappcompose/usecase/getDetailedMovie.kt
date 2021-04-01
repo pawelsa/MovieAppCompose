@@ -1,8 +1,8 @@
 package com.example.movieappcompose.usecase
 
 import com.example.movieappcompose.base.UseCase
-import com.example.movieappcompose.data.models.DetailedMovie
-import com.example.movieappcompose.data.models.Movie
+import com.example.movieappcompose.data.models.movie.DetailedMovie
+import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.data.repositories.MovieRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single

@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnSelected
-import com.example.movieappcompose.data.models.Discussion
-import com.example.movieappcompose.data.models.Review
+import com.example.movieappcompose.data.models.movie.Discussion
+import com.example.movieappcompose.data.models.movie.Review
 import com.example.movieappcompose.screens.movieDetail.MovieDetailState
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
