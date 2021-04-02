@@ -1,8 +1,8 @@
 package com.example.movieappcompose.data.dataSources.api.models.tv_shows
 
 data class TvShowApi(
-    val backdrop_path: String,
-    val first_air_date: String,
+    val backdrop_path: String?,
+    val first_air_date: String?,
     val genre_ids: List<Int>,
     val id: Int,
     val name: String,

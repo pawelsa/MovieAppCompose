@@ -11,7 +11,7 @@ import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListState
 import com.example.movieappcompose.screens.moviePage.viewModel.MovieListViewModel
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.LocalActions
+import com.example.movieappcompose.utlis.LocalMovieActions
 import com.example.movieappcompose.widgets.Center
 import com.example.movieappcompose.widgets.pager_temp.ExperimentalPagerApi
 import com.example.movieappcompose.widgets.pager_temp.HorizontalPager
@@ -100,7 +100,7 @@ fun MoviesPager(
     popularMovies: List<Movie>,
     upcomingMovies: List<Movie>,
 ) {
-    val selectMovie = LocalActions.current.selectMovie
+    val selectMovie = LocalMovieActions.current.selectMovie
 
     HorizontalPager(state = pagerState, offscreenLimit = 3) { page ->
         val movies = when (page) {

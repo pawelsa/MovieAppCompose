@@ -93,7 +93,7 @@ abstract class PersistTvShowLists(
     override fun Observable<List<TvShowTransfer>>.saveInDb(param: Param): Observable<List<TvShow>> {
         return this
                 .flatMapSingle {
-                    saveMovieInDatabaseWithOrder(it, param.page)
+                    saveShowInDatabaseWithOrder(it, param.page)
                 }
                 .doOnNext {
                     Timber.d("After saving in db: ${it.size}")
@@ -109,7 +109,7 @@ abstract class PersistTvShowLists(
                 }
     }
 
-    private fun saveMovieInDatabaseWithOrder(
+    private fun saveShowInDatabaseWithOrder(
         showTransferList: List<TvShowTransfer>,
         page: Int,
     ): @NonNull Single<List<TvShowTransfer>> {
@@ -156,7 +156,7 @@ abstract class PersistTvShowLists(
                         }
                     } else {
                         setLastTimeTopRatedShowsSaved(System.currentTimeMillis()).flatMap {
-                            setUpcomingMoviesLastPage(page)
+                            setTopRatedShowLastPage(page)
                         }
                     }
                 }
@@ -219,7 +219,7 @@ class PersistPopularShowsList(
 
     override fun getLocal(param: Param): Observable<List<TvShow>> {
         return tvShowDao
-                .getTopRatedShows()
+                .getPopularShows()
                 .map {
                     it.mapToDomain()
                 }
@@ -239,6 +239,15 @@ class PersistTopRatedShowsList(
         api
                 .getTopRatedShows(page)
                 .timeout(20, TimeUnit.SECONDS)
+                .doOnSubscribe {
+                    Timber.d("Subscribed to remote")
+                }
+                .doOnSuccess {
+                    Timber.d("Succeeded remote download")
+                }
+                .doOnError {
+                    Timber.e(it, "Thrown exception at remote download")
+                }
 
     override fun shouldUpdateTvShowData(page: Int): Single<Boolean> {
         return settings
@@ -247,7 +256,7 @@ class PersistTopRatedShowsList(
                     settings
                             .getTopRatedShowsLastPage()
                             .map { lastPage ->
-                                Timber.d("Upcoming remote: savedPages: $lastPage, page: $page, updated: $lastTimeUpdated")
+                                Timber.d("TopRated remote: savedPages: $lastPage, page: $page, updated: $lastTimeUpdated")
                                 lastPage < page || lastTimeUpdated.isDateOlderThan(
                                     Calendar.DAY_OF_MONTH,
                                     1
@@ -258,7 +267,7 @@ class PersistTopRatedShowsList(
 
     override fun getLocal(param: Param): Observable<List<TvShow>> {
         return tvShowDao
-                .getPopularShows()
+                .getTopRatedShows()
                 .map {
                     it.mapToDomain()
                 }

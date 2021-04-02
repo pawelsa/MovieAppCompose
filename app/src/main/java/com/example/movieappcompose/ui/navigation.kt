@@ -7,7 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.toMutableStateList
-import com.example.movieappcompose.screens.movieScreen.Destination
+import com.example.movieappcompose.screens.movieScreen.MovieDestination
+import com.example.movieappcompose.screens.tv_shows.ShowDestination
 
 /**
  * A simple navigator which maintains a back stack.
@@ -58,7 +59,15 @@ class Navigator<T : Parcelable> private constructor(
 @Composable
 fun rememberNavigator(
     backDispatcher: OnBackPressedDispatcher,
-    initDestination: Destination,
-): Navigator<Destination> = rememberSaveable(saver = Navigator.saver(backDispatcher)) {
+    initDestination: MovieDestination,
+): Navigator<MovieDestination> = rememberSaveable(saver = Navigator.saver(backDispatcher)) {
+    Navigator(initDestination, backDispatcher)
+}
+
+@Composable
+fun rememberNavigator(
+    backDispatcher: OnBackPressedDispatcher,
+    initDestination: ShowDestination,
+): Navigator<ShowDestination> = rememberSaveable(saver = Navigator.saver(backDispatcher)) {
     Navigator(initDestination, backDispatcher)
 }

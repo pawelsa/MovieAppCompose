@@ -9,10 +9,10 @@ data class TvShowDb(
     @PrimaryKey
     val show_id: Int,
     val name: String,
-    @ColumnInfo(name = "posterPath")
-    val posterPath: String,
-    @ColumnInfo(name = "backdrop_path")
-    val backdropPath: String,
+    @ColumnInfo(name = "posterPath", defaultValue = "")
+    val posterPath: String = "",
+    @ColumnInfo(name = "backdrop_path", defaultValue = "")
+    val backdropPath: String = "",
     @ColumnInfo(name = "original_language")
     val originalLanguage: String,
     @ColumnInfo(name = "original_title")

@@ -12,14 +12,14 @@ import com.example.movieappcompose.data.models.movie.Genre
 import com.example.movieappcompose.data.models.movie.mappers.mapToDomain
 import com.example.movieappcompose.data.models.tv_shows.TvShow
 
-val ApiShowToDomain: (api: TvShowApi, genreList: List<Genre>, creditsApi: ShowCreditsApi, order: List<TvShowOrderDb>) -> TvShow =
+/*val ApiShowToDomain: (api: TvShowApi, genreList: List<Genre>, creditsApi: ShowCreditsApi, order: List<TvShowOrderDb>) -> TvShow =
     { api, genreList, credits, order ->
         throw Exception("Not implemented")
         TvShow(
             id = api.id,
             title = api.name,
-            backdropPath = api.backdrop_path,
-            releaseDate = api.first_air_date,
+            backdropPath = api.backdrop_path ?: "",
+            releaseDate = api.first_air_date ?: "",
             genres = api.genre_ids.map { genreId ->
                 genreList.first { it.genre_id == genreId }
             },
@@ -33,7 +33,7 @@ val ApiShowToDomain: (api: TvShowApi, genreList: List<Genre>, creditsApi: ShowCr
             cast = credits.cast.map(ApiCastToDomain),
             crew = credits.crew.map(ApiCrewToDomain),
         )
-    }
+    }*/
 
 val ApiShowToDb: (api: TvShowApi, genreList: List<Genre>, creditsApi: ShowCreditsApi, order: List<TvShowOrderDb>) -> ShowToCrewAndCastRelationship =
     { api, genreList, creditsApi, order ->
@@ -47,8 +47,8 @@ val ApiShowToDb: (api: TvShowApi, genreList: List<Genre>, creditsApi: ShowCredit
                 originalLanguage = api.original_language,
                 originalTitle = api.original_name,
                 posterPath = api.poster_path,
-                releaseDate = api.first_air_date,
-                backdropPath = api.backdrop_path
+                releaseDate = api.first_air_date ?: "",
+                backdropPath = api.backdrop_path ?: ""
             ),
             castList = creditsApi.cast.map {
                 TvShowCastDb(

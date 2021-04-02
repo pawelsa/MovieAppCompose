@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.base.OnClick
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.LocalActions
+import com.example.movieappcompose.utlis.LocalMovieActions
 import com.example.movieappcompose.widgets.MovieAppBar
 
 
@@ -34,7 +34,7 @@ fun MovieDetailAppBar(
     MovieAppBar(
         navigationIcon = {
             IconButton(
-                onClick = LocalActions.current.upPress,
+                onClick = LocalMovieActions.current.upPress,
             ) {
                 Icon(
                     Icons.Sharp.ArrowBack,

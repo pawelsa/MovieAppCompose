@@ -21,7 +21,7 @@ import com.example.movieappcompose.R
 import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.LocalActions
+import com.example.movieappcompose.utlis.LocalMovieActions
 import com.example.movieappcompose.widgets.MovieTabRow
 import com.example.movieappcompose.widgets.Page
 import com.example.movieappcompose.widgets.pager_temp.ExperimentalPagerApi
@@ -38,7 +38,7 @@ fun ActorsPage(
     val tabs = listOf(stringResource(R.string.cast), stringResource(R.string.crew))
     val pagerState = rememberPagerState(pageCount = tabs.size)
     val coroutineScope = rememberCoroutineScope()
-    val upPress = LocalActions.current.upPress
+    val upPress = LocalMovieActions.current.upPress
 
     Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) {
         Column {

@@ -18,13 +18,13 @@ import com.example.movieappcompose.R
 import com.example.movieappcompose.data.models.movie.DetailedMovie
 import com.example.movieappcompose.screens.movieDetail.MovieDetailViewModel
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.LocalActions
+import com.example.movieappcompose.utlis.LocalMovieActions
 
 
 @Composable
 fun DetailsPart(movie: DetailedMovie) {
     val movieDetailViewModel: MovieDetailViewModel = viewModel()
-    val actionAmbient = LocalActions.current
+    val actionAmbient = LocalMovieActions.current
     var isDescriptionExtended by remember { mutableStateOf(false) }
 
     val onCollectPressed = {

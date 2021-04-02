@@ -28,7 +28,7 @@ fun MainScreen(
     ) {
         Crossfade(targetState = mainActivityViewModel.currentSelectedItemInNavigationBar) { currentPage ->
             when (currentPage) {
-                1 -> TvShowsPage()
+                1 -> TvShowsPage(backDispatcher)
                 2 -> Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) { }
                 else -> MovieScreen(mainActivityViewModel, backDispatcher)
             }

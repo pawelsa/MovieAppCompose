@@ -12,7 +12,7 @@ import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.screens.movieDetail.MovieDetailPage
 import com.example.movieappcompose.screens.moviePage.MoviePage
 import com.example.movieappcompose.ui.rememberNavigator
-import com.example.movieappcompose.utlis.LocalActions
+import com.example.movieappcompose.utlis.LocalMovieActions
 
 @ExperimentalMaterialApi
 @Composable
@@ -20,25 +20,25 @@ fun MovieScreen(
     mainActivityViewModel: MainActivityViewModel,
     backDispatcher: OnBackPressedDispatcher,
 ) {
-    val navigator = rememberNavigator(backDispatcher, Destination.Home)
-    val actions = remember(navigator) { Actions(navigator) }
+    val navigator = rememberNavigator(backDispatcher, MovieDestination.Home)
+    val actions = remember(navigator) { MovieActions(navigator) }
 
-    CompositionLocalProvider(LocalActions provides actions) {
+    CompositionLocalProvider(LocalMovieActions provides actions) {
         Crossfade(navigator.current) { destination ->
             when (destination) {
-                Destination.Home -> {
+                MovieDestination.Home -> {
                     mainActivityViewModel.showBottomNavigationBar = true
                     MoviePage()
                 }
-                is Destination.MovieDetail -> {
+                is MovieDestination.MovieDetail -> {
                     mainActivityViewModel.showBottomNavigationBar = false
                     MovieDetailPage(
                         movie = destination.movie
                     )
                 }
-                is Destination.SelectingMovieSeat -> Box { }
-                is Destination.MovieTicket -> Box { }
-                is Destination.ActorsList -> {
+                is MovieDestination.SelectingMovieSeat -> Box { }
+                is MovieDestination.MovieTicket -> Box { }
+                is MovieDestination.ActorsList -> {
                     mainActivityViewModel.showBottomNavigationBar = false
                     ActorsPage(destination.movie)
                 }

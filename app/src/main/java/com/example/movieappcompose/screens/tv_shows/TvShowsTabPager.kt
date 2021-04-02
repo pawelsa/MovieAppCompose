@@ -11,7 +11,7 @@ import com.example.movieappcompose.data.models.tv_shows.TvShow
 import com.example.movieappcompose.screens.tv_shows.viewModel.TvShowListState
 import com.example.movieappcompose.screens.tv_shows.viewModel.TvShowListViewModel
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.LocalActions
+import com.example.movieappcompose.utlis.LocalShowActions
 import com.example.movieappcompose.widgets.Center
 import com.example.movieappcompose.widgets.pager_temp.ExperimentalPagerApi
 import com.example.movieappcompose.widgets.pager_temp.HorizontalPager
@@ -73,8 +73,8 @@ fun TvShowsTabBarPager(
         )
         is TvShowListState.Loaded -> MoviesPager(
             pagerState = pagerState,
-            popularMovies = state.popularShows,
-            upcomingMovies = state.topShows,
+            popularShows = state.popularShows,
+            topRatedShows = state.topShows,
             loadMoreData = loadMoreData
         )
     }
@@ -97,18 +97,18 @@ fun LoadingMoviesPager(
 fun MoviesPager(
     pagerState: PagerState,
     loadMoreData: (Int) -> Unit,
-    popularMovies: List<TvShow>,
-    upcomingMovies: List<TvShow>,
+    popularShows: List<TvShow>,
+    topRatedShows: List<TvShow>,
 ) {
-    val selectMovie = LocalActions.current.selectShow
+    val selectShow = LocalShowActions.current.selectShow
 
     HorizontalPager(state = pagerState, offscreenLimit = 3) { page ->
         val movies = when (page) {
-            1 -> popularMovies
-            else -> upcomingMovies
+            1 -> popularShows
+            else -> topRatedShows
         }
         TvShowsList(movies, loadMoreData = {
             loadMoreData(page)
-        }) { selectMovie(it) }
+        }) { selectShow(it) }
     }
 }
