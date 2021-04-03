@@ -1,8 +1,7 @@
 package com.example.movieappcompose.di
 
 import com.example.movieappcompose.data.repositories.MovieRepository
-import com.example.movieappcompose.data.repositories.PersistPopularShowsList
-import com.example.movieappcompose.data.repositories.PersistTopRatedShowsList
+import com.example.movieappcompose.data.repositories.TvShowRepository
 import com.example.movieappcompose.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -26,7 +25,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesMovieReviews(movieRepository: MovieRepository): GetDetailedMoviesUseCase =
+    fun providesDetailedMovie(movieRepository: MovieRepository): GetDetailedMoviesUseCase =
         GetDetailedMoviesUseCaseImpl(movieRepository)
 
     @Provides
@@ -36,11 +35,16 @@ object UseCaseModule {
 
     @Provides
     @Singleton // TODO: 01/04/2021 move persistence to repository
-    fun providersPopularShows(persistPopularShows: PersistPopularShowsList): GetPopularShowsUseCase =
-        GetPopularShowsUseCase(persistPopularShows)
+    fun providersPopularShows(tvShowRepository: TvShowRepository): GetPopularShowsUseCase =
+        GetPopularShowsUseCase(tvShowRepository)
 
     @Provides
     @Singleton
-    fun providersTopRatedShows(persistTopRatedShows: PersistTopRatedShowsList): GetTopRatedShowsUseCase =
-        GetTopRatedShowsUseCase(persistTopRatedShows)
+    fun providersTopRatedShows(tvShowRepository: TvShowRepository): GetTopRatedShowsUseCase =
+        GetTopRatedShowsUseCase(tvShowRepository)
+
+    @Provides
+    @Singleton
+    fun providesDetailedTvShow(tvShowRepository: TvShowRepository): GetDetailedTvShowUseCase =
+        GetDetailedTvShowUseCaseImpl(tvShowRepository)
 }

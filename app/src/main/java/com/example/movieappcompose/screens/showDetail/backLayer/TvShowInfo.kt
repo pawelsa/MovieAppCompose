@@ -1,4 +1,4 @@
-package com.example.movieappcompose.screens.movieDetail.backLayer
+package com.example.movieappcompose.screens.showDetail.backLayer
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import com.example.movieappcompose.R
-import com.example.movieappcompose.data.models.movie.Movie
+import com.example.movieappcompose.data.models.tv_shows.TvShow
 import com.example.movieappcompose.extensions.roundTo
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
@@ -23,24 +23,24 @@ import com.example.movieappcompose.widgets.Genres
 
 
 @Composable
-fun GeneralMovieInfo(movie: Movie) {
-    Text(text = movie.title, style = MaterialTheme.typography.h2)
-    Genres(movie.genres)
+fun GeneralTvShowInfo(tvShow: TvShow) {
+    Text(text = tvShow.title, style = MaterialTheme.typography.h2)
+    Genres(tvShow.genres)
     ProvideTextStyle(value = MaterialTheme.typography.subtitle1) {
         Text(
             text = stringResource(
                 id = R.string.director, formatArgs = arrayOf(
-                    movie.director?.name ?: stringResource(
+                    tvShow.director?.name ?: stringResource(
                         id = R.string.unknown
                     )
                 )
             )
         )
         Spacer(modifier = Modifier.requiredHeight(Dimen.margin.small))
-        Text(text = stringResource(id = R.string.starring, formatArgs = arrayOf(movie.starring)))
+        Text(text = stringResource(id = R.string.starring, formatArgs = arrayOf(tvShow.starring)))
     }
     Spacer(modifier = Modifier.requiredHeight(Dimen.margin.medium))
-    com.example.movieappcompose.screens.showDetail.backLayer.Grade(grade = movie.grade)
+    Grade(grade = tvShow.grade)
 }
 
 @Composable
@@ -65,8 +65,8 @@ fun Grade(grade: Double) {
         Spacer(modifier = Modifier.requiredWidth(marginBetweenStarsAndGrade))
         Text(
             text = grade
-                    .roundTo(1)
-                    .toString(),
+                .roundTo(1)
+                .toString(),
             style = MaterialTheme.typography.h2.copy(
                 color = MovieColors.yellow,
                 fontSize = Dimen.text.description

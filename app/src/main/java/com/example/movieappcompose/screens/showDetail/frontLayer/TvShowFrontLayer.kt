@@ -1,4 +1,4 @@
-package com.example.movieappcompose.screens.movieDetail.frontLayer
+package com.example.movieappcompose.screens.showDetail.frontLayer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -23,8 +23,8 @@ import com.example.movieappcompose.R
 import com.example.movieappcompose.base.OnSelected
 import com.example.movieappcompose.data.models.movie.Discussion
 import com.example.movieappcompose.data.models.movie.Review
-import com.example.movieappcompose.screens.movieDetail.MovieDetailState
-import com.example.movieappcompose.screens.showDetail.frontLayer.DetailTab
+import com.example.movieappcompose.screens.movieDetail.frontLayer.DetailTab
+import com.example.movieappcompose.screens.showDetail.TvShowDetailState
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.ui.MovieColors
 import com.example.movieappcompose.widgets.Center
@@ -36,23 +36,23 @@ import com.example.movieappcompose.widgets.pager_temp.rememberPagerState
 import kotlinx.coroutines.launch
 
 @Composable
-fun FrontLayer(
-    movieDetailState: MovieDetailState,
-    frontLayerViewModel: FrontLayerViewModel = viewModel(),
+fun TvShowFrontLayer(
+    tvShowDetailState: TvShowDetailState,
+    frontLayerViewModel: TvShowFrontLayerViewModel = viewModel(),
 ) {
-    FrontLayer(
+    TvShowFrontLayer(
         pageSelected = frontLayerViewModel.state.page,
         onPageSelected = frontLayerViewModel::selectPage,
-        movieDetailState
+        tvShowDetailState
     )
 }
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun FrontLayer(
+fun TvShowFrontLayer(
     pageSelected: Int,
     onPageSelected: OnSelected,
-    movieDetailState: MovieDetailState,
+    tvShowDetailState: TvShowDetailState,
 ) {
 
     val pagerState = rememberPagerState(
@@ -85,14 +85,14 @@ fun FrontLayer(
                 .requiredHeight(Dimen.margin.medium)
                 .fillMaxWidth()
         )
-        when (movieDetailState) {
-            is MovieDetailState.LoadedMovieDetails -> com.example.movieappcompose.screens.showDetail.frontLayer.DataLoadedViewPager(
+        when (tvShowDetailState) {
+            is TvShowDetailState.LoadedTvShowDetails -> DataLoadedViewPager(
                 pagerState = pagerState,
                 onPageSelected = onSelected,
-                reviews = movieDetailState.movie.reviews,
-                discussionMessages = movieDetailState.movie.discussion
+                reviews = tvShowDetailState.show.reviews,
+                discussionMessages = tvShowDetailState.show.discussion
             )
-            else -> com.example.movieappcompose.screens.showDetail.frontLayer.LoadingDatingViewPage(
+            else -> LoadingDatingViewPage(
                 pagerState = pagerState,
                 onPageSelected = onSelected
             )
@@ -117,9 +117,7 @@ fun DataLoadedViewPager(
     HorizontalPager(state = pagerState) { page ->
         when (page) {
             0 -> ReviewsTab(reviews)
-            else -> com.example.movieappcompose.screens.showDetail.frontLayer.DiscussionTab(
-                discussionMessages
-            )
+            else -> DiscussionTab(discussionMessages)
         }
     }
 }
@@ -201,7 +199,7 @@ private fun TabText(title: String, isLoading: Boolean, count: Int) {
 private fun ReviewsTab(
     reviews: List<Review>,
 ) {
-    com.example.movieappcompose.screens.showDetail.frontLayer.TabContent(
+    TabContent(
         data = reviews,
         emptyMessage = stringResource(id = R.string.detail_no_reviews)
     ) { review ->
@@ -221,7 +219,7 @@ private fun ReviewsTab(
 
 @Composable
 fun DiscussionTab(discussionMessages: List<Discussion>) {
-    com.example.movieappcompose.screens.showDetail.frontLayer.TabContent(
+    TabContent(
         discussionMessages,
         emptyMessage = stringResource(id = R.string.detail_no_discussions)
     ) { message ->

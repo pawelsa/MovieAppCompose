@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.screens.moviePage.viewModel.MainScreenViewModel
+import com.example.movieappcompose.screens.showDetail.ShowDetailPage
 import com.example.movieappcompose.screens.tv_shows.viewModel.TvShowListViewModel
 import com.example.movieappcompose.ui.rememberNavigator
 import com.example.movieappcompose.utlis.LocalShowActions
@@ -42,9 +43,7 @@ fun TvShowsPage(
                     )
                 }
                 is ShowDestination.ShowDetail -> {
-                    Page(showBottomBar = false) {
-                        Text(text = "detail")
-                    }
+                    ShowDetailPage(tvShow = destination.show)
                 }
                 is ShowDestination.ActorsList -> {
                     Page(showBottomBar = false) {

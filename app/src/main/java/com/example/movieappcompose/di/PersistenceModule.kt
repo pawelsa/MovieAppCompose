@@ -6,12 +6,7 @@ import com.example.movieappcompose.data.dataSources.db.dao.GenreDao
 import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
 import com.example.movieappcompose.data.dataSources.db.dao.TvShowDao
 import com.example.movieappcompose.data.datastore.Settings
-import com.example.movieappcompose.data.persistence.PersistGenre
-import com.example.movieappcompose.data.persistence.PersistGenreImpl
-import com.example.movieappcompose.data.persistence.PersistPopularMoviesList
-import com.example.movieappcompose.data.persistence.PersistUpcomingMoviesList
-import com.example.movieappcompose.data.repositories.PersistPopularShowsList
-import com.example.movieappcompose.data.repositories.PersistTopRatedShowsList
+import com.example.movieappcompose.data.persistence.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
