@@ -86,13 +86,13 @@ fun FrontLayer(
                 .fillMaxWidth()
         )
         when (movieDetailState) {
-            is MovieDetailState.LoadedMovieDetails -> com.example.movieappcompose.screens.showDetail.frontLayer.DataLoadedViewPager(
+            is MovieDetailState.LoadedMovieDetails -> DataLoadedViewPager(
                 pagerState = pagerState,
                 onPageSelected = onSelected,
                 reviews = movieDetailState.movie.reviews,
                 discussionMessages = movieDetailState.movie.discussion
             )
-            else -> com.example.movieappcompose.screens.showDetail.frontLayer.LoadingDatingViewPage(
+            else -> LoadingDatingViewPage(
                 pagerState = pagerState,
                 onPageSelected = onSelected
             )
@@ -117,7 +117,7 @@ fun DataLoadedViewPager(
     HorizontalPager(state = pagerState) { page ->
         when (page) {
             0 -> ReviewsTab(reviews)
-            else -> com.example.movieappcompose.screens.showDetail.frontLayer.DiscussionTab(
+            else -> DiscussionTab(
                 discussionMessages
             )
         }
@@ -201,7 +201,7 @@ private fun TabText(title: String, isLoading: Boolean, count: Int) {
 private fun ReviewsTab(
     reviews: List<Review>,
 ) {
-    com.example.movieappcompose.screens.showDetail.frontLayer.TabContent(
+    TabContent(
         data = reviews,
         emptyMessage = stringResource(id = R.string.detail_no_reviews)
     ) { review ->
@@ -221,7 +221,7 @@ private fun ReviewsTab(
 
 @Composable
 fun DiscussionTab(discussionMessages: List<Discussion>) {
-    com.example.movieappcompose.screens.showDetail.frontLayer.TabContent(
+    TabContent(
         discussionMessages,
         emptyMessage = stringResource(id = R.string.detail_no_discussions)
     ) { message ->

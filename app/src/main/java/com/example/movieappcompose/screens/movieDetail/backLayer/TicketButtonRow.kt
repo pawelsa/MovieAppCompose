@@ -27,8 +27,8 @@ fun TicketButtons(
         // TODO: 02/11/2020 make this buttons as widgets
         Button(
             modifier = Modifier
-                    .weight(1f)
-                    .padding(Dimen.padding.medium),
+                .weight(1f)
+                .padding(Dimen.padding.medium),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = if(isCollected) MovieColors.greyButton else MovieColors.yellow
             ),
@@ -43,12 +43,13 @@ fun TicketButtons(
         }
         Button(
             modifier = Modifier
-                    .weight(2f)
-                    .padding(Dimen.padding.medium),
+                .weight(2f)
+                .padding(Dimen.padding.medium),
             colors = ButtonDefaults.buttonColors(backgroundColor = MovieColors.yellow),
             contentPadding = PaddingValues(Dimen.padding.button),
             elevation = ButtonDefaults.elevation(Dimen.elevation.button),
             onClick = onBuyPressed,
+            enabled = false,
         ) {
             Text(text = stringResource(id = R.string.detail_buy_now))
         }

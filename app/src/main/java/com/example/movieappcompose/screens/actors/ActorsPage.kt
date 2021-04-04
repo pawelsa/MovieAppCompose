@@ -12,16 +12,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
-import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.screens.mainActivity.MainActivityViewModel
 import com.example.movieappcompose.ui.Dimen
-import com.example.movieappcompose.utlis.LocalMovieActions
 import com.example.movieappcompose.widgets.MovieTabRow
 import com.example.movieappcompose.widgets.Page
 import com.example.movieappcompose.widgets.pager_temp.ExperimentalPagerApi
@@ -29,16 +28,29 @@ import com.example.movieappcompose.widgets.pager_temp.HorizontalPager
 import com.example.movieappcompose.widgets.pager_temp.rememberPagerState
 import kotlinx.coroutines.launch
 
+
+data class ActorsPageDetails(
+    val title: String,
+    val castList: List<Person>,
+    val crewList: List<Person>
+)
+
+data class Person(
+    val name: String,
+    val profilePicture: String,
+    val position: String,
+)
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ActorsPage(
-    movie: Movie,
+    actorsPageDetails: ActorsPageDetails,
+    upPress: () -> Unit,
     mainActivityViewModel: MainActivityViewModel = viewModel(),
 ) {
     val tabs = listOf(stringResource(R.string.cast), stringResource(R.string.crew))
     val pagerState = rememberPagerState(pageCount = tabs.size)
     val coroutineScope = rememberCoroutineScope()
-    val upPress = LocalMovieActions.current.upPress
 
     Page(showBottomBar = mainActivityViewModel.showBottomNavigationBar) {
         Column {
@@ -48,7 +60,7 @@ fun ActorsPage(
                     Icon(Icons.Sharp.ArrowBack, stringResource(R.string.go_back))
                 }
                 Spacer(modifier = Modifier.padding(start = Dimen.margin.big))
-                Text(text = movie.title, style = MaterialTheme.typography.h2)
+                Text(text = actorsPageDetails.title, style = MaterialTheme.typography.h2)
             }
             MovieTabRow(
                 modifier = Modifier.padding(vertical = Dimen.padding.medium),
@@ -61,13 +73,8 @@ fun ActorsPage(
                 )
             }
             HorizontalPager(state = pagerState) { page ->
-                val people by remember(page) {
-                    mutableStateOf(if (page == 0) movie.cast.map {
-                        Person(it.name,
-                            it.profilePicture,
-                            it.character)
-                    } else movie.crew.map { Person(it.name, it.profilePicture, it.job) })
-                }
+                val people =
+                    if (page == 0) actorsPageDetails.castList else actorsPageDetails.crewList
                 LazyColumn {
                     items(people) { person ->
                         PersonItem(person = person)
@@ -78,9 +85,3 @@ fun ActorsPage(
 
     }
 }
-
-data class Person(
-    val name: String,
-    val profilePicture: String,
-    val position: String,
-)

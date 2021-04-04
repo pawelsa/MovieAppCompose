@@ -3,7 +3,7 @@ package com.example.movieappcompose.screens.showDetail
 import com.example.movieappcompose.base.BaseViewModel
 import com.example.movieappcompose.data.models.tv_shows.DetailedShow
 import com.example.movieappcompose.data.models.tv_shows.TvShow
-import com.example.movieappcompose.usecase.ChangeMovieCollectedStatusUseCase
+import com.example.movieappcompose.usecase.ChangeTvShowCollectedStatusUseCase
 import com.example.movieappcompose.usecase.GetDetailedTvShowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TvShowDetailViewModel @Inject constructor(
     private val getDetailedMoviesUseCase: GetDetailedTvShowUseCase,
-    private val changeMovieCollectedStatusUseCase: ChangeMovieCollectedStatusUseCase
+    private val changeTvShowCollectedStatusUseCase: ChangeTvShowCollectedStatusUseCase
 ) : BaseViewModel<TvShowDetailState>(
     TvShowDetailState.Init
 ) {
@@ -37,9 +37,9 @@ class TvShowDetailViewModel @Inject constructor(
             })
     }
 
-/*    fun changeCollectedStatus(tvShow: TvShow) {
-        disposables += changeMovieCollectedStatusUseCase(
-            ChangeMovieCollectedStatusUseCase.Param(
+    fun changeCollectedStatus(tvShow: TvShow) {
+        disposables += changeTvShowCollectedStatusUseCase(
+            ChangeTvShowCollectedStatusUseCase.Param(
                 tvShow.id,
                 this.detailedShow.isCollected
             )
@@ -52,5 +52,5 @@ class TvShowDetailViewModel @Inject constructor(
             }, {
                 Timber.e(it)
             })
-    }*/
+    }
 }

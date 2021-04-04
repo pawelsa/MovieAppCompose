@@ -14,7 +14,7 @@ import com.example.movieappcompose.data.dataSources.db.models.tvShow.TvShowCrewD
 import com.example.movieappcompose.data.dataSources.db.models.tvShow.TvShowDb
 
 @Database(
-    entities = [MovieDb::class, CastDb::class, CrewDb::class, GenreDb::class, MovieGenreCrossRef::class, MovieOrderDb::class, CollectedDb::class, TvShowDb::class, TvShowCrewDb::class, TvShowCastDb::class, ShowGenreCrossRef::class, TvShowOrderDb::class],
+    entities = [MovieDb::class, CastDb::class, CrewDb::class, GenreDb::class, MovieGenreCrossRef::class, MovieOrderDb::class, CollectedMovieDb::class, TvShowDb::class, TvShowCrewDb::class, TvShowCastDb::class, ShowGenreCrossRef::class, TvShowOrderDb::class, CollectedTvShowDb::class],
     version = 1
 )
 abstract class MoviesDB : RoomDatabase() {

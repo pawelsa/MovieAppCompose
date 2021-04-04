@@ -47,4 +47,9 @@ object UseCaseModule {
     @Singleton
     fun providesDetailedTvShow(tvShowRepository: TvShowRepository): GetDetailedTvShowUseCase =
         GetDetailedTvShowUseCaseImpl(tvShowRepository)
+
+    @Provides
+    @Singleton
+    fun providersCollectedTvShowStatus(tvShowRepository: TvShowRepository): ChangeTvShowCollectedStatusUseCase =
+        ChangeTvShowCollectedStatusUseCaseImpl(tvShowRepository)
 }

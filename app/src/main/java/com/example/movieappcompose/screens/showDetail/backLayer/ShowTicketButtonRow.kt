@@ -18,7 +18,7 @@ import com.example.movieappcompose.ui.MovieColors
 
 
 @Composable
-fun ShowTicketButtons(
+fun ShowCollectButton(
     isCollected: Boolean,
     onCollectPressed: OnClick,
     onBuyPressed: OnClick,
@@ -49,8 +49,9 @@ fun ShowTicketButtons(
             contentPadding = PaddingValues(Dimen.padding.button),
             elevation = ButtonDefaults.elevation(Dimen.elevation.button),
             onClick = onBuyPressed,
+            enabled = false
         ) {
-            Text(text = stringResource(id = R.string.detail_buy_now))
+            Text(text = stringResource(id = R.string.detail_watch_now))
         }
     }
 }

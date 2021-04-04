@@ -2,6 +2,7 @@ package com.example.movieappcompose.data.repositories
 
 import com.example.movieappcompose.data.dataSources.api.TvShowsApi
 import com.example.movieappcompose.data.dataSources.db.dao.TvShowDao
+import com.example.movieappcompose.data.dataSources.db.models.movie.CollectedTvShowDb
 import com.example.movieappcompose.data.models.movie.Discussion
 import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.data.models.movie.Review
@@ -41,17 +42,16 @@ class TvShowRepository(
     // TODO: 21.03.2021 getMovieDiscussion method should be implemented
     fun getTvShowDiscussion(tvShowId: Int): Single<List<Discussion>> = Single.just(emptyList())
 
-    fun isShowCollected(tvShowId: Int) =
-        Single.just(false) //tvShowDao.isMovieCollected(movieId = movieId)
+    fun isShowCollected(tvShowId: Int) = tvShowDao.isMovieCollected(tvShowId = tvShowId)
 
-/*    fun changeMovieCollectStatus(movieId: Int, isCollected: Boolean): Single<Boolean> {
+    fun changeTvShowCollectStatus(tvShowId: Int, isCollected: Boolean): Single<Boolean> {
         return if (isCollected) {
-            tvShowDao.uncollectMovie(movieId = movieId)
+            tvShowDao.uncollectTvShow(tvShowId = tvShowId)
         } else {
-            val collectedDb = CollectedDb(movieId = movieId, true)
-            tvShowDao.collectMovie(collectedDb = collectedDb)
+            val collectedDb = CollectedTvShowDb(tvShowId = tvShowId, true)
+            tvShowDao.collectTvShow(collectedDb = collectedDb)
         }
             .andThen(Single.just(!isCollected))
-    }*/
+    }
 
 }

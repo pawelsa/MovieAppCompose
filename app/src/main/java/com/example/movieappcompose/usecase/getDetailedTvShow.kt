@@ -1,7 +1,6 @@
 package com.example.movieappcompose.usecase
 
 import com.example.movieappcompose.base.UseCase
-import com.example.movieappcompose.data.models.movie.DetailedMovie
 import com.example.movieappcompose.data.models.tv_shows.DetailedShow
 import com.example.movieappcompose.data.models.tv_shows.TvShow
 import com.example.movieappcompose.data.repositories.TvShowRepository
@@ -46,12 +45,12 @@ class GetDetailedTvShowUseCaseImpl(private val tvShowRepository: TvShowRepositor
                 discussionsSource,
                 reviewsSource,
             )
-        ) { (reviewsSource, discussionSource, collectedSource) ->
+        ) { (reviews, discussion, collected) ->
             DetailedShow(
                 tvShow = param.tvShow,
-                reviews = (reviewsSource as DetailedMovie).reviews,
-                discussion = (discussionSource as DetailedMovie).discussion,
-                isCollected = (collectedSource as DetailedMovie).isCollected,
+                reviews = (reviews as DetailedShow).reviews,
+                discussion = (discussion as DetailedShow).discussion,
+                isCollected = (collected as DetailedShow).isCollected,
             )
         }
     }

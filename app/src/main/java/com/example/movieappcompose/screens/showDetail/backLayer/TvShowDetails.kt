@@ -16,7 +16,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieappcompose.R
 import com.example.movieappcompose.data.models.tv_shows.DetailedShow
-import com.example.movieappcompose.screens.movieDetail.backLayer.TicketButtons
 import com.example.movieappcompose.screens.showDetail.TvShowDetailViewModel
 import com.example.movieappcompose.ui.Dimen
 import com.example.movieappcompose.utlis.LocalShowActions
@@ -29,13 +28,12 @@ fun TvShowDetailsPart(show: DetailedShow) {
     var isDescriptionExtended by remember { mutableStateOf(false) }
 
     val onCollectPressed = {
-//        tvShowDetailViewModel.changeCollectedStatus(show.tvShow)
+        tvShowDetailViewModel.changeCollectedStatus(show.tvShow)
     }
     val onBuyPressed = {
         // TODO: 03/11/2020 change to movieId
     }
     val onShowMoreActorsPressed = {
-        // TODO: 03/11/2020 implement showing actors list
         actionAmbient.showMoreActors(show.tvShow)
     }
 
@@ -59,7 +57,7 @@ fun TvShowDetailsPart(show: DetailedShow) {
         overflow = TextOverflow.Ellipsis,
     )
     Spacer(modifier = Modifier.requiredHeight(Dimen.margin.big))
-    TicketButtons(
+    ShowCollectButton(
         isCollected = show.isCollected,
         onCollectPressed = onCollectPressed,
         onBuyPressed = onBuyPressed

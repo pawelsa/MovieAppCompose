@@ -4,7 +4,7 @@ import com.example.movieappcompose.data.dataSources.api.MoviesApi
 import com.example.movieappcompose.data.dataSources.api.models.movie.ReviewApi
 import com.example.movieappcompose.data.dataSources.api.models.movie.ReviewListApi
 import com.example.movieappcompose.data.dataSources.db.dao.MovieDao
-import com.example.movieappcompose.data.dataSources.db.models.movie.CollectedDb
+import com.example.movieappcompose.data.dataSources.db.models.movie.CollectedMovieDb
 import com.example.movieappcompose.data.models.movie.Discussion
 import com.example.movieappcompose.data.models.movie.Movie
 import com.example.movieappcompose.data.models.movie.Review
@@ -50,8 +50,8 @@ class MovieRepository(
         return if (isCollected) {
             movieDao.uncollectMovie(movieId = movieId)
         } else {
-            val collectedDb = CollectedDb(movieId = movieId, true)
-            movieDao.collectMovie(collectedDb = collectedDb)
+            val collectedDb = CollectedMovieDb(movieId = movieId, true)
+            movieDao.collectMovie(collectedMovieDb = collectedDb)
         }
             .andThen(Single.just(!isCollected))
     }
